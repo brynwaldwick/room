@@ -12,11 +12,6 @@ class Dispatcher
     setUser: (user) ->
         @user = user
 
-    # CRUD options
-
-    get: (type, query, cb) ->
-        @remote 'getAs', @user._id, @account.slug, type, query, cb
-
     findMessages: (type, cb) ->
         if !cb
             cb = options
@@ -33,22 +28,6 @@ class Dispatcher
     newMessages$: ->
         new_items$ = @subscribe$ "new_message"
         new_items$
-
-    # Streaming versions of get and find, folding CRUD events into state of item(s)
-
-    # get$: (type, query) ->
-    #     item$ = @remote$ 'getAs', @user._id, @account.slug, type, query
-    #     events$ = @subscribe$ "#{@account.slug}::item:#{query._id}"
-    #     item$.concat(events$).scan(handleItemEvent)
-
-    # find$: (type, query, options) ->
-    #     items$ = @remote$ 'findAs', @user._id, @account.slug, type, query, options
-    #     events$ = @subscribe$ "#{@account.slug}::type:#{type}"
-    #     items$.concat(events$).scan(handleItemsEvent)
-
-    # feed$: (query) ->
-    #     events$ = @remote$ 'findEventsAs', @user._id, @account.slug, '*', null, 0
-    #     events$.concat @subscribe$ "#{@account.slug}"
 
 dispatcher = new Dispatcher
 module.exports = dispatcher

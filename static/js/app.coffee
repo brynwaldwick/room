@@ -35,20 +35,15 @@ Messages = React.createClass
     newMessage: (message) ->
         console.log 'i got a new message', message.body
         _messages = @state.messages
-        _messages.push message
         @setState {messages: _messages}, =>
             @fixScroll()
 
     fixScroll: ->
         $feed = document.getElementById('messages')
-        console.log $feed
-        console.log $feed.scrollTop
-        console.log $feed.scrollHeight
         $messages = @refs.messages
-        console.log $messages
-        $messages.scrollTop = $messages.scrollHeight - $messages.clientHeight
 
-        # $feed.scrollTop = $feed.scrollHeight
+        # TODO: wtf
+        $messages.scrollTop = $messages.scrollHeight - $messages.clientHeight
 
     render: ->
         <div className='events-feed'>
