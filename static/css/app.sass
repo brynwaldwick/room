@@ -1,0 +1,62 @@
+$colors
+    gray: #737373
+
+$padding
+    small: 10px
+    default: 16px
+
+*
+    margin: 0
+    padding: 0
+    box-sizing: border-box
+
+html, body, #app, .app
+    height: 100%
+
+body
+    font: 14px/20px "Arimo", Arial, sans-serif
+    font: 14px/20px "Raleway", Arial, sans-serif
+
+input, button, textarea
+    font: inherit
+
+#app
+    display: flex
+    flex-direction: column
+
+    .nav
+        position: fixed
+        top: 0px
+        left: 0px
+        right: 0px
+        text-align: right
+
+        h1
+            font: 20px "Oswald"
+            padding: $padding.default
+            display: inline-block
+            color: white
+            background: rgba(0, 0, 0, 0.5)
+
+.messages
+    padding-bottom: 50px
+
+    .message
+        padding: $padding.small
+
+        .from
+            font-weight: bold
+            color: $colors.gray
+
+.message-publisher
+    position: fixed
+    bottom: 0px
+    left: 0px
+    right: 0px
+
+    input
+        padding: $padding.small
+        width: 100%
+
+        &:focus
+            outline: none
