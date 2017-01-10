@@ -16,6 +16,9 @@ context = {
     # focus above it. e.g. go from the girl's book to the table, but not
     # from the girl's book to the pens on the table.
     inventory: []
+    hallway_key: false
+    egg: false
+    room_door: 'closed'
 }
 
 story = require '../story'
@@ -38,39 +41,68 @@ parseMessage = (body, cb) ->
     console.log story[context.location]?[context.focus]?.target
     console.log story[context.location]?.target
 
-    if story[target]?
-        Target = story[target]
-    else if story[context.location]?[context.focus]?[target]?
-        Target = story[context.location][context.focus][target]
-    else if story[context.location]?[target]?
-        Target = story[context.location][target]
+    cb null, {action, target}
 
-    if action == 'inspect'
-        if story[target]
-            context.location = target
-            context.focus = target
-        else if story[context.location][target]?
-            context.focus = target
 
-    cb null, {target: 'Testjones', response: Target?[action] || Target}
+applyIntentToSession = ({target, action}, context, cb) ->
+
+    if action == 'go_to'
+        if target == context.location
+            cb null, "You are here."
+        else if story[context.location].neighbors[target]?
+            response = story[context.location].neighbors[target](context)
+            cb null, response
+
+        else
+            cb null, 'You cant go here'
+    else
+
+        # if story[target]?
+        #     Target = story[target]
+        if target == context.location
+            Target = story[context.location]
+        else if story[context.location]?[context.focus]?[target]?
+            Target = story[context.location][context.focus][target]
+        else if story[context.location]?[target]?
+            Target = story[context.location][target]
+
+        # TODO: breakout into updateContext
+
+        if action == 'inspect'
+            # if story[target]
+            #     context.location = target
+            #     context.focus = target
+            if story[context.location][target]?
+                context.focus = target
+
+        # TODO: call into function
+        if _.isFunction Target?[action]
+            console.log 'you are a function'
+            cb null, Target[action](context)
+        else
+            cb null, Target?[action] || Target
 
 data_methods.sendMessage = (new_message, cb) ->
     new_message.from ||= 'user'
 
     createAndPublishMessage new_message, (err, created_message) ->
-        parseMessage new_message.body, (err, {target, command, response}) ->
+        parseMessage new_message.body, (err, {target, action, command, response}) ->
+            applyIntentToSession {target, action}, context, (err, response) ->
 
-            if response?
-                _body = response
-            else
-                _body = "Nothing interesting."
+                if response?
+                    if _.isString response
+                        _body = response
+                    else
+                        _body = 'Error.'
+                else
+                    _body = "Nothing interesting."
 
-            response_message = {
-                body: _body
-                from: 'room'
-            }
+                response_message = {
+                    body: _body
+                    from: 'Room'
+                }
 
-            createAndPublishMessage response_message, cb
+                createAndPublishMessage response_message, cb
 
 createAndPublishMessage = (new_message, cb) ->
     generic_methods.createMessage new_message, (err, created_message) ->
