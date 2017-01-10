@@ -2,6 +2,7 @@ $colors
     gray: #737373
 
 $padding
+    tiny: 6px
     small: 10px
     default: 16px
 
@@ -10,11 +11,11 @@ $padding
     padding: 0
     box-sizing: border-box
 
-html, body, #app, .app
+html, body, #app, .app, .content, .events-feed, .messages
     height: 100%
 
 body
-    font: 14px/20px "Raleway", Arial, sans-serif
+    font: 18px/20px "Raleway", Arial, sans-serif
 
 input, button, textarea
     font: inherit
@@ -43,6 +44,7 @@ input, button, textarea
 
 .messages
     padding-bottom: 50px
+    overflow-y: scroll
 
     .message
         padding: $padding.small
@@ -50,6 +52,10 @@ input, button, textarea
         .from
             font-weight: bold
             color: $colors.gray
+            margin-bottom: $padding.tiny
+
+        .body
+            line-height: 24px
 
 .message-publisher
     position: fixed

@@ -35,14 +35,13 @@ Messages = React.createClass
     newMessage: (message) ->
         console.log 'i got a new message', message.body
         _messages = @state.messages
+        _messages.push message
         @setState {messages: _messages}, =>
             @fixScroll()
 
     fixScroll: ->
         $feed = document.getElementById('messages')
         $messages = @refs.messages
-
-        # TODO: wtf
         $messages.scrollTop = $messages.scrollHeight - $messages.clientHeight
 
     render: ->
