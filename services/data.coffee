@@ -8,18 +8,19 @@ orm = require('data-service/orm')(config.mongodb)
 data_service = new somata.Service 'room:data'
 generic_methods = generic(schema, data_service)
 
-context = {
-    location: 'Room'
-    focus: 'Room'
-    # Rule: you can move your focus to something in the same location
-    # from a sub focus, but you can only move into a subfocus from the
-    # focus above it. e.g. go from the girl's book to the table, but not
-    # from the girl's book to the pens on the table.
-    inventory: []
-    hallway_key: false
-    egg: false
-    room_door: 'closed'
-}
+contexts = {}
+# {
+#     location: 'Room'
+#     focus: 'Room'
+#     # Rule: you can move your focus to something in the same location
+#     # from a sub focus, but you can only move into a subfocus from the
+#     # focus above it. e.g. go from the girl's book to the table, but not
+#     # from the girl's book to the pens on the table.
+#     inventory: []
+#     hallway_key: false
+#     egg: false
+#     room_door: 'closed'
+# }
 
 story = require '../story'
 
@@ -36,14 +37,12 @@ parseMessage = (body, cb) ->
     target = split_body[1]
     console.log 'Action', action
     console.log 'Target', target
-
-    console.log 'The context is', context
-
     cb null, {action, target}
 
 
 applyIntentToSession = ({target, action}, context, cb) ->
 
+    console.log 'The context is', context
     if action == 'go_to'
         if target == context.location
             cb null, "You are here."
@@ -88,7 +87,24 @@ data_methods.sendMessage = (new_message, cb) ->
 
     createAndPublishMessage new_message, (err, created_message) ->
         parseMessage new_message.body, (err, {target, action, command, response}) ->
-            applyIntentToSession {target, action}, context, (err, response) ->
+
+            base_context = {
+                location: 'Room'
+                focus: 'Room'
+                # Rule: you can move your focus to something in the same location
+                # from a sub focus, but you can only move into a subfocus from the
+                # focus above it. e.g. go from the girl's book to the table, but not
+                # from the girl's book to the pens on the table.
+                inventory: []
+                hallway_key: false
+                egg: false
+                room_door: 'closed'}
+
+            contexts[new_message.client_key] ||= base_context
+
+            _context = contexts[new_message.client_key]
+
+            applyIntentToSession {target, action}, _context, (err, response) ->
 
                 if response?
                     if _.isString response
