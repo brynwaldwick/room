@@ -80,7 +80,10 @@ applyIntentToSession = ({target, action}, context, cb) ->
             console.log 'you are a function'
             cb null, Target[action](context)
         else
-            cb null, Target?[action] || Target
+            if action == 'inspect'
+                cb null, Target?[action] || Target
+            else
+                cb null, Target?[action] || "Sorry, you can't."
 
 data_methods.sendMessage = (new_message, cb) ->
     new_message.from ||= 'user'

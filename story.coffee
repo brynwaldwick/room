@@ -7,9 +7,11 @@ Inventory: {
     egg: false
 }
 
-Self: {
-    inspect: "There is blood all over your shirt."
-}
+ENDING = "The egg screams and crumbles to dust. The dust settles, then animates and morphs to become a tiny figure, sanguine and pink. The figure grows and becomes Mary. \n
+Events unfold in a cloud of sparks. Mary pulls her kerchief over her shining blonde hair as you link hands and head out the door. The gargoyle sends a clever goodbye. You tip your hat to the gardener, who is busy breaking apart a clump of worms with a shovel. You and Mary eat by the river and smoke cigarettes into a fountain until the sun comes up. \n
+You walk together back to the room, feeling complete. Mary guides your hand to pick up the knife and pulls it towards her soft chest. You violently press and leave here there on the floor. She is choking on blood. The butler enters through the open door behind you and hands you a tomato. You bite into the fruit, laden with eggs and larvae from the garden outside. The room darkens as your mind slows, and you tumble forward onto the floor and into darkness."
+
+winner_message = "You win! Thank you for playing Room. We hope you'll play again. Say 'sign me up' to sign up for notifications about new chapters. Say 'share on [social_network]' to tell your friends about Room. Welcome back! Until next time..."
 
 module.exports = Story = {
 Room:
@@ -26,16 +28,16 @@ Room:
     Knife:
         inspect: "The knife sits coldly beside the girl's face. The top of the blade is wiped completely clean. The bottom looks to be encrusted in blood."
         pick_up: "You hastily grab the knife. A drop of blood on the handle makes you feel sick and your eyes swim. You stab your thumb shoving it into your pocket and a warm red ribbon splashes onto your pants. Fuck. It's not actually that bad, don't worry."
+    Blood: "The blood looks gooey and it’s turning brown. She has been dead or dying here for some time now."
+    Hair: "Her hair is blonde and looks like something you could use to braid a rope to heaven."
+    Dress: "The dress is blue with a white bow."
+    Necklace: "The fang of a snake held with silver metal and leather against her neck. The tooth presses against her."
+    Mouth: "She's wearing black lipstick. It looks too eager and a bit out of place."
+    Shoes: "Felt buckles and finely polished leather. Kate Spade or something asinine thing like that."
+    Book: "Something by an author that nobody has ever heard of. 'A Depiction of Worth in Spite of Modern Philosophy'. Sounds like it's a bit much, honestly."
     Girl:
-        inspect: "Her name tag says Mary. She’s wearing a blue dress with a white bow. There were polka dots on her kerchief but it is faded with wear and they are barely visible now. Dried blood is caked in her satin blonde hair."
+        inspect: "Her name tag says Mary. She’s wearing a blue dress with a white bow and a tight necklace. There is a book under her hand. There were polka dots on her kerchief but it is faded with wear and they are barely visible now. Dried blood is caked in her satin blonde hair."
         pick_up: "That’s weird."
-        Blood: "The blood looks gooey and it’s turning brown. She has been dead or dying here for some time now."
-        Hair: "Her hair is blonde and looks like something you could use to braid a rope to heaven."
-        Dress: "The dress is blue with a white bow."
-        Necklace: "The fang of a snake held with silver metal and leather against her neck. The worn tip presses seductively against the soft part of her neck."
-        Mouth: "She's wearing black lipstick. It looks too eager and a bit out of place."
-        Shoes: "Felt buckles and finely polished leather. Kate Spade or something asinine thing like that."
-        Book: "Something by an author that nobody has ever heard of. 'A Depiction of Worth in Spite of Modern Philosophy'. Sounds like it's a bit much, honestly."
         move: "You find a tattered love note covered in blood under the body. The contents are very personal and won't add much to the narrative other than pain."
         # TODO: access rule from context.body_moved
         Note: {
@@ -57,7 +59,7 @@ Room:
                 return "It's open."
             else
                 context.room_door = 'open'
-                return "Make sure you gather all the clues. The door opens. There is a Hallway outside."
+                return "The door opens. There is a Hallway outside."
     Hallway:
         inspect: (context) ->
             if context.room_door == 'open'
@@ -67,7 +69,7 @@ Room:
     Egg:
         smash: (context) ->
             if context.egg
-                return "Your ending here."
+                return "#{ENDING}"
             else
                 return "Easter came earlier than expected this year."
     neighbors:
@@ -78,7 +80,7 @@ Room:
             else
                 return 'You cannot go through the closed door.'
 Hallway:
-    inspect: 'It stretches away from you. There is a door along the right side and a door ahead of you. There is a vague notion of stairs going up and to the left. A painting hangs on the wall opposite the first door. A gargoyle sits on a pedestal in a location that is not relevant. He chuckles quietly with a gravel pitch and clears his throat with anticipation. "The Butler did it, you know" he delivers in a jaunty grunt. "Not really, but I found myself unable to resist the irony."'
+    inspect: 'It stretches away from you. There is a door along the right side and a door ahead of you. There is a vague notion of stairs going up and to the left. A painting hangs on the wall opposite the first door. A gargoyle sits on a pedestal in a location that is not relevant. He chuckles quietly with a gravel pitch and clears his throat with anticipation. "The Butler did it, you know" he delivers in a jaunty grunt. "Not really mate, but I found myself unable to resist the irony."'
     Painting:
         inspect: "There is a painting on the wall. Mountains flow towards the background like a rogue wave. A dragon curls with an ugly grace over tiny King Arther and his horse. Fire screams across the canvas, and a chicken in the background walks clumsily towards an old logging road. A blue dress and various other maiden garments are hung in terse rows outside a hut made of lincoln logs in the distance."
         Dragon: "It doesn't actually look the way a real dragon does but the artist certainly put worthy effort into the details. Its neck and back are a slate roof, the scales interwoven gracefully. The burst of fire from his mouth caresses the trees in the distance. Admittedly the perspective is a bit off but the emotion of the scene makes up for it. His eyes gaze longingly towards the chicken."
@@ -93,12 +95,12 @@ Hallway:
             pick_up: "The Gargoyle protests mightily"
         talk_to:
             ask_about: #(this is like inspect but by talking to another person)
-                picture_on_wall: "This is my favorite piece. Far better than that shit they're making endlessly with those colored pens in there. The emotion of this painting... The meaning, or the lack thereof, or the search for that meaning, is everything. Like... why does King Arthur do what he does? Are we ever to know? Is there any logical reason to even consider the answer? Is the fact that I'm here talking to you right now about the picture the only reason for its existence?"
+                picture_on_wall: "This is my favorite piece. Far better than that shit they're making endlessly with those colored pens in there. The emotion of this painting: The meaning, or the lack thereof, or the search for that meaning, is everything. To wit - why does King Arthur do what he does? Are we to know? Is there any logical reason to consider the answer? Is the fact that I'm here talking to you right now about the picture the only reason for his existence?"
                 dragon: "He was a good guy but he had some kind of temper."
-                kind_arthur: "Not really sure."
+                king_arthur: "Not really sure."
                 picture_in_hand: "That's my girlfriend. Don't ask about it."
-                butler: "I'm not convinced the guy exists to be frank... if it weren't here for you here today I'd doubt it completely."
-                girl: "I would tell you not to go near her but you've just came from there."
+                butler: "I'm not convinced the guy exists to be frank... if it weren't for you here today I'd doubt it completely."
+                girl: "I would tell you not to go near her but you've just come from there."
             trigger_good_somehow: "Thanks for the chat. I think this could really be a breakthrough for me. I feel lighter already, please hold me for a moment."
             pick_up: "The combo to that door is 8-8-5-3-1."
             be_nice: "He says thanks, some generative nice thing in a certain conversational style"
@@ -143,6 +145,8 @@ Garden:
                 growing: "Mutant vegetables."
                 gargoyle: "That fucking gargoyle. Some days I wonder what Mary does in there."
                 girl: "Mary was my oldest friend. That fucking gargoyle barely lets me in to see her anymore, like she has to study every hour of every day. I know she had her new boyfriend over last night. Seems to me that every night she is bringing a new version of that same guy home. And I'm not able to come in a few minutes for tea?"
+    Vegetables:
+        inspect: "Some kind of mutant symbolism of invasion and rebirth. Corn, tomatoes, eggplants... and the related fauna."
     Corn:
         inspect: "Corn is pretty boring. Squared away rows. Stalks, leaves, ears. If they could actually say what they have heard maybe they could help you piece together what happened in the Room, but as it is what is this corn good for? Strong and tall with good ears... not cutting it today."
     Tomatoes:
