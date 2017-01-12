@@ -15,7 +15,7 @@ winner_message = "You win! Thank you for playing Room. We hope you'll play again
 
 module.exports = Story = {
 Room:
-    inspect: "You are in a room. You see the Butler's boot as he leaves through the door. You hear a key turn and some burly laughter from outside. A pile of smashed and rotted vegetables sit in a corner. There is a girl on the floor inscribed in a pool of blood. On one wall a window looks out towards a spindly garden. On one wall is an old wooden table. On yet another wall is that door that has already been mentioned."
+    inspect: "You are in a room. You see the Butler's boot as he leaves through the door. You hear a key turn and some burly laughter from outside. A pile of smashed and rotted vegetables sits in a corner. There is a girl on the floor inscribed in a pool of blood. On one wall a window looks out towards a spindly garden. On one wall is an old wooden table. On yet another wall is that door that has already been mentioned."
     Butler:
         inspect: "He has already gone out the door. He was wearing some painfully expensive shoe but that is all you could see through your stupor."
         talk_to: "He has already gone out the door. You spend a few moments talking to the door; nothing happens."
@@ -133,7 +133,7 @@ Hallway:
             return "You take the brief stroll towards the garden. #{Story.Garden.inspect}"
         Room: (context) ->
             context.location = 'Room'
-            return "You once again enter the room. A pile of smashed and rotted vegetables sit in a corner. There is a girl on the floor inscribed in a pool of blood. On one wall a window looks out towards a spindly garden. On one wall is an old wooden table. On yet another wall is that door that has already been mentioned."
+            return "You once again enter the room. A pile of smashed and rotted vegetables sits in a corner. There is a girl on the floor inscribed in a pool of blood. On one wall a window looks out towards a spindly garden. On one wall is an old wooden table. On yet another wall is that door that has already been mentioned."
 Garden:
     inspect: "A gardener flails with a shovel and mutters something about the gargoyle. There is some oddly symbolic activity happening here, where tomatoes, corn, and the like reach outward from their festering rows."
     Gardener:
