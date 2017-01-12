@@ -16,17 +16,18 @@ class Dispatcher
         if !cb
             cb = options
             options = null
-        @remote 'findMessages', {}, cb
+        @remote 'findMessages', {client_key: window.client_key}, cb
 
     sendMessage: (message, cb=noop) ->
         @remote 'sendMessage', message, cb
 
     findMessages$: (query) ->
-        items$ = @remote$ 'findMessages', {}
+        console.log 'quality', query
+        items$ = @remote$ 'findMessages', query, =>
         items$
 
     newMessages$: ->
-        new_items$ = @subscribe$ "new_message"
+        new_items$ = @subscribe$ "new_message:#{window.client_key}"
         new_items$
 
 dispatcher = new Dispatcher

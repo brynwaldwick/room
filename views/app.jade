@@ -16,7 +16,8 @@ html
                 span.loading Loading app...
 
         script.
-            window.user = !{JSON.stringify(user)};
+            //- window.user = !{JSON.stringify(user)};
+            window.client_key = "#{client_key}";
 
         script(src='/socket.io/socket.io.js')
         script(src="#{base_url || ''}/js/app.js")

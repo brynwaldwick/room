@@ -22,8 +22,10 @@ Messages = React.createClass
         messages: []
 
     componentDidMount: ->
-        @messages$ = dispatcher.findMessages$ {}
-        @messages$.onValue @foundMessages
+        @messages$ = dispatcher.findMessages {client_key: window.client_key}, (err, messages) =>
+            @setState {messages}, =>
+                @fixScroll()
+        # @messages$.onValue @foundMessages
 
         @newMessages$ = dispatcher.newMessages$()
         @newMessages$.onValue @newMessage
@@ -74,6 +76,7 @@ MessagePublisher = React.createClass
         new_message = {
             body: @state.value
             from: 'user'
+            client_key: window.client_key
         }
         dispatcher.sendMessage new_message, (resp) =>
             @setState value: ''
