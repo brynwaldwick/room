@@ -17,4 +17,8 @@ app = polar config.api, middleware: [client_info_middleware]
 app.get '/', (req, res) ->
     res.render 'app'
 
+app.get '/:thread_slug', (req, res) ->
+    res.locals.client_key = req.params.thread_slug
+    res.render 'app'
+
 app.start()

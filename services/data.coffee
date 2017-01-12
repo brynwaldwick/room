@@ -132,11 +132,13 @@ data_methods.findMessages = (query, cb) ->
         cb err, messages.reverse()
 
         if messages.length == 0
-            new_message = {
-                from: 'Room'
-                body: story.Room.inspect
-                client_key: query.client_key
-            }
-            createAndPublishMessage new_message, =>
+            setTimeout =>
+                new_message = {
+                    from: 'Room'
+                    body: story.Room.inspect
+                    client_key: query.client_key
+                }
+                createAndPublishMessage new_message, ->
+            , 1234
 
 data_service.methods = _.extend {}, generic_methods, data_methods

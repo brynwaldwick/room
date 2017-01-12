@@ -26,7 +26,7 @@ Messages = React.createClass
             @setState {messages}, =>
                 @fixScroll()
         # @messages$.onValue @foundMessages
-
+        console.log 'test'
         @newMessages$ = dispatcher.newMessages$()
         @newMessages$.onValue @newMessage
 
@@ -35,6 +35,7 @@ Messages = React.createClass
             @fixScroll()
 
     newMessage: (message) ->
+        console.log 'test'
         console.log 'i got a new message', message.body
         _messages = @state.messages
         _messages.push message
