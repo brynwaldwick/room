@@ -34,12 +34,10 @@ parseMessage = (body, cb) ->
     split_body = body.split ' '
     action = split_body[0] || 'inspect'
     target = split_body[1]
-    console.log action
-    console.log target
-    # console.log story
+    console.log 'Action', action
+    console.log 'Target', target
+
     console.log 'The context is', context
-    console.log story[context.location]?[context.focus]?.target
-    console.log story[context.location]?.target
 
     cb null, {action, target}
 
@@ -103,17 +101,26 @@ data_methods.sendMessage = (new_message, cb) ->
                 response_message = {
                     body: _body
                     from: 'Room'
+                    client_key: new_message.client_key
                 }
 
                 createAndPublishMessage response_message, cb
 
 createAndPublishMessage = (new_message, cb) ->
     generic_methods.createMessage new_message, (err, created_message) ->
-        data_service.publish "new_message", created_message
+        data_service.publish "new_message:#{new_message.client_key}", created_message
         cb null, created_message
 
-data_methods.findMessages = (query, options, cb) ->
-    generic_methods.findMessages query, options, (err, messages) ->
+data_methods.findMessages = (query, cb) ->
+    generic_methods.findMessages query, (err, messages) ->
         cb err, messages.reverse()
+
+        if messages.length == 0
+            new_message = {
+                from: 'Room'
+                body: story.Room.inspect
+                client_key: query.client_key
+            }
+            createAndPublishMessage new_message, =>
 
 data_service.methods = _.extend {}, generic_methods, data_methods
