@@ -22,6 +22,13 @@ contexts = {}
 #     room_door: 'closed'
 # }
 
+helpers = {
+    capitalize: (s) ->
+        if !s?.length then return ''
+        s.split(" ").map((s) ->
+            s[0].toUpperCase() + s.slice(1)).join ' '
+}
+
 story = require '../story'
 
 data_methods = {}
@@ -34,7 +41,7 @@ parseMessage = (body, cb) ->
     console.log 'Parsing the body', body
     split_body = body.split ' '
     action = split_body[0] || 'inspect'
-    target = split_body[1]
+    target = split_body[1..].join ' '
     console.log 'Action', action
     console.log 'Target', target
     cb null, {action, target}
@@ -43,7 +50,9 @@ parseMessage = (body, cb) ->
 applyIntentToSession = ({target, action}, context, cb) ->
 
     console.log 'The context is', context
-    if action == 'go_to'
+    target = helpers.capitalize target
+    console.log target
+    if action in ['go_to', 'goto']
         if target == context.location
             cb null, "You are here."
         else if story[context.location].neighbors[target]?
@@ -51,7 +60,7 @@ applyIntentToSession = ({target, action}, context, cb) ->
             cb null, response
 
         else
-            cb null, 'You cant go here'
+            cb null, 'You cannot go there'
     else
 
         # if story[target]?

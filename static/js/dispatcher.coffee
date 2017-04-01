@@ -9,6 +9,8 @@ class Dispatcher
     remote$: somata.remote$.bind null, 'room:data'
     subscribe$: somata.subscribe$.bind null, 'room:data'
 
+    intents$: new KefirBus()
+
     setUser: (user) ->
         @user = user
 

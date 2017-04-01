@@ -31,7 +31,7 @@ input, button, textarea
     .nav
         position: fixed
         top: 0px
-        left: 0px
+        width: 100px
         right: 0px
         text-align: right
 
@@ -56,6 +56,14 @@ input, button, textarea
 
         .body
             line-height: 24px
+
+            a
+                font-weight: bold
+                cursor: pointer
+                color: #444
+
+            p + p
+                margin-top: $padding.small
 
 .message-publisher
     position: fixed

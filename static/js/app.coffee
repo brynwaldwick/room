@@ -1,5 +1,6 @@
 React = require 'react'
 ReactDOM = require 'react-dom'
+reactStringReplace = require 'react-string-replace'
 
 dispatcher = require './dispatcher'
 
@@ -26,7 +27,6 @@ Messages = React.createClass
             @setState {messages}, =>
                 @fixScroll()
         # @messages$.onValue @foundMessages
-        console.log 'test'
         @newMessages$ = dispatcher.newMessages$()
         @newMessages$.onValue @newMessage
 
@@ -35,8 +35,6 @@ Messages = React.createClass
             @fixScroll()
 
     newMessage: (message) ->
-        console.log 'test'
-        console.log 'i got a new message', message.body
         _messages = @state.messages
         _messages.push message
         @setState {messages: _messages}, =>
@@ -54,10 +52,27 @@ Messages = React.createClass
             </div>
         </div>
 
+    sendMessage: (body) -> =>
+        dispatcher.intents$.emit {type: 'message', body}
+
     renderMessage: (message, i) ->
         <div key=message._id className='message'>
             <div className='from'>{message.from}</div>
-            <div className='body'>{message.body}</div>
+            <div className='body'>
+                {message.body.split('\n').map (line, li) =>
+                    i = 0
+                    <p key={'li_' + li}>
+                        {replaced = reactStringReplace line, /(#\w+)/g, (match, mi) =>
+                            value = match.replace("#", "").replace('_'," ")
+                            to_send = "inspect " + value
+                            <a key={'ma_men_' + li + '_' + mi} onClick={@sendMessage(to_send)}>{value}</a>
+                        replaced = reactStringReplace replaced, /(~\w+)/g, (match, mi) =>
+                            to_send = "goto " + match.replace "~", ""
+                            <a key={'ma_dir_' + li + '_' + i++} onClick={@sendMessage(to_send)}>{match.replace "~", ""}</a>
+                        replaced
+                        }
+                    </p>}
+            </div>
         </div>
 
 MessagePublisher = React.createClass
@@ -68,6 +83,12 @@ MessagePublisher = React.createClass
     changeValue: (e) ->
         value = e.target.value
         @setState {value}
+
+    componentDidMount: ->
+        dispatcher.intents$.onValue (i) =>
+            if i.type == 'message'
+                @setState value: i.body, =>
+                    @sendMessage()
 
     onKeyPress: (e) ->
         if e.which == 13
