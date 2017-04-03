@@ -126,7 +126,7 @@ Hallway:
             return "You take the brief stroll towards the garden. #{Story.Garden.inspect}"
         Room: (context) ->
             context.location = 'Room'
-            return "You once again enter the #room. A pile of smashed and rotting vegetables sits in a corner. There is a #girl on the floor inscribed in a pool of blood. On one wall a window looks out towards a spindly #garden. On one wall is an old wooden #table. On yet another wall is that door that has already been mentioned."
+            return "You once again enter the #room. A pile of smashed and rotting vegetables sits in a corner. There is a #girl on the floor inscribed in a pool of blood. On one wall a #window looks out towards a spindly garden. On one wall is an old wooden #table. On yet another wall is that door that has already been mentioned."
 Garden:
     inspect: "A #gardener flails with a shovel and mutters something about the gargoyle. There is some oddly symbolic activity happening here, where #tomatoes, #corn, and the like reach outward from their festering rows. \n
         Behind you, the house stands with the door to the ~Hallway swinging ajar."

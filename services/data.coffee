@@ -41,6 +41,7 @@ parseMessage = (body, cb) ->
     console.log 'Parsing the body', body
     split_body = body.split ' '
     action = split_body[0] || 'inspect'
+    action = action.toLowerCase()
     target = split_body[1..].join ' '
     console.log 'Action', action
     console.log 'Target', target
