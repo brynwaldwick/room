@@ -21,4 +21,7 @@ app.get '/:thread_slug', (req, res) ->
     res.locals.client_key = req.params.thread_slug
     res.render 'app'
 
+app.get '/levels/:level_int', (req, res) ->
+    res.render 'app'
+
 app.start()

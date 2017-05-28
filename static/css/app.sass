@@ -1,5 +1,6 @@
 $colors
     gray: #737373
+    light_gray: #c1c1c1
 
 $padding
     tiny: 6px
@@ -20,6 +21,9 @@ body
 input, button, textarea
     font: inherit
 
+p
+    line-height: 27px
+
 .loading
     margin: $padding.default
     display: block
@@ -35,12 +39,27 @@ input, button, textarea
         right: 0px
         text-align: right
 
-        h1
-            font: 20px "Oswald"
+        h1, .fa-bars
+            cursor: pointer
+            font: 20px
             padding: $padding.default
             display: inline-block
             color: white
             background: rgba(0, 0, 0, 0.5)
+
+        h1
+            font: 20px "Oswald"
+
+input
+    border: 1px solid $colors.light_gray
+
+    -webkit-input-placeholder: $colors.light_gray
+
+.chapter-header
+    font: 20px "Oswald"
+    padding: $padding.small
+    margin: 65px 0px
+    text-align: center
 
 .messages
     padding-bottom: 50px
@@ -51,7 +70,7 @@ input, button, textarea
 
         .from
             font-weight: bold
-            color: $colors.gray
+            color: $colors.light_gray
             margin-bottom: $padding.tiny
 
         .body

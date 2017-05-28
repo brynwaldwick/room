@@ -9,7 +9,7 @@ App = React.createClass
     render: ->
         <div className='app'>
             <div className='nav'>
-                <h1>Room</h1>
+                <i className='fa fa-bars' />
             </div>
             <div className='content'>
                 <Messages />
@@ -48,6 +48,10 @@ Messages = React.createClass
     render: ->
         <div className='events-feed'>
             <div className='messages' id='messages' ref='messages'>
+                <div className='chapter-header'>
+                    <h2>Chapter 1</h2>
+                    <h4>Room</h4>
+                </div>
                 {@state.messages.map @renderMessage}
             </div>
         </div>
