@@ -130,7 +130,9 @@ App = React.createClass({
       "className": 'app'
     }, React.createElement("div", {
       "className": 'nav'
-    }, React.createElement("h1", null, "Room")), React.createElement("div", {
+    }, React.createElement("i", {
+      "className": 'fa fa-bars'
+    })), React.createElement("div", {
       "className": 'content'
     }, React.createElement(Messages, null), React.createElement(MessagePublisher, null)));
   }
@@ -191,7 +193,9 @@ Messages = React.createClass({
       "className": 'messages',
       "id": 'messages',
       "ref": 'messages'
-    }, this.state.messages.map(this.renderMessage)));
+    }, React.createElement("div", {
+      "className": 'chapter-header'
+    }, React.createElement("h2", null, "Chapter 1"), React.createElement("h4", null, "Room")), this.state.messages.map(this.renderMessage)));
   },
   sendMessage: function(body) {
     return (function(_this) {

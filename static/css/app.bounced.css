@@ -28,6 +28,10 @@ textarea {
   font: inherit;
 }
 
+p {
+  line-height: 27px;
+}
+
 .loading {
   margin: 16px;
   display: block;
@@ -38,12 +42,18 @@ textarea {
   flex-direction: column;
 }
 
-#app .nav h1 {
-  font: 20px "Oswald";
+#app .nav h1,
+#app .nav .fa-bars {
+  cursor: pointer;
+  font: 20px;
   padding: 16px;
   display: inline-block;
   color: white;
   background: rgba(0, 0, 0, 0.5);
+}
+
+#app .nav h1 {
+  font: 20px "Oswald";
 }
 
 #app .nav {
@@ -54,6 +64,18 @@ textarea {
   text-align: right;
 }
 
+input {
+  border: 1px solid #c1c1c1;
+  -webkit-input-placeholder: #c1c1c1;
+}
+
+.chapter-header {
+  font: 20px "Oswald";
+  padding: 10px;
+  margin: 65px 0px;
+  text-align: center;
+}
+
 .messages {
   padding-bottom: 50px;
   overflow-y: scroll;
@@ -61,7 +83,7 @@ textarea {
 
 .messages .message .from {
   font-weight: bold;
-  color: #737373;
+  color: #c1c1c1;
   margin-bottom: 6px;
 }
 
