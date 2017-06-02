@@ -3,6 +3,8 @@ grammar = '''
 
     %dontunderstand
         I don't understand ye, mate
+        Talk to me about Mary
+        What d'ye mean?
 
     %comboPromptNegative
         Why should I tell y'? Yer bein an ass.
@@ -39,7 +41,8 @@ grammar = nalgene.parse grammar
 
 girl_triggers = ['girl', 'she', 'her']
 curse_triggers = ['fuck', 'shit', 'bitch', 'asshole']
-pretty_triggers = ['beautiful', 'pretty', 'nice']
+pretty_triggers = ['beautiful', 'pretty', 'nice', 'like']
+ugly_triggers = ['ugly', 'hate', 'stupid', 'bitch', 'whore', 'cunt']
 
 parseMessage = ({context, body}, cb) ->
 
@@ -50,7 +53,7 @@ parseMessage = ({context, body}, cb) ->
             body.indexOf(w) > -1
         return words_contained?.length
 
-    if bodyContains(girl_triggers) && bodyContains('ugly')
+    if bodyContainsEither(girl_triggers) && bodyContainsEither(ugly_triggers)
         response = '%girlUglyResponse'
     else if bodyContainsEither(girl_triggers) && bodyContainsEither(pretty_triggers)
         response = '%girlPrettyResponse'
