@@ -80,10 +80,10 @@ Hallway:
         "King Arthur": "King Arthur is overmatched today but on balance he is a good guy. He will push valiantly towards whichever new challenge dares to rear its head. What is it all for you wonder? People have been asking the chicken that for years and nobody has ever found themselves any kind of satisfying answer, on this side or the next."
         Chicken: "Does there have to be a reason for everything? She sets her eyes on the road ahead of her and lets the seduction of the unknown distance compell her forward."
     Gargoyle:
-        inspect: "The gargoyle has seen better days, in a way similar to most. Its nose crumbles from the crawl and repeat of decades. It has three horns and carries shadows of old faces. It also carries a #picture of a something..."
+        inspect: "The gargoyle has seen better days. Its nose crumbles from the crawl and repeat of decades. It has three horns and carries shadows of old faces. It also carries a #picture of a something..."
         pick_up: "It shakes you away with a gruff expletive. It appears far too heavy to actually hold anyway."
         Picture:
-            inspect: "It is a Polaroid of a raven and a girl. A flurry of activity in the background suggests a chicken was at one point framed, with head, and alive in the shot."
+            inspect: "It is a Polaroid of a raven and a girl. A flurry of activity in the background suggests a chicken was at one point framed - with head and alive - in the shot."
             pick_up: "The Gargoyle protests mightily"
             take: "The Gargoyle protests mightily"
         talk_to:
@@ -97,7 +97,7 @@ Hallway:
             trigger_good_somehow: "Thanks for the chat. I think this could really be a breakthrough for me. I feel lighter already, please hold me for a moment."
             pick_up: "The combo to that door is 8-8-5-3-1."
             be_nice: "He says thanks, some generative nice thing in a certain conversational style"
-            be_mean: "The gargoyle howls with rage and wobbles towards you, his eyes literally catching on fire. He falls off the table and the stone base cracks, revealing a golden key that looks to be one of those copies fresh from the locksmith with sharp edges. You pick up the key as the gargoyle makes one last sickening sound and lays silent."
+            be_mean: "The gargoyle howls with rage and wobbles towards you. His eyes catch on fire as he falls off the table and his stone base cracks, revealing a golden key. You pick up the key as the gargoyle makes one last sickening sound and lays silent."
     Stairs:
         inspect: "A path towards a dark attic. Cobwebs give you that creepy feeling. The door is profoundly locked and it's pretty dark."
     "Near Door":
@@ -138,7 +138,7 @@ Garden:
                 garden: "Mutant vegetables."
                 growing: "Mutant vegetables."
                 gargoyle: "That fucking gargoyle. Some days I wonder what Mary does in there."
-                girl: "Mary was my oldest friend. That fucking gargoyle barely lets me in to see her anymore, like she has to study every hour of every day. I know she had her new boyfriend over last night. Seems to me that every night she is bringing a new version of that same guy home. And I'm not able to come in a few minutes for tea?"
+                girl: "Mary was my oldest friend. That fucking gargoyle barely lets me in to see her anymore, like she has to study every hour of every day. I know she had her new boyfriend over last night. Seems to me that every night she is bringing a new version of that same guy home. And I can't come in for tea?"
     Vegetables:
         inspect: "Some kind of mutant symbolism of invasion and rebirth. Corn, tomatoes, eggplants... and the related fauna."
     Corn:
