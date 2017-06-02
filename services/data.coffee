@@ -107,14 +107,17 @@ data_methods.sendMessage = (new_message, cb) ->
                 # previous context of messages from the person
                 topic = "room"
                 characters[target].parseMessage {topic, body: new_message.body}, (err, parsed_message) ->
-                    # TODO: handle characters' interpretations in story state
-                    response_message = {
-                        body: "They don't want to talk"
-                        from: 'Room'
-                        client_key: new_message.client_key
-                    }
+                    characters[target].generateResponse parsed_message, (err, response) ->
+                        console.log err, response
+                        # TODO: handle characters' interpretations in story state
+                        body = response.body || "They don't want to talk"
+                        response_message = {
+                            body
+                            from: 'Room'
+                            client_key: new_message.client_key
+                        }
 
-                    createAndPublishMessage response_message, cb
+                        createAndPublishMessage response_message, cb
             else
                 response_message = {
                     body: "They aren't here"
