@@ -1,6 +1,11 @@
 
 grammar = '''
 
+    %hi
+        Hello, mate
+        Oy
+        Hi there
+
     %dontunderstand
         I don't understand ye, mate
         Talk to me about Mary
@@ -8,6 +13,9 @@ grammar = '''
 
     %becomeNice
         Thanks for saying that friend. I'm startin to warm up to ye'
+
+    %comboPromptNoHelp
+        I am ornery. I don't want to tell you.
 
     %comboPromptNegative
         Why should I tell y'? Yer bein an ass.
@@ -43,6 +51,7 @@ grammar = '''
 nalgene = require 'nalgene'
 grammar = nalgene.parse grammar
 
+hello_triggers = [' hi', 'hello', ' hey']
 girl_triggers = ['girl', 'she', 'her']
 curse_triggers = ['fuck', 'shit', 'bitch', 'asshole']
 pretty_triggers = ['beautiful', 'pretty', 'nice', 'like']
@@ -67,20 +76,21 @@ parseMessage = (context, body, cb) ->
     else if bodyContainsEither(curse_triggers)
         response = '%curseResponse'
         context.mood -= 0.15
-
+    else if bodyContainsEither(hello_triggers)
+        response = '%hi'
     else if bodyContainsEither(door_triggers)
         if context.mood > 0.8
             response = '%comboPromptPositive'
-        else
+        else if context.mood < 0.5
             response = '%comboPromptNegative'
+        else
+            response = '%comboPromptNoHelp'
 
     cb null, {response, context}
 
 generateResponse = ({response, parsed, context}, cb) ->
-    console.log 'my context is', context
     if context.mood < 0.2
         entry = '%flipOut'
-        console.log 'im flipping out', response
         context.trigger = "gargoyle:fall"
     else if (response != '%comboPromptPositive') && (context.mood > 0.8)
         entry = '%becomeNice'

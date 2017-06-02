@@ -107,6 +107,8 @@ data_methods.sendMessage = (new_message, cb) ->
         gargoyle:
             mood: 0.5
             dead: false
+        gardener:
+            mood: 0.5
         hallway_key: false
         egg: false
         room_door: 'closed'}
@@ -126,8 +128,8 @@ data_methods.sendMessage = (new_message, cb) ->
                 topic = "room"
                 message_context = {
                     location
-                    mood: _context.gargoyle.mood
-                    dead: _context.gargoyle.dead
+                    mood: _context[target].mood
+                    dead: _context[target].dead
                     topic
                 }
                 characters[target].parseMessage message_context, new_message.body, (err, parsed_message) ->
