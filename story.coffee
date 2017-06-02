@@ -97,13 +97,17 @@ Hallway:
             trigger_good_somehow: "Thanks for the chat. I think this could really be a breakthrough for me. I feel lighter already, please hold me for a moment."
             pick_up: "The combo to that door is 8-8-5-3-1."
             be_nice: "He says thanks, some generative nice thing in a certain conversational style"
-            be_mean: "The gargoyle howls with rage and wobbles towards you. His eyes catch on fire as he falls off the table and his stone base cracks, revealing a golden key. You pick up the key as the gargoyle makes one last sickening sound and lays silent."
+        triggers:
+            fall: (context) ->
+                context.gargoyle.dead = true
+                context.hallway_key = true
+                "The gargoyle howls with rage and wobbles towards you. His eyes catch on fire as he falls off the table and his stone base cracks, revealing a golden key. You pick up the key as the gargoyle makes one last sickening sound and lays silent."
     Stairs:
         inspect: "A path towards a dark attic. Cobwebs give you that creepy feeling. The door is profoundly locked and it's pretty dark."
     "Near Door":
         inspect: "It's locked. A modern keyhole looks out of place in this ancient house."
         unlock: (context) ->
-            if context.hallway_key == true
+            if context.hallway_key
                 context.hallway_door = 'unlocked'
                 "You push the key into the lock and it turns with a satisfying 'tssk-sflrt'. Seems like it was recently installed."
             else

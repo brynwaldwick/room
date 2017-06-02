@@ -15,6 +15,7 @@ grammar = '''
 
     %comboPromptPositive
         It's 1-2-3-4-5
+        Use the combo 1-2-3-4-5
 
     %interpretPainting
         I dunno. What d' you think?
@@ -76,9 +77,12 @@ parseMessage = (context, body, cb) ->
     cb null, {response, context}
 
 generateResponse = ({response, parsed, context}, cb) ->
+    console.log 'my context is', context
     if context.mood < 0.2
         entry = '%flipOut'
-    else if (response !='%comboPromptPositive') && (context.mood > 0.8)
+        console.log 'im flipping out', response
+        context.trigger = "gargoyle:fall"
+    else if (response != '%comboPromptPositive') && (context.mood > 0.8)
         entry = '%becomeNice'
     else if !response?
         template_context = {}
