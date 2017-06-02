@@ -99,6 +99,20 @@ applyIntentToSession = ({target, action}, context, cb) ->
 
 data_methods.sendMessage = (new_message, cb) ->
     new_message.from ||= 'user'
+
+    base_context = {
+        location: 'Room'
+        focus: 'Room'
+        inventory: []
+        gargoyle_mood: 0.5
+        hallway_key: false
+        egg: false
+        room_door: 'closed'}
+
+    contexts[new_message.client_key] ||= base_context
+
+    _context = contexts[new_message.client_key]
+
     createAndPublishMessage new_message, (err, created_message) ->
         if matched = new_message.body.match /\@([\w]*)/g
             message_to_character = true
@@ -106,14 +120,19 @@ data_methods.sendMessage = (new_message, cb) ->
             if characters[target]?
                 # previous context of messages from the person
                 topic = "room"
-                characters[target].parseMessage {topic, body: new_message.body}, (err, parsed_message) ->
+                message_context = {
+                    location: _context.location
+                    mood: _context.gargoyle_mood
+                    topic
+                }
+                characters[target].parseMessage message_context, new_message.body, (err, parsed_message) ->
                     characters[target].generateResponse parsed_message, (err, response) ->
-                        console.log err, response
+                        _context.gargoyle_mood = response?.context?.mood
                         # TODO: handle characters' interpretations in story state
                         body = response.body || "They don't want to talk"
                         response_message = {
                             body
-                            from: 'Room'
+                            from: target || 'Room'
                             client_key: new_message.client_key
                         }
 
@@ -128,18 +147,6 @@ data_methods.sendMessage = (new_message, cb) ->
                 createAndPublishMessage response_message, cb
         else
             parseMessage new_message.body, (err, {target, action, command, response}) ->
-
-                base_context = {
-                    location: 'Room'
-                    focus: 'Room'
-                    inventory: []
-                    hallway_key: false
-                    egg: false
-                    room_door: 'closed'}
-
-                contexts[new_message.client_key] ||= base_context
-
-                _context = contexts[new_message.client_key]
 
                 applyIntentToSession {target, action}, _context, (err, response) ->
 

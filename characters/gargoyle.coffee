@@ -6,12 +6,15 @@ grammar = '''
         Talk to me about Mary
         What d'ye mean?
 
+    %becomeNice
+        Thanks for saying that friend. I'm startin to warm up to ye'
+
     %comboPromptNegative
         Why should I tell y'? Yer bein an ass.
         I could be more forthcoming were I a bit happier.
 
     %comboPromptPositive
-        Will
+        It's 1-2-3-4-5
 
     %interpretPainting
         I dunno. What d' you think?
@@ -43,9 +46,10 @@ girl_triggers = ['girl', 'she', 'her']
 curse_triggers = ['fuck', 'shit', 'bitch', 'asshole']
 pretty_triggers = ['beautiful', 'pretty', 'nice', 'like']
 ugly_triggers = ['ugly', 'hate', 'stupid', 'bitch', 'whore', 'cunt']
+door_triggers = ['combo', 'combination', 'unlock', 'door', 'far door']
 
-parseMessage = ({context, body}, cb) ->
-
+parseMessage = (context, body, cb) ->
+    {location, topic, mood} = context
     bodyContains = (str) ->
         body.indexOf(str) > -1
     bodyContainsEither = (arr) ->
@@ -55,22 +59,35 @@ parseMessage = ({context, body}, cb) ->
 
     if bodyContainsEither(girl_triggers) && bodyContainsEither(ugly_triggers)
         response = '%girlUglyResponse'
+        context.mood -= 0.25
     else if bodyContainsEither(girl_triggers) && bodyContainsEither(pretty_triggers)
         response = '%girlPrettyResponse'
+        context.mood += 0.25
     else if bodyContainsEither(curse_triggers)
         response = '%curseResponse'
+        context.mood -= 0.15
 
-    cb null, {response}
+    else if bodyContainsEither(door_triggers)
+        if context.mood > 0.8
+            response = '%comboPromptPositive'
+        else
+            response = '%comboPromptNegative'
 
-generateResponse = ({response, parsed}, cb) ->
-    if !response?
-        context = {}
+    cb null, {response, context}
+
+generateResponse = ({response, parsed, context}, cb) ->
+    if context.mood < 0.2
+        entry = '%flipOut'
+    else if (response !='%comboPromptPositive') && (context.mood > 0.8)
+        entry = '%becomeNice'
+    else if !response?
+        template_context = {}
         entry = '%dontunderstand'
     else
         entry = response
 
     body = nalgene.generate grammar, null, entry
-    cb null, {body, response, parsed}
+    cb null, {body, response, parsed, context}
 
 # ...
 # change mood of gargoyle in each client's context
