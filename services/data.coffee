@@ -30,6 +30,9 @@ helpers = {
 }
 
 story = require '../story'
+characters =
+    "gargoyle": require '../characters/gargoyle'
+    "gardener": require '../characters/gardener'
 
 data_methods = {}
 
@@ -79,6 +82,8 @@ applyIntentToSession = ({target, action}, context, cb) ->
             # if story[target]
             #     context.location = target
             #     context.focus = target
+            # if target isLocatedIn(story[context.location])
+            #     context.focus = target
             if story[context.location][target]?
                 context.focus = target
 
@@ -94,43 +99,62 @@ applyIntentToSession = ({target, action}, context, cb) ->
 
 data_methods.sendMessage = (new_message, cb) ->
     new_message.from ||= 'user'
-
     createAndPublishMessage new_message, (err, created_message) ->
-        parseMessage new_message.body, (err, {target, action, command, response}) ->
+        if matched = new_message.body.match /\@([\w]*)/g
+            message_to_character = true
+            target = matched[0][1..]
+            if characters[target]?
+                # previous context of messages from the person
+                topic = "room"
+                characters[target].parseMessage {topic, body: new_message.body}, (err, parsed_message) ->
+                    # TODO: handle characters' interpretations in story state
+                    response_message = {
+                        body: "They don't want to talk"
+                        from: 'Room'
+                        client_key: new_message.client_key
+                    }
 
-            base_context = {
-                location: 'Room'
-                focus: 'Room'
-                # Rule: you can move your focus to something in the same location
-                # from a sub focus, but you can only move into a subfocus from the
-                # focus above it. e.g. go from the girl's book to the table, but not
-                # from the girl's book to the pens on the table.
-                inventory: []
-                hallway_key: false
-                egg: false
-                room_door: 'closed'}
-
-            contexts[new_message.client_key] ||= base_context
-
-            _context = contexts[new_message.client_key]
-
-            applyIntentToSession {target, action}, _context, (err, response) ->
-
-                if response?
-                    if _.isString response
-                        _body = response
-                    else
-                        _body = 'Error.'
-                else
-                    _body = "Nothing interesting."
-
+                    createAndPublishMessage response_message, cb
+            else
                 response_message = {
-                    body: _body
+                    body: "They aren't here"
                     from: 'Room'
                     client_key: new_message.client_key
                 }
 
                 createAndPublishMessage response_message, cb
+        else
+            parseMessage new_message.body, (err, {target, action, command, response}) ->
+
+                base_context = {
+                    location: 'Room'
+                    focus: 'Room'
+                    inventory: []
+                    hallway_key: false
+                    egg: false
+                    room_door: 'closed'}
+
+                contexts[new_message.client_key] ||= base_context
+
+                _context = contexts[new_message.client_key]
+
+                applyIntentToSession {target, action}, _context, (err, response) ->
+
+                    if response?
+                        if _.isString response
+                            _body = response
+                        else
+                            _body = 'Error.'
+                    else
+                        _body = "Nothing interesting."
+
+                    response_message = {
+                        body: _body
+                        from: 'Room'
+                        client_key: new_message.client_key
+                    }
+
+                    createAndPublishMessage response_message, cb
 
 createAndPublishMessage = (new_message, cb) ->
     generic_methods.createMessage new_message, (err, created_message) ->
