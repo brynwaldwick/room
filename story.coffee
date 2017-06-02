@@ -101,7 +101,7 @@ Hallway:
             fall: (context) ->
                 context.gargoyle.dead = true
                 context.hallway_key = true
-                "The gargoyle howls with rage and wobbles towards you. His eyes catch on fire as he falls off the table and his stone base cracks, revealing a golden key. You pick up the key as the gargoyle makes one last sickening sound and lays silent."
+                "The gargoyle howls with rage and wobbles towards you. His eyes catch on fire as he falls off the table and his stone base cracks, revealing a golden key. You pick up the key. The gargoyle makes one last sickening sound and lays silent."
     Stairs:
         inspect: "A path towards a dark attic. Cobwebs give you that creepy feeling. The door is profoundly locked and it's pretty dark."
     "Near Door":
