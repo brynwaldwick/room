@@ -51,34 +51,30 @@ grammar = '''
 nalgene = require 'nalgene'
 grammar = nalgene.parse grammar
 
+{bodyContainsEither, bodyContains} = require './helpers'
+
 hello_triggers = [' hi', 'hello', ' hey']
-girl_triggers = ['girl', 'she', 'her']
+girl_triggers = ['girl', 'she', 'her', 'mary']
 curse_triggers = ['fuck', 'shit', 'bitch', 'asshole']
-pretty_triggers = ['beautiful', 'pretty', 'nice', 'like']
-ugly_triggers = ['ugly', 'hate', 'stupid', 'bitch', 'whore', 'cunt']
+pretty_triggers = ['beautiful', 'pretty', 'nice', 'like', 'great', 'amazing', 'kind']
+ugly_triggers = ['ugly', 'hate', 'dumb', 'annoying', 'bossy', 'stupid', 'bitch', 'whore', 'suck', 'cunt']
 door_triggers = ['combo', 'combination', 'unlock', 'door', 'far door']
 
 parseMessage = (context, body, cb) ->
     {location, topic, mood} = context
-    bodyContains = (str) ->
-        body.indexOf(str) > -1
-    bodyContainsEither = (arr) ->
-        words_contained = arr.filter (w) ->
-            body.indexOf(w) > -1
-        return words_contained?.length
 
-    if bodyContainsEither(girl_triggers) && bodyContainsEither(ugly_triggers)
+    if bodyContainsEither(body, girl_triggers) && bodyContainsEither(body, ugly_triggers)
         response = '%girlUglyResponse'
         context.mood -= 0.25
-    else if bodyContainsEither(girl_triggers) && bodyContainsEither(pretty_triggers)
+    else if bodyContainsEither(body, girl_triggers) && bodyContainsEither(body, pretty_triggers)
         response = '%girlPrettyResponse'
         context.mood += 0.25
-    else if bodyContainsEither(curse_triggers)
+    else if bodyContainsEither(body, curse_triggers)
         response = '%curseResponse'
         context.mood -= 0.15
-    else if bodyContainsEither(hello_triggers)
+    else if bodyContainsEither(body, hello_triggers)
         response = '%hi'
-    else if bodyContainsEither(door_triggers)
+    else if bodyContainsEither(body, door_triggers)
         if context.mood > 0.8
             response = '%comboPromptPositive'
         else if context.mood < 0.5
