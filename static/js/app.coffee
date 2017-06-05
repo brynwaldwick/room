@@ -59,6 +59,9 @@ Messages = React.createClass
     sendMessage: (body) -> =>
         dispatcher.intents$.emit {type: 'message', body}
 
+    populateInput: (body) -> =>
+        dispatcher.intents$.emit {type: 'talk-to', body}
+
     renderMessage: (message, i) ->
         <div key=message._id className='message'>
             <div className='from'>{message.from}</div>
@@ -73,6 +76,10 @@ Messages = React.createClass
                         replaced = reactStringReplace replaced, /(~\w+)/g, (match, mi) =>
                             to_send = "goto " + match.replace "~", ""
                             <a key={'ma_dir_' + li + '_' + i++} onClick={@sendMessage(to_send)}>{match.replace "~", ""}</a>
+                        replaced = reactStringReplace replaced, /(@\w+)/g, (match, mi) =>
+                            target = match.replace("@", "").replace('_'," ")
+                            value = "@" + target
+                            <a key={'ma_talk_to_' + li + '_' + mi} onClick={@populateInput(value)}>{value}</a>
                         replaced
                         }
                     </p>}
@@ -94,22 +101,36 @@ MessagePublisher = React.createClass
                 @setState value: i.body, =>
                     @sendMessage()
 
+            else if i.type == 'talk-to'
+                @setState value: i.body + ' ', =>
+                    @refs.publisher.focus()
+
     onKeyPress: (e) ->
         if e.which == 13
             @sendMessage()
 
     sendMessage: ->
+        body = @state.value
         new_message = {
-            body: @state.value
+            body
             from: 'user'
             client_key: window.client_key
         }
         dispatcher.sendMessage new_message, (resp) =>
-            @setState value: ''
+            if matched = body.match /\@([\w]*)/g
+                @setState value: matched[0] + ' '
+            else
+                @setState value: ''
 
     render: ->
         <div className='message-publisher'>
-            <input placeholder='Send a message to Room' value=@state.value onChange=@changeValue onKeyPress=@onKeyPress />
+            <input
+                ref='publisher'
+                placeholder='Send a message to Room'
+                value=@state.value
+                onChange=@changeValue
+                onKeyPress=@onKeyPress
+            />
         </div>
 
 ReactDOM.render <App />, document.getElementById 'app'

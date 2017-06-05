@@ -80,23 +80,13 @@ Hallway:
         "King Arthur": "King Arthur is overmatched today but on balance he is a good guy. He will push valiantly towards whichever new challenge dares to rear its head. What is it all for you wonder? People have been asking the chicken that for years and nobody has ever found themselves any kind of satisfying answer, on this side or the next."
         Chicken: "Does there have to be a reason for everything? She sets her eyes on the road ahead of her and lets the seduction of the unknown distance compell her forward."
     Gargoyle:
-        inspect: "The gargoyle has seen better days. Its nose crumbles from the crawl and repeat of decades. It has three horns and carries shadows of old faces. It also carries a #picture of a something..."
+        inspect: "The @gargoyle has seen better days. Its nose crumbles from the crawl and repeat of decades. It has three horns and carries shadows of old faces. It also carries a #picture of a something..."
         pick_up: "It shakes you away with a gruff expletive. It appears far too heavy to actually hold anyway."
         Picture:
             inspect: "It is a Polaroid of a raven and a girl. A flurry of activity in the background suggests a chicken was at one point framed - with head and alive - in the shot."
             pick_up: "The Gargoyle protests mightily"
             take: "The Gargoyle protests mightily"
-        talk_to:
-            ask_about: #(this is like inspect but by talking to another person)
-                picture_on_wall: "This is my favorite piece. Far better than that shit they're making endlessly with those colored pens in there. The emotion of this painting: The meaning, or the lack thereof, or the search for that meaning, is everything. To wit - why does King Arthur do what he does? Are we to know? Is there any logical reason to consider the answer? Is the fact that I'm here talking to you right now about the picture the only reason for his existence?"
-                dragon: "He was a good guy but he had some kind of temper."
-                king_arthur: "Not really sure."
-                picture_in_hand: "That's my girlfriend. Don't ask about it."
-                butler: "I'm not convinced the guy exists to be frank... if it weren't for you here today I'd doubt it completely."
-                girl: "I would tell you not to go near her but you've just come from there."
-            trigger_good_somehow: "Thanks for the chat. I think this could really be a breakthrough for me. I feel lighter already, please hold me for a moment."
-            pick_up: "The combo to that door is 8-8-5-3-1."
-            be_nice: "He says thanks, some generative nice thing in a certain conversational style"
+        is_character: true
         triggers:
             fall: (context) ->
                 context.gargoyle.dead = true
@@ -137,6 +127,7 @@ Garden:
     Gardener:
         inspect: "The gardener is wearing overalls as you'd expect. He tends the #eggplants carefully, with distracted - largely ineffective - detours to rid the tomato plants of pestilence."
         Overalls: "The brand is 'Thest Jonest'"
+        is_character: true
         talk_to:
             ask_about:
                 garden: "Mutant vegetables."
