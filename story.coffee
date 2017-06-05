@@ -47,7 +47,7 @@ Room:
         inspect: 'White paint is spread across the door in angry strokes. The words are mildly chilling, mostly ambiguous. "Turn back."'
         open: (context) ->
             if context.room_door == 'open'
-                return "It's open."
+                return "It's open. There is a ~Hallway outside."
             else
                 context.room_door = 'open'
                 return "The door opens. There is a ~Hallway outside."
@@ -104,6 +104,7 @@ Hallway:
                 "You don't have the key."
 
         open: (context) ->
+                
             if context.hallway_door == 'unlocked'
                 context.hallway_door = 'open'
                 "The door swings open. The Butler is standing alone in a tiny room holding an antique pistol. He shoots you in the face for being an asshole to the gargoyle. You are dead."
@@ -112,7 +113,12 @@ Hallway:
     "Far Door":
         inspect: "It's locked. There is a keypad above the handle. The digits 1 through 5 shine out through green LEDs."
         try_code: "The LEDs blink red. The gargoyle says some hilarious discouraging shit."
-        open: "The door swings open. A stone path curls up the hill towards the garden."
+        open: (context) ->
+            if context.hallway_far_door == 'open'
+                "It's open. A stone path curls up the hill towards the ~garden."
+            else
+                context.hallway_far_door = 'open'
+                "The door swings open. A stone path curls up the hill towards the ~garden."
     Door: "The #near_door or the #far_door?"
     neighbors:
         Garden: (context) ->
@@ -125,7 +131,7 @@ Garden:
     inspect: "A #gardener flails with a shovel and mutters something about the gargoyle. There is some oddly symbolic activity happening here, where #tomatoes, #corn, and the like reach outward from their festering rows. \n
         Behind you, the house stands with the door to the ~Hallway swinging ajar."
     Gardener:
-        inspect: "The gardener is wearing overalls as you'd expect. He tends the #eggplants carefully, with distracted - largely ineffective - detours to rid the tomato plants of pestilence."
+        inspect: "The @gardener is wearing overalls as you'd expect. He tends the #eggplants carefully, with distracted - largely ineffective - detours to rid the tomato plants of pestilence."
         Overalls: "The brand is 'Thest Jonest'"
         is_character: true
         talk_to:
