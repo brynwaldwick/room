@@ -207,6 +207,16 @@ Messages = React.createClass({
       };
     })(this);
   },
+  populateInput: function(body) {
+    return (function(_this) {
+      return function() {
+        return dispatcher.intents$.emit({
+          type: 'talk-to',
+          body: body
+        });
+      };
+    })(this);
+  },
   renderMessage: function(message, i) {
     return React.createElement("div", {
       "key": message._id,
@@ -236,6 +246,14 @@ Messages = React.createClass({
             "key": 'ma_dir_' + li + '_' + i++,
             "onClick": _this.sendMessage(to_send)
           }, match.replace("~", ""));
+        }), replaced = reactStringReplace(replaced, /(@\w+)/g, function(match, mi) {
+          var target, value;
+          target = match.replace("@", "").replace('_', " ");
+          value = "@" + target;
+          return React.createElement("a", {
+            "key": 'ma_talk_to_' + li + '_' + mi,
+            "onClick": _this.populateInput(value)
+          }, value);
         }), replaced));
       };
     })(this))));
@@ -264,6 +282,12 @@ MessagePublisher = React.createClass({
           }, function() {
             return _this.sendMessage();
           });
+        } else if (i.type === 'talk-to') {
+          return _this.setState({
+            value: i.body + ' '
+          }, function() {
+            return _this.refs.publisher.focus();
+          });
         }
       };
     })(this));
@@ -274,17 +298,25 @@ MessagePublisher = React.createClass({
     }
   },
   sendMessage: function() {
-    var new_message;
+    var body, new_message;
+    body = this.state.value;
     new_message = {
-      body: this.state.value,
+      body: body,
       from: 'user',
       client_key: window.client_key
     };
     return dispatcher.sendMessage(new_message, (function(_this) {
       return function(resp) {
-        return _this.setState({
-          value: ''
-        });
+        var matched;
+        if (matched = body.match(/\@([\w]*)/g)) {
+          return _this.setState({
+            value: matched[0] + ' '
+          });
+        } else {
+          return _this.setState({
+            value: ''
+          });
+        }
       };
     })(this));
   },
@@ -292,6 +324,7 @@ MessagePublisher = React.createClass({
     return React.createElement("div", {
       "className": 'message-publisher'
     }, React.createElement("input", {
+      "ref": 'publisher',
       "placeholder": 'Send a message to Room',
       "value": this.state.value,
       "onChange": this.changeValue,
