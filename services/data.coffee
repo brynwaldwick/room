@@ -40,9 +40,19 @@ data_methods.saySomething = (something, cb) ->
     console.log '[saySomething] Saying', something
     cb null, {said: something}
 
+filler_words = ['a', 'the', 'my', 'to', 'into', 'but']
+
+trimFillerWords = (body) ->
+    result = body
+    filler_words.map (w) ->
+        regEx = new RegExp(" " + w + " ", "ig")
+        result = result.replace regEx, " "
+
+    return result
+
 parseMessage = (body, cb) ->
     console.log 'Parsing the body', body
-    split_body = body.split ' '
+    split_body = trimFillerWords(body).split ' '
     action = split_body[0] || 'inspect'
     action = action.toLowerCase()
     target = split_body[1..].join ' '
@@ -56,7 +66,7 @@ applyIntentToSession = ({target, action}, context, cb) ->
     console.log 'The context is', context
     target = helpers.capitalize target
     console.log target
-    if action in ['go_to', 'goto']
+    if action in ['go_to', 'goto', 'go', 'enter', 'walk']
         if target == context.location
             cb null, "You are here."
         else if story[context.location].neighbors[target]?
