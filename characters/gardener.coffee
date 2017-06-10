@@ -38,12 +38,17 @@ parseMessage = (context, body, cb) ->
     cb null, {response, context}
 
 generateResponse = ({response, parsed, context}, cb) ->
-
     body = nalgene.generate grammar, null, response
     cb null, {body, response, parsed, context}
+
+# TODO: refactor to new intent model like gargoyle
+handleMessage = (context, body, cb) ->
+    parseMessage context, body, (err, resp) ->
+        generateResponse resp, cb
 
 module.exports = {
     grammar
     parseMessage
     generateResponse
+    handleMessage
 }
