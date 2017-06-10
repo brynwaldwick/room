@@ -14,12 +14,16 @@ Room:
         inspect: "The table is hefty and made from oak. Hewn by the titans of old no doubt. There is a stack of 11 #papers and 3 colored #pens arranged randomly as if somebody just left them there. There is no puzzle here, short of allegory."
         Pens: 'There is a red, green, and blue pen. The green ink is slightly more used than both the others.'
         Papers: "Most are blank. Some have pixel-like boxes, some have more organic shapes. The most prolific are those made of connections and the spaces between them. There is some kind of progression but it's difficult to discern any order."
-        pick_up: "It's too heavy."
+        take: "It's too heavy."
         move: "It's too heavy."
     Knife:
         inspect: "The knife sits coldly beside the girl's face. The top of the blade is wiped completely clean. The bottom looks to be encrusted in blood."
-        pick_up: "You hastily grab the knife. A drop of blood on the handle makes you feel sick and your eyes swim. You stab your thumb shoving it into your pocket and a warm red ribbon splashes onto your pants. Fuck. It's not actually that bad, don't worry."
-    Blood: "The blood is tacky and it’s turning brown. She has been dead or dying here for some time now."
+        take: "You hastily grab the knife. A drop of blood on the handle makes you feel sick and your eyes swim. You stab your thumb shoving it into your pocket and a warm red ribbon splashes onto your pants. Fuck. It's not actually that bad, don't worry."
+    Blood:
+        inspect: "The blood is tacky and it’s turning brown. She has been dead or dying here for some time now."
+        take: (context) ->
+            context.inventory.push 'blood'
+            return "You have nothing to hold it and it's not going to help you."
     Hair: "Her hair is blonde and looks like something you could use to braid a rope to heaven."
     Dress: "The dress is blue with a white bow."
     Necklace: "The fang of a snake held with silver metal and leather against her neck. The tooth presses against her."
@@ -28,12 +32,12 @@ Room:
     Book: "Something by an author that nobody has ever heard of. 'A Depiction of Worth in Spite of Modern Philosophy'. Sounds like it's a bit much, honestly."
     Girl:
         inspect: "Her name tag says Mary. She’s wearing a blue #dress with a white bow and a tight #necklace. There is a #book under her hand. There were polka dots on her kerchief but it is faded with wear and they are barely visible now. Dried blood is caked in her satin blonde #hair."
-        pick_up: "That’s weird."
+        take: "That’s weird."
         move: "You find a tattered love #note covered in blood under the body. The contents are very personal and won't add much to the narrative other than pain."
         # TODO: access rule from context.body_moved
         Note: {
             inspect: "It reads 'You never loved me. I never loved myself. It’s too hard to decide which one of us did this'. Some love note, sounds like a terrible situation."
-            pick_up: "You put it into your pocket. You cut your hand on the knife and blood pours onto your pants."
+            take: "You put it into your pocket. You cut your hand on the knife and blood pours onto your pants."
         }
     Window:
         inspect: "Birch panes and brittle blown glass. There is a spindly #garden outside. A #forest stands as an ominous backdrop. A whisper of #smoke from a distant fire floats through the canopy. Mountains. As you approach the window, the #chicken that was busy pecking at the house's foundation screams and runs towards the forest."
@@ -70,6 +74,10 @@ Room:
                 return "You walk into the Hallway. #{Story.Hallway.inspect}"
             else
                 return 'You cannot go through the closed door.'
+
+        Window: (context) ->
+            return "You don't fit"
+
 Hallway:
     inspect: 'It stretches away from you. There is a #door along the right side and a #door far ahead of you. There is a vague notion of #stairs going up and to the left. A #painting hangs on the wall opposite the #near_door. \n
         A #gargoyle sits on a pedestal in a location that is not relevant. He chuckles quietly with a gravel pitch and clears his throat with anticipation. "The Butler did it, you know" he delivers in a jaunty grunt. "Not really mate, but I found myself unable to resist the irony."'
@@ -81,32 +89,32 @@ Hallway:
         Chicken: "Does there have to be a reason for everything? She sets her eyes on the road ahead of her and lets the seduction of the unknown distance compell her forward."
     Gargoyle:
         inspect: "The @gargoyle has seen better days. Its nose crumbles from the crawl and repeat of decades. It has three horns and carries shadows of old faces. It also carries a #picture of a something..."
-        pick_up: "It shakes you away with a gruff expletive. It appears far too heavy to actually hold anyway."
+        take: "It shakes you away with a gruff expletive. It appears far too heavy to actually hold anyway."
         Picture:
             inspect: "It is a Polaroid of a raven and a girl. A flurry of activity in the background suggests a chicken was at one point framed - with head and alive - in the shot."
-            pick_up: "The Gargoyle protests mightily"
+            take: "The Gargoyle protests mightily"
             take: "The Gargoyle protests mightily"
         is_character: true
         triggers:
             fall: (context) ->
                 context.gargoyle.dead = true
-                context.hallway_key = true
+                context.Hallway.key = true
                 "The gargoyle howls with rage and wobbles towards you. His eyes catch on fire as he falls off the table and his stone base cracks, revealing a golden key. You pick up the key. The gargoyle makes one last sickening sound and lays silent."
     Stairs:
         inspect: "A path towards a dark attic. Cobwebs give you that creepy feeling. The door is profoundly locked and it's pretty dark."
     "Near Door":
         inspect: "It's locked. A modern keyhole looks out of place in this ancient house."
         unlock: (context) ->
-            if context.hallway_key
-                context.hallway_door = 'unlocked'
+            if context.Hallway.key
+                context.Hallway.near_door = 'unlocked'
                 "You push the key into the lock and it turns with a satisfying 'tssk-sflrt'. Seems like it was recently installed."
             else
                 "You don't have the key."
 
         open: (context) ->
                 
-            if context.hallway_door == 'unlocked'
-                context.hallway_door = 'open'
+            if context.Hallway.near_door == 'unlocked'
+                context.Hallway.near_door = 'open'
                 "The door swings open. The Butler is standing alone in a tiny room holding an antique pistol. He shoots you in the face for being an asshole to the gargoyle. You are dead."
             else
                 "It is locked."
@@ -114,10 +122,10 @@ Hallway:
         inspect: "It's locked. There is a keypad above the handle. The digits 1 through 5 shine out through green LEDs."
         try_code: "The LEDs blink red. The gargoyle says some hilarious discouraging shit."
         open: (context) ->
-            if context.hallway_far_door == 'open'
+            if context.Hallway.far_door == 'open'
                 "It's open. A stone path curls up the hill towards the ~garden."
             else
-                context.hallway_far_door = 'open'
+                context.Hallway.far_door = 'open'
                 "The door swings open. A stone path curls up the hill towards the ~garden."
     Door: "The #near_door or the #far_door?"
     neighbors:
@@ -159,7 +167,7 @@ Garden:
                 ["One of the eggs mentions that they are in fact the gardener, in another life that has yet to exist.",
                 "One of the eggs tells you that they are yet to exist.",
                 "One of the eggs tells you that they are the girl"]
-            pick_up: (context) ->
+            take: (context) ->
                 context.egg = true
                 return "You take the egg that claimed to be the girl. Why did you do that?"
     neighbors:
