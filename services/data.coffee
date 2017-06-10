@@ -197,7 +197,6 @@ data_methods.sendMessage = (new_message, cb) ->
             parseMessage new_message.body, (err, {target, action, command, response}) ->
 
                 applyIntentToSession {target, action}, _context, (err, response) ->
-                    console.log err, response
                     if response?
                         if _.isString response
                             _body = response

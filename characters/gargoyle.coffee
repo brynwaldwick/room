@@ -162,7 +162,7 @@ interpretCommand = (context, {cmd, args}, cb) ->
 
 applyIntentToContext = (context, intent, cb) ->
     # 1) Apply context update
-    context_update = intent.context_update || {}
+    context_update = intent?.context_update || {}
     Object.assign {}, context, context_update
 
     # 2) Run commands

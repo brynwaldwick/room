@@ -127,7 +127,10 @@ Hallway:
             else
                 context.Hallway.far_door = 'open'
                 "The door swings open. A stone path curls up the hill towards the ~garden."
-    Door: "The #near_door or the #far_door?"
+    Door:
+        inspect: "The #near_door or the #far_door?"
+        open: (context) ->
+            return "The #near_door or the #far_door?"
     neighbors:
         Garden: (context) ->
             context.location = 'Garden'
