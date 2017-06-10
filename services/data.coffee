@@ -40,7 +40,7 @@ data_methods.saySomething = (something, cb) ->
     console.log '[saySomething] Saying', something
     cb null, {said: something}
 
-filler_words = ['a', 'the', 'my', 'up', 'with',
+filler_words = ['a', 'the', 'my', 'up', 'with', 'at',
     'to', 'out', 'in', 'into', 'but', 'through', 'some']
 
 trimFillerWords = (body) ->
