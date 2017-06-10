@@ -17,7 +17,7 @@ contexts = {}
 #     # focus above it. e.g. go from the girl's book to the table, but not
 #     # from the girl's book to the pens on the table.
 #     inventory: []
-#     hallway_key: false
+#     hallway: false
 #     egg: false
 #     room_door: 'closed'
 # }
@@ -40,7 +40,8 @@ data_methods.saySomething = (something, cb) ->
     console.log '[saySomething] Saying', something
     cb null, {said: something}
 
-filler_words = ['a', 'the', 'my', 'to', 'into', 'but']
+filler_words = ['a', 'the', 'my', 'up', 'with',
+    'to', 'out', 'in', 'into', 'but', 'through', 'some']
 
 trimFillerWords = (body) ->
     result = body
@@ -63,9 +64,7 @@ parseMessage = (body, cb) ->
 
 applyIntentToSession = ({target, action}, context, cb) ->
 
-    console.log 'The context is', context
     target = helpers.capitalize target
-    console.log target
     if action in ['go_to', 'goto', 'go', 'enter', 'walk']
         if target == context.location
             cb null, "You are here."
@@ -76,7 +75,6 @@ applyIntentToSession = ({target, action}, context, cb) ->
         else
             cb null, 'You cannot go there'
     else
-
         # if story[target]?
         #     Target = story[target]
         if target == context.location
@@ -86,18 +84,19 @@ applyIntentToSession = ({target, action}, context, cb) ->
         else if story[context.location]?[target]?
             Target = story[context.location][target]
 
-        # TODO: breakout into updateContext
+        if action in ['inspect', 'look', 'watch', 'check out']
+            action = 'inspect'
+
+        if action in ['take', 'pick', 'grab', 'use']
+            action = 'take'
 
         if action == 'inspect'
-            # if story[target]
-            #     context.location = target
-            #     context.focus = target
+            # TODO: need recursive context searching
             # if target isLocatedIn(story[context.location])
             #     context.focus = target
             if story[context.location][target]?
                 context.focus = target
 
-        # TODO: call into function
         if _.isFunction Target?[action]
             console.log 'you are a function'
             cb null, Target[action](context)
@@ -111,6 +110,7 @@ data_methods.sendMessage = (new_message, cb) ->
     new_message.from ||= 'user'
 
     base_context = {
+        level: 1
         location: 'Room'
         focus: 'Room'
         inventory: []
@@ -119,7 +119,8 @@ data_methods.sendMessage = (new_message, cb) ->
             dead: false
         gardener:
             mood: 0.5
-        hallway_key: false
+        Hallway:
+            key: false
         egg: false
         room_door: 'closed'}
 
@@ -142,9 +143,20 @@ data_methods.sendMessage = (new_message, cb) ->
                     dead: _context[target].dead
                     topic
                 }
-                characters[target].parseMessage message_context, new_message.body, (err, parsed_message) ->
-                    characters[target].generateResponse parsed_message, (err, response) ->
-                        _context[target].mood = response?.context?.mood
+
+                characters[target].handleMessage message_context, new_message.body, (err, response) ->
+
+                    # TODO: use this more complete version
+
+
+                # TODO: send stuff through with context
+                # characters[target].parseMessage message_context, new_message.body, (err, parsed_message) ->
+                #     {context, response} = parsed_message
+                #     intent = response
+                #     characters[target].buildResponseFromIntent context, intent, (err, response) ->
+
+                        if response?.context?.mood
+                            _context[target].mood = response?.context?.mood
                         # TODO: handle characters' interpretations in story state
                         body = response.body || "They don't want to talk"
                         response_message = {
@@ -185,7 +197,7 @@ data_methods.sendMessage = (new_message, cb) ->
             parseMessage new_message.body, (err, {target, action, command, response}) ->
 
                 applyIntentToSession {target, action}, _context, (err, response) ->
-
+                    console.log err, response
                     if response?
                         if _.isString response
                             _body = response
