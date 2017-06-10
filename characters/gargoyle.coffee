@@ -1,3 +1,42 @@
+async = require 'async'
+
+intents = {
+    'hi':
+        trigger_words: [' hi', 'hello', ' hey']
+
+    'girlPrettyResponse':
+        trigger_words: [
+            '$and',
+            ['girl', 'she', 'her', 'mary'],
+            ['beautiful', 'pretty', 'nice', 'like', 'great', 'amazing', 'kind']
+        ]
+        commands: [
+            cmd: "incMood"
+            args: 0.25
+        ]
+
+    'girlUglyResponse':
+        trigger_words: [
+            '$and',
+            ['girl', 'she', 'her', 'mary'],
+            ['ugly', 'hate', 'dumb', 'annoying', 'bossy', 'stupid', 'bitch', 'whore', 'suck', 'cunt']
+        ]
+        commands: [
+            cmd: "incMood"
+            args: -0.25
+        ]
+
+    'curseResponse':
+        trigger_words: ['']
+        commands: [
+            cmd: "incMood"
+            args: -0.15
+        ]
+
+    'requestCombo':
+        trigger_words: ['combo', 'combination', 'unlock', 'door', 'far door']
+}
+
 
 grammar = '''
 
@@ -11,7 +50,7 @@ grammar = '''
         Talk to me about Mary
         What d'ye mean?
 
-    %becomeNice
+    %becameNice
         Thanks for saying that friend. I'm startin to warm up to ye'
 
     %comboPromptNoHelp
@@ -62,59 +101,105 @@ door_triggers = ['combo', 'combination', 'unlock', 'door', 'far door']
 
 parseMessage = (context, body, cb) ->
     {location, topic, mood} = context
-
     if bodyContainsEither(body, girl_triggers) && bodyContainsEither(body, ugly_triggers)
-        response = '%girlUglyResponse'
+        intent = '%girlUglyResponse'
         context.mood -= 0.25
     else if bodyContainsEither(body, girl_triggers) && bodyContainsEither(body, pretty_triggers)
-        response = '%girlPrettyResponse'
+        intent = '%girlPrettyResponse'
         context.mood += 0.25
     else if bodyContainsEither(body, curse_triggers)
-        response = '%curseResponse'
+        intent = '%curseResponse'
         context.mood -= 0.15
     else if bodyContainsEither(body, hello_triggers)
-        response = '%hi'
+        intent = '%hi'
     else if bodyContainsEither(body, door_triggers)
+        intent = '%requestCombo'
+    cb null, {intent, context}
+
+buildResponseFromIntent = (context, intent, cb) ->
+    response_template = context.response_template_type || intent
+
+    if response_template == '%requestCombo'
         if context.mood > 0.8
-            response = '%comboPromptPositive'
+            response_template = '%comboPromptPositive'
         else if context.mood < 0.5
-            response = '%comboPromptNegative'
+            response_template = '%comboPromptNegative'
         else
-            response = '%comboPromptNoHelp'
+            response_template = '%comboPromptNoHelp'
 
-    cb null, {response, context}
-
-generateResponse = ({response, parsed, context}, cb) ->
     if context.mood < 0.2
-        entry = '%flipOut'
+        response_template = '%flipOut'
         context.trigger = "gargoyle:fall"
-    else if (response != '%comboPromptPositive') && (context.mood > 0.8)
-        entry = '%becomeNice'
-    else if !response?
+
+    else if (response_template in ['%girlPrettyResponse']) && (context.mood > 0.8)
+        response_template = '%becameNice'
+
+    else if !response_template?
         template_context = {}
-        entry = '%dontunderstand'
-    else
-        entry = response
+        response_template = '%dontunderstand'
 
-    body = nalgene.generate grammar, null, entry
-    cb null, {body, response, parsed, context}
+    body = nalgene.generate grammar, null, response_template
+    cb null, {body, intent, context}
 
-# ...
-# change mood of gargoyle in each client's context
-# if we're talking about the girl then get mad if ugly, happy if pretty
-# get mad if you curse
-# (this is a non-narrator response)
-# if it is over a threshold, then trigger a certain response (wobble or give combo)
-# garden, outside
-    # tell that gardener to keep his potty mouth away if you ever make it out there
-# paintingInterpretation
-    # what do you think it means?
-# parser (pass in body and topic)
-    # girl in the room is ugly vs. girl in the painting is ugly
-# + ideally configure the outcomes by level eventually
+# Gargoyle Service
+# -----------------------------------------------------------------------------
+
+methods = {
+    incMood: (context, delta, cb) ->
+        context.gargoyle.mood += delta
+        response = {}
+        cb null, {context}
+    setMood: (context, new_mood, cb) ->
+        context.gargoyle.mood = new_mood
+        cb null, {context}
+}
+
+# TODO: BotforestBot class, ({intents, commands}) ->
+# -----------------------------------------------------------------------------
+
+interpretCommand = (context, {cmd, args}, cb) ->
+    methods[cmd] context, args..., cb
+
+applyIntentToContext = (context, intent, cb) ->
+    # 1) Apply context update
+    context_update = intent.context_update || {}
+    Object.assign {}, context, context_update
+
+    # 2) Run commands
+    commands = intent?.commands || []
+    async.series (commands.map (command) ->
+        return (cb) ->
+            interpretCommand context, command, cb
+        ), (err, done) ->
+            console.log "Any mutations to context?", context
+            console.log "Any context for response template?", context.template_context
+            cb err, context
+
+
+handleMessage = (context, body, cb) ->
+    parseMessage context, body, (err, {context, intent}) ->
+        applyIntentToContext context, intent, (err, context) ->
+            buildResponseFromIntent context, intent, cb
 
 module.exports = {
+    handleMessage
     grammar
     parseMessage
-    generateResponse
+    buildResponseFromIntent
 }
+
+# Other dialog ideas
+
+# ask_about: #(this is like inspect but by talking to another person)
+#     picture_on_wall: "This is my favorite piece. Far better than that shit they're making endlessly with those colored pens in there. The emotion of this painting: The meaning, or the lack thereof, or the search for that meaning, is everything. To wit - why does King Arthur do what he does? Are we to know? Is there any logical reason to consider the answer? Is the fact that I'm here talking to you right now about the picture the only reason for his existence?"
+#     dragon: "He was a good guy but he had some kind of temper."
+#     king_arthur: "Not really sure."
+#     picture_in_hand: "That's my girlfriend. Don't ask about it."
+#     butler: "I'm not convinced the guy exists to be frank... if it weren't for you here today I'd doubt it completely."
+#     girl: "I would tell you not to go near her but you've just come from there."
+# trigger_good_somehow: "Thanks for the chat. I think this could really be a breakthrough for me. I feel lighter already, please hold me for a moment."
+# pick_up: "The combo to that door is 8-8-5-3-1."
+# be_nice: "He says thanks, some generative nice thing in a certain conversational style"
+    # tell that gardener to keep his potty mouth away if you ever make it out there
+# parser (pass in body and topic)
+    # girl in the room is ugly vs. girl in the painting is ugly
