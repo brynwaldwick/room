@@ -1,5 +1,7 @@
-# Presented as a loose schema
-# Looking to get the story together and the mechanics
+# Warning: Large spoilers below
+# Please play the game at http://entertheroom.io
+
+# There is nothing here you don't already know. Anything you are hoping to find is at that above link.
 
 winner_message = "You win! Thank you for playing Room. We hope you'll play again. Say 'sign me up' to sign up for notifications about new chapters. Say 'share on [social_network]' to tell your friends about Room. Welcome back! Until next time..."
 
@@ -64,9 +66,11 @@ Room:
     Egg:
         smash: (context) ->
             if context.egg
+                # SPOILER ALERT!
+                context.winner = true
                 return "#{ENDING}"
             else
-                return "Easter came earlier than expected this year."
+                return "A subtle wind steers through the trees outside. Looks like Easter blowing in earlier than expected this year."
     neighbors:
         Hallway: (context) ->
             if context.room_door == 'open'
@@ -115,6 +119,7 @@ Hallway:
                 
             if context.Hallway.near_door == 'unlocked'
                 context.Hallway.near_door = 'open'
+                context.dead = true
                 "The door swings open. The Butler is standing alone in a tiny room holding an antique pistol. He shoots you in the face for being an asshole to the gargoyle. You are dead."
             else
                 "It is locked."

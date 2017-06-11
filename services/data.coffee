@@ -33,6 +33,7 @@ story = require '../story'
 characters =
     "gargoyle": require '../characters/gargoyle'
     "gardener": require '../characters/gardener'
+    "eggs": require '../characters/eggs'
 
 data_methods = {}
 
@@ -111,6 +112,8 @@ data_methods.sendMessage = (new_message, cb) ->
 
     base_context = {
         level: 1
+        dead: false
+        winner: false
         location: 'Room'
         focus: 'Room'
         inventory: []
@@ -127,64 +130,70 @@ data_methods.sendMessage = (new_message, cb) ->
     contexts[new_message.client_key] ||= base_context
 
     _context = contexts[new_message.client_key]
-    {location} = _context
+    {location, focus} = _context
 
     createAndPublishMessage new_message, (err, created_message) ->
-        if matched = new_message.body.match /\@([\w]*)/g
+        if _context.dead == true
+            response_message = {
+                body: "You are dead. >Restart the level."
+                from: 'Room'
+                actions: [
+                    trigger: '>Restart'
+
+                ]
+                client_key: new_message.client_key
+            }
+            createAndPublishMessage response_message, cb
+
+        else if matched = new_message.body.match /\@([\w]*)/g
             message_to_character = true
             target = matched[0][1..]
             name = helpers.capitalize target
-            if characters[target]? && story[location][name]?
+            console.log location, focus
+            console.log story[location]?[focus]
+            if characters[target]? && (story[location][name]? ||
+                    story[location]?[focus]?[name]?)
                 # previous context of messages from the person
                 topic = "room"
                 message_context = {
                     location
-                    mood: _context[target].mood
-                    dead: _context[target].dead
+                    mood: _context[target]?.mood
+                    dead: _context[target]?.dead
                     topic
                 }
 
                 characters[target].handleMessage message_context, new_message.body, (err, response) ->
 
-                    # TODO: use this more complete version
+                    if response?.context?.mood
+                        _context[target].mood = response?.context?.mood
+                    # TODO: handle characters' interpretations in story state
+                    body = response.body || "They don't want to talk"
+                    response_message = {
+                        body
+                        from: target || 'Room'
+                        client_key: new_message.client_key
+                    }
 
+                    createAndPublishMessage response_message, (err, character_message) ->
+                        cb err, character_message
+                        if response.context.trigger?
+                            trigger_slug = response.context.trigger.split(':')[1]
+                            Trigger = story[location][name]?.triggers?[trigger_slug]
+                            if _.isFunction Trigger
+                                body = Trigger(_context)
+                            else
+                                body = Trigger
 
-                # TODO: send stuff through with context
-                # characters[target].parseMessage message_context, new_message.body, (err, parsed_message) ->
-                #     {context, response} = parsed_message
-                #     intent = response
-                #     characters[target].buildResponseFromIntent context, intent, (err, response) ->
+                            if body?
+                                response_message = {
+                                    body
+                                    from: 'Room'
+                                    client_key: new_message.client_key
+                                }
 
-                        if response?.context?.mood
-                            _context[target].mood = response?.context?.mood
-                        # TODO: handle characters' interpretations in story state
-                        body = response.body || "They don't want to talk"
-                        response_message = {
-                            body
-                            from: target || 'Room'
-                            client_key: new_message.client_key
-                        }
-
-                        createAndPublishMessage response_message, (err, character_message) ->
-                            cb err, character_message
-                            if response.context.trigger?
-                                trigger_slug = response.context.trigger.split(':')[1]
-                                Trigger = story[location][name]?.triggers?[trigger_slug]
-                                if _.isFunction Trigger
-                                    body = Trigger(_context)
-                                else
-                                    body = Trigger
-
-                                if body?
-                                    response_message = {
-                                        body
-                                        from: 'Room'
-                                        client_key: new_message.client_key
-                                    }
-
-                                    createAndPublishMessage response_message, (err, narrator_message) ->
-                                        console.log err if err?
-                                        console.log 'Sent narrator message'
+                                createAndPublishMessage response_message, (err, narrator_message) ->
+                                    console.log err if err?
+                                    console.log 'Sent narrator message'
             else
                 response_message = {
                     body: "They aren't here"
