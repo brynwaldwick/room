@@ -1,5 +1,7 @@
+BotforestBot = require './botforest-bot'
+nalgene = require 'nalgene'
 
-grammar = '''
+grammar = nalgene.parse '''
     %dontWant
         I don't want to talk.
         Leave me to it, please.
@@ -19,36 +21,36 @@ garden_triggers = ['vegetables', 'plant', 'grow']
 girl_triggers = ['girl', 'inside', 'mary']
 gargoyle_triggers = ['gargoyle', 'house']
 
-nalgene = require 'nalgene'
-grammar = nalgene.parse grammar
+intents = {
+    'aboutGargoyle': {
+        trigger_words: gargoyle_triggers
+    }
+    'aboutGirl': {
+        trigger_words: girl_triggers
+    }
+    'aboutGarden': {
+        trigger_words: garden_triggers
+    }
+}
 
 {bodyContainsEither, bodyContains} = require './helpers'
 
 parseMessage = (context, body, cb) ->
     {location, topic, mood} = context
     if bodyContainsEither(body, girl_triggers)
-        response = '%aboutGirl'
+        intent = 'aboutGirl'
     else if bodyContainsEither(body, garden_triggers)
-        response = '%aboutGarden'
+        intent = 'aboutGarden'
     else if bodyContainsEither(body, gargoyle_triggers)
-        response = '%aboutGargoyle'
-    else
-        response = '%dontWant'
+        intent = 'aboutGargoyle'
 
-    cb null, {response, context}
+    cb null, {intent, context}
 
-generateResponse = ({response, parsed, context}, cb) ->
-    body = nalgene.generate grammar, null, response
-    cb null, {body, response, parsed, context}
+generateResponse = (context, intent, cb) ->
+    if !intent?.length
+        intent = 'dontWant'
+    body = nalgene.generate grammar, null, "%" + intent
+    cb null, {body, intent, context}
 
-# TODO: refactor to new intent model like gargoyle
-handleMessage = (context, body, cb) ->
-    parseMessage context, body, (err, resp) ->
-        generateResponse resp, cb
-
-module.exports = {
-    grammar
-    parseMessage
-    generateResponse
-    handleMessage
-}
+Gardener = new BotforestBot(parseMessage, generateResponse, {})
+module.exports = Gardener

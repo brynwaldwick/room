@@ -1,4 +1,6 @@
 async = require 'async'
+BotforestBot = require './botforest-bot'
+nalgene = require 'nalgene'
 
 intents = {
     'hi':
@@ -87,7 +89,6 @@ grammar = '''
         Get out!
 '''
 
-nalgene = require 'nalgene'
 grammar = nalgene.parse grammar
 
 {bodyContainsEither, bodyContains} = require './helpers'
@@ -154,39 +155,8 @@ methods = {
         cb null, {context}
 }
 
-# TODO: BotforestBot class, ({intents, commands}) ->
-# -----------------------------------------------------------------------------
-
-interpretCommand = (context, {cmd, args}, cb) ->
-    methods[cmd] context, args..., cb
-
-applyIntentToContext = (context, intent, cb) ->
-    # 1) Apply context update
-    context_update = intent?.context_update || {}
-    Object.assign {}, context, context_update
-
-    # 2) Run commands
-    commands = intent?.commands || []
-    async.series (commands.map (command) ->
-        return (cb) ->
-            interpretCommand context, command, cb
-        ), (err, done) ->
-            console.log "Any mutations to context?", context
-            console.log "Any context for response template?", context.template_context
-            cb err, context
-
-
-handleMessage = (context, body, cb) ->
-    parseMessage context, body, (err, {context, intent}) ->
-        applyIntentToContext context, intent, (err, context) ->
-            buildResponseFromIntent context, intent, cb
-
-module.exports = {
-    handleMessage
-    grammar
-    parseMessage
-    buildResponseFromIntent
-}
+Gargoyle = new BotforestBot(parseMessage, buildResponseFromIntent, methods)
+module.exports = Gargoyle
 
 # Other dialog ideas
 
