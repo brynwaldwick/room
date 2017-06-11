@@ -72,7 +72,6 @@ applyIntentToSession = ({target, action}, context, cb) ->
         else if story[context.location].neighbors[target]?
             response = story[context.location].neighbors[target](context)
             cb null, response
-
         else
             cb null, 'You cannot go there'
     else
@@ -116,6 +115,7 @@ data_methods.sendMessage = (new_message, cb) ->
         winner: false
         location: 'Room'
         focus: 'Room'
+        topic: ''
         inventory: []
         gargoyle:
             mood: 0.5
@@ -124,12 +124,15 @@ data_methods.sendMessage = (new_message, cb) ->
             mood: 0.5
         Hallway:
             key: false
+            far_door: 'unlocked'
         egg: false
         room_door: 'closed'}
 
     contexts[new_message.client_key] ||= base_context
 
     _context = contexts[new_message.client_key]
+    last_topic = '' + _context.topic
+    _context.topic = ''
     {location, focus} = _context
 
     createAndPublishMessage new_message, (err, created_message) ->
@@ -204,23 +207,38 @@ data_methods.sendMessage = (new_message, cb) ->
                 createAndPublishMessage response_message, cb
         else
             parseMessage new_message.body, (err, {target, action, command, response}) ->
-
-                applyIntentToSession {target, action}, _context, (err, response) ->
-                    if response?
-                        if _.isString response
-                            _body = response
+                if action == 'inventory'
+                    body = "You have " + (
+                        if _context.inventory.length
+                            _context.inventory[0] + _context.inventory[1..-1].map (i) -> ", #{i}"
                         else
-                            _body = 'Error.'
-                    else
-                        _body = "Nothing interesting."
+                            "nothing."
 
+                    )
                     response_message = {
-                        body: _body
+                        body
                         from: 'Room'
                         client_key: new_message.client_key
                     }
 
                     createAndPublishMessage response_message, cb
+                else
+                    applyIntentToSession {target, action}, _context, (err, response) ->
+                        if response?
+                            if _.isString response
+                                _body = response
+                            else
+                                _body = 'Error.'
+                        else
+                            _body = "Nothing interesting."
+
+                        response_message = {
+                            body: _body
+                            from: 'Room'
+                            client_key: new_message.client_key
+                        }
+
+                        createAndPublishMessage response_message, cb
 
 createAndPublishMessage = (new_message, cb) ->
     generic_methods.createMessage new_message, (err, created_message) ->

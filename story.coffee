@@ -14,8 +14,16 @@ Room:
         talk_to: "He has already gone out the door. You spend a few moments talking to the door; nothing happens."
     Table:
         inspect: "The table is hefty and made from oak. Hewn by the titans of old no doubt. There is a stack of 11 #papers and 3 colored #pens arranged randomly as if somebody just left them there. There is no puzzle here, short of allegory."
-        Pens: 'There is a red, green, and blue pen. The green ink is slightly more used than both the others.'
-        Papers: "Most are blank. Some have pixel-like boxes, some have more organic shapes. The most prolific are those made of connections and the spaces between them. There is some kind of progression but it's difficult to discern any order."
+        Pens: 
+            inspect: 'There is a red, green, and blue pen. The green ink is slightly more used than both the others.'
+            take: (context) ->
+                context.inventory.push 'pens'
+                return "You take 2 of the pens."
+        Papers:
+            inspect: "Most are blank. Some have pixel-like boxes, some have more organic shapes. The most prolific are those made of connections and the spaces between them. There is some kind of progression but it's difficult to discern any order."
+            take: (context) ->
+                context.inventory.push 'paper'
+                return "You take a piece of paper."
         take: "It's too heavy."
         move: "It's too heavy."
     Knife:
@@ -25,7 +33,7 @@ Room:
         inspect: "The blood is tacky and it’s turning brown. She has been dead or dying here for some time now."
         take: (context) ->
             context.inventory.push 'blood'
-            return "You have nothing to hold it and it's not going to help you."
+            return "You scrape up some blood clumsily. It's not going to help you."
     Hair: "Her hair is blonde and looks like something you could use to braid a rope to heaven."
     Dress: "The dress is blue with a white bow."
     Necklace: "The fang of a snake held with silver metal and leather against her neck. The tooth presses against her."
@@ -103,7 +111,8 @@ Hallway:
             fall: (context) ->
                 context.gargoyle.dead = true
                 context.Hallway.key = true
-                "The gargoyle howls with rage and wobbles towards you. His eyes catch on fire as he falls off the table and his stone base cracks, revealing a golden key. You pick up the key. The gargoyle makes one last sickening sound and lays silent."
+                "The gargoyle howls with rage and wobbles towards you. His eyes catch on fire as he falls off the table and his stone base cracks, revealing a golden key. You pick up the key. The gargoyle makes one last sickening sound and lays silent. \n
+                You are now going to have to crack that combo on the far door yourself or find a way to kill yourself to get out of here."
     Stairs:
         inspect: "A path towards a dark attic. Cobwebs give you that creepy feeling. The door is profoundly locked and it's pretty dark."
     "Near Door":
@@ -129,6 +138,9 @@ Hallway:
         open: (context) ->
             if context.Hallway.far_door == 'open'
                 "It's open. A stone path curls up the hill towards the ~garden."
+            else if context.Hallway.far_door == 'locked'
+                context.topic = 'hallway_far_door_combo'
+                return "Enter the combo"
             else
                 context.Hallway.far_door = 'open'
                 "The door swings open. A stone path curls up the hill towards the ~garden."
