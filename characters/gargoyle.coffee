@@ -52,6 +52,11 @@ grammar = '''
         Talk to me about Mary
         What d'ye mean?
 
+    %answerAboutMary
+        I don't want to tell ye' all that much. But I do like hearing you talk about her. It helps me remember...
+        Look I don't want to tell ye' much about the girl because I don't know how much you already know. I do want to help you on your way in me heart of hearts. But I am ornery and quite literally not in the mood at the moment.
+        What do you want me to say? I won't give you much. I could find it in myself to be helpful in other ways were I so persuaded.
+
     %becameNice
         Thanks for saying that friend. I'm startin to warm up to ye'
 
@@ -100,11 +105,16 @@ pretty_triggers = ['beautiful', 'pretty', 'nice', 'like', 'great', 'amazing', 'k
 ugly_triggers = ['ugly', 'hate', 'dumb', 'annoying', 'bossy', 'stupid', 'bitch', 'whore', 'suck', 'cunt']
 door_triggers = ['combo', 'combination', 'unlock', 'door', 'far door']
 
+interrogation_triggers = ['happened', '?', 'killed', 'who', 'dead', 'why', 'room']
+
+
 parseMessage = (context, body, cb) ->
     {location, topic, mood} = context
     if bodyContainsEither(body, girl_triggers) && bodyContainsEither(body, ugly_triggers)
         intent = '%girlUglyResponse'
         context.mood -= 0.25
+    else if bodyContainsEither(body, girl_triggers) && bodyContainsEither(body, interrogation_triggers)
+        intent = '%answerAboutMary'
     else if bodyContainsEither(body, girl_triggers) && bodyContainsEither(body, pretty_triggers)
         intent = '%girlPrettyResponse'
         context.mood += 0.25
