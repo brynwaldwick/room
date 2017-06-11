@@ -1,6 +1,10 @@
+somata = require 'somata'
 config = require './config'
 polar = require 'somata-socketio'
 crypto = require 'crypto'
+
+client = new somata.Client()
+DataService = client.remote.bind client, 'room:data'
 
 md5 = (s) -> crypto.createHash('md5').update(s).digest('hex')
 getPublicClientKey = (session_id) -> md5(session_id)
@@ -23,5 +27,9 @@ app.get '/:thread_slug', (req, res) ->
 
 app.get '/levels/:level_int', (req, res) ->
     res.render 'app'
+
+app.get '/levels/:level_int/restart', (req, res) ->
+    DataService 'restartLevel', {client_key: res.locals.client_key}, (err, response) ->
+        res.redirect '/levels/:level_int'
 
 app.start()
