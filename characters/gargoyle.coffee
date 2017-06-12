@@ -58,7 +58,7 @@ grammar = '''
         What do you want me to say? I won't give you much. I could find it in myself to be helpful in other ways were I so persuaded.
 
     %becameNice
-        Thanks for saying that friend. I'm startin to warm up to ye'
+        Thanks for saying that friend. I'm startin to warm up to ye', as it goes... Is there any way I can help you on your quest?
 
     %comboPromptNoHelp
         I am ornery. I don't want to tell you.
@@ -75,7 +75,7 @@ grammar = '''
         I dunno. What d' you think?
 
     %girlPrettyResponse
-        I've oft thought the same.
+        I've oft thought the same. Boy I like the way we're talking like this...
         Can't help but agree mate. If my old stone bones could sing...
 
     %girlUglyResponse
@@ -105,7 +105,8 @@ pretty_triggers = ['beautiful', 'pretty', 'nice', 'like', 'great', 'amazing', 'k
 ugly_triggers = ['ugly', 'hate', 'dumb', 'annoying', 'bossy', 'stupid', 'bitch', 'whore', 'suck', 'cunt']
 door_triggers = ['combo', 'combination', 'unlock', 'door', 'far door']
 
-interrogation_triggers = ['happened', '?', 'killed', 'who', 'dead', 'why', 'room', 'murder', 'died', 'die']
+interrogation_triggers = ['happened', 'knife', 'kill', 'murder', 'who',
+    'dead', 'why', 'room', 'murder', 'die']
 
 
 parseMessage = (context, body, cb) ->
@@ -177,9 +178,3 @@ module.exports = Gargoyle
 #     picture_in_hand: "That's my girlfriend. Don't ask about it."
 #     butler: "I'm not convinced the guy exists to be frank... if it weren't for you here today I'd doubt it completely."
 #     girl: "I would tell you not to go near her but you've just come from there."
-# trigger_good_somehow: "Thanks for the chat. I think this could really be a breakthrough for me. I feel lighter already, please hold me for a moment."
-# pick_up: "The combo to that door is 8-8-5-3-1."
-# be_nice: "He says thanks, some generative nice thing in a certain conversational style"
-    # tell that gardener to keep his potty mouth away if you ever make it out there
-# parser (pass in body and topic)
-    # girl in the room is ugly vs. girl in the painting is ugly
