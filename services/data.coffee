@@ -29,7 +29,11 @@ helpers = {
             s[0].toUpperCase() + s.slice(1)).join ' '
 }
 
-story = require '../story'
+story = require '../levels/level_1_room'
+# story = require '../levels/level_2_office'
+# story = require('../levels/level_3_house').story
+# story = require '../levels/level_4_flight'
+# story = require '../levels/level_5_factory'
 characters =
     "gargoyle": require '../characters/gargoyle'
     "gardener": require '../characters/gardener'
