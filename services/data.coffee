@@ -152,8 +152,6 @@ data_methods.sendMessage = (new_message, cb) ->
             message_to_character = true
             target = matched[0][1..]
             name = helpers.capitalize target
-            console.log location, focus
-            console.log story[location]?[focus]
             if characters[target]? && (story[location][name]? ||
                     story[location]?[focus]?[name]?)
                 # previous context of messages from the person

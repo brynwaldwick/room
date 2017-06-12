@@ -16,6 +16,10 @@ grammar = nalgene.parse '''
         mm?
         e?
         chr?
+
+    %whoAmI
+        na s'
+        nunu
 '''
 
 girl_triggers = ['girl', 'she', 'her', 'mary']

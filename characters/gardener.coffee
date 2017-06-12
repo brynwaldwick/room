@@ -8,10 +8,12 @@ grammar = nalgene.parse '''
 
     %aboutGargoyle
         That fuckin' gargoyle.
-        Guy's a right arse.
+        The gargoyle is a right arse.
+        I've had it up round here ever since he last let me in there.
 
     %aboutGirl
         I just want to go in there and see her.
+        Mary was my oldest friend. That fucking gargoyle barely lets me in to see her anymore, like she has to study every hour of every day. I know she had her new boyfriend over last night. Seems to me that every night she is bringing a new version of that same guy home. And I can't come in for tea?
 
     %aboutGarden
         Mutant vegetables.
@@ -19,7 +21,7 @@ grammar = nalgene.parse '''
 
 garden_triggers = ['vegetables', 'plant', 'grow']
 girl_triggers = ['girl', 'inside', 'mary']
-gargoyle_triggers = ['gargoyle', 'house']
+gargoyle_triggers = ['gargoyle', 'house', 'inside']
 
 intents = {
     'aboutGargoyle': {

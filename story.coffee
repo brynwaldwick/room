@@ -32,7 +32,7 @@ Room:
     Blood:
         inspect: "The blood is tacky and it’s turning brown. She has been dead or dying here for some time now."
         take: (context) ->
-            context.inventory.push 'blood'
+            context.inventory.push 'the blood'
             return "You scrape up some blood clumsily. It's not going to help you."
     Hair: "Her hair is blonde and looks like something you could use to braid a rope to heaven."
     Dress: "The dress is blue with a white bow."
@@ -162,12 +162,6 @@ Garden:
         inspect: "The @gardener is wearing overalls as you'd expect. He tends the #eggplants carefully, with distracted - largely ineffective - detours to rid the tomato plants of pestilence."
         Overalls: "The brand is 'Thest Jonest'"
         is_character: true
-        talk_to:
-            ask_about:
-                garden: "Mutant vegetables."
-                growing: "Mutant vegetables."
-                gargoyle: "That fucking gargoyle. Some days I wonder what Mary does in there."
-                girl: "Mary was my oldest friend. That fucking gargoyle barely lets me in to see her anymore, like she has to study every hour of every day. I know she had her new boyfriend over last night. Seems to me that every night she is bringing a new version of that same guy home. And I can't come in for tea?"
     Vegetables:
         inspect: "Some kind of mutant symbolism of invasion and rebirth. Corn, tomatoes, eggplants... and the related fauna."
     Corn:
@@ -183,19 +177,24 @@ Garden:
         inspect: "The eggplants hang as the royal fruit at the center of the garden. The majority bear voluptuous purple fruit. One plant in the corner of the garden looks like it has sprouted a dozen #eggs off of a remote branch. The eggs are humming."
         Eggs:
             inspect: "A dozen glowing, perfectly elliptical, oddly pastel eggs. Each of the twelve has a tiny mouth and a soul. They are vibrating as a unit at the fundamental frequency of some tiny creature, and they are emitting a wet sound not too different from a vibrating cell phone. They burble away and cast nondescript verbal sounds in your direction."
-            talk_to: (context) ->
-                ["One of the eggs mentions that they are in fact the gardener, in another life that has yet to exist.",
-                "One of the eggs tells you that they are yet to exist.",
-                "One of the eggs tells you that they are the girl"]
             take: (context) ->
+                if context.egg
+                    return "You already have an egg. That is all you might need."
                 context.egg = true
-                return "You take the egg that claimed to be the girl. Why did you do that?"
+                context.inventory.push 'an egg'
+                return "You pick up a soft, round egg. It hums warmly against you."
+        Egg:
+            take: (context) ->
+                if context.egg
+                    return "You already have an egg. That is all you might need."
+                context.egg = true
+                context.inventory.push 'an egg'
+                return "You pick up a soft, round egg. It hums warmly against you."
     neighbors:
         Hallway: (context) ->
             context.location = "Hallway"
             return "You return to the hallway from which you emerged earlier in this story. The gargoyle offers a well-practiced greeting. There is a door to the ~Room, the locked #near_door , and the open door leading to the ~Garden"
 }
-
 
 Inventory: {
     knife: false

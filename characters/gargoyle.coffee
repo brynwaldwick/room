@@ -105,7 +105,7 @@ pretty_triggers = ['beautiful', 'pretty', 'nice', 'like', 'great', 'amazing', 'k
 ugly_triggers = ['ugly', 'hate', 'dumb', 'annoying', 'bossy', 'stupid', 'bitch', 'whore', 'suck', 'cunt']
 door_triggers = ['combo', 'combination', 'unlock', 'door', 'far door']
 
-interrogation_triggers = ['happened', '?', 'killed', 'who', 'dead', 'why', 'room']
+interrogation_triggers = ['happened', '?', 'killed', 'who', 'dead', 'why', 'room', 'murder', 'died', 'die']
 
 
 parseMessage = (context, body, cb) ->
