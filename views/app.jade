@@ -20,6 +20,9 @@ html
             //- window.user = !{JSON.stringify(user)};
             window.client_key = "#{client_key}";
 
+        script.
+            window.level = !{JSON.stringify(level)}
+
         script(src='/socket.io/socket.io.js')
         script(src="#{base_url || ''}/js/app.js")
 
