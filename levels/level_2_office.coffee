@@ -13,7 +13,7 @@ module.exports = {
         Room:
             inspect:
                 "-- There seems to be a postmaster servicing the old cluster... -- \n 
-                The machine breathes a announcement into the room. A stare and a pause. A #man in a suit paces across the carpet and peers menacingly into a tiny screen. \n
+                The machine breathes an announcement into the room. A stare and a pause. A #man in a suit paces across the carpet and peers menacingly into a tiny screen. \n
                 -- And when is he going to finish? -- \n
                 "
             Man: "
