@@ -13,12 +13,12 @@ module.exports = {
         Room:
             inspect:
                 "-- There seems to be a postmaster servicing the old cluster... -- \n 
-                The machine breathes an announcement into the room. A stare and a pause. A #man in a suit paces across the carpet and peers menacingly into a tiny screen. \n
+                The machine breathes a announcement into the room. A stare and a pause. A #man in a suit paces across the carpet and peers menacingly into a tiny screen. \n
                 -- And when is he going to finish? -- \n
                 "
             Man: "
-                He mulls simple decisions, compared to those men in older ages. \n
-                These days men make simple decisions. These decisions and the men themselves are broken down and made simpler and they are faster and it feels like there is less to them. The process is clinical as much as it is chemical. Industrial. Want. And. Emotion. People end up where they don't belong. \n
+                He mulls simple decisions, compared to those men of older ages. \n
+                These days men make simple decisions. The decisions and the men themselves are broken down and made simpler and they are faster and it feels like there is less to them. The process is clinical as much as it is chemical. Industrial. Want. And. Emotion. People end up where they don't belong. \n
                 \n \n
                 To wit, you are in a room. There is a #desk near the back wall. Some #windows behind it, thick glass. A blue #rug, #tables. #Doors. Perhaps the largest departure from any image in your mind right now is the #robot that swivles through the room."
             Desk:
@@ -49,10 +49,10 @@ module.exports = {
                 take: (context) ->
                     context.Lamp?.health -= 0.1
                     return "The lamp rattles. Please don't touch that, says Aviana"
-            Robot: "The #Aviana Presidential Assistant hovers in the office. She was a secret DARPA project; a crowdsourced intelligence robot built to help the Commander in Chief best serve the people of his country. \n
+            Robot: "The #Aviana Presidential Assistant hovers in the office. She was a secret DARPA project; a crowdsourced intelligence robot built to help the Commander in Chief serve the people of his country. \n
             The two were joined at the hip in 2063 and have evolved a sort of communist dictator, tourettes victim, old married couple, dying binary star #dynamic of deep pessimism and the lowest common denominator projected onto itself."
             Dynamic: 'They would one day write in the history books: "When Aviana talked, the President listened."'
-            Aviana: "@aviana, named for somebody's granddaughter"
+            Aviana: "@aviana was named for somebody's granddaughter"
     }
 }
 
