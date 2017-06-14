@@ -1,6 +1,8 @@
 React = require 'react'
 ReactDOM = require 'react-dom'
 reactStringReplace = require 'react-string-replace'
+{ValidatedForm} = require 'validated-form'
+FeedItems = require './feed-items'
 
 dispatcher = require './dispatcher'
 
@@ -49,8 +51,8 @@ Messages = React.createClass
         <div className='events-feed'>
             <div className='messages' id='messages' ref='messages'>
                 <div className='chapter-header'>
-                    <h2>Chapter 1</h2>
-                    <h4>Room</h4>
+                    <h2>Chapter {level.index}</h2>
+                    <h4>{level.name}</h4>
                 </div>
                 {@state.messages.map @renderMessage}
             </div>
@@ -63,8 +65,12 @@ Messages = React.createClass
         dispatcher.intents$.emit {type: 'talk-to', body}
 
     renderMessage: (message, i) ->
-        <div key=message._id className='message'>
-            <div className='from'>{message.from}</div>
+        if !(message.from in ['user', 'Room', 'room'])
+            from_class = "from-character"
+        {kind} = message
+
+        <div key=message._id className="message #{from_class}">
+            <div className="from">{message.from}</div>
             <div className='body'>
                 {message.body.split('\n').map (line, li) =>
                     i = 0
@@ -84,6 +90,9 @@ Messages = React.createClass
                         }
                     </p>}
             </div>
+            {if message.form#kind == 'combo'
+                <FeedItems.DoorCombo message=message sendMessage=@sendMessage />
+            }
         </div>
 
 MessagePublisher = React.createClass
