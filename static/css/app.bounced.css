@@ -64,9 +64,55 @@ p {
   text-align: right;
 }
 
-input {
+.message form label {
+  display: none;
+}
+
+.message form input:focus {
+  outline: none;
+  border-bottom: 1px solid #aaa;
+}
+
+.message form input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #c1c1c1;
+}
+
+.message form button {
+  width: 100px;
+  margin: 0 auto;
+  display: block;
+}
+
+.message form input,
+.message form button {
+  margin-bottom: 10px;
+  padding: 6px;
+  background: white;
+  cursor: pointer;
+}
+
+.message form {
+  margin-top: 10px;
+  width: 200px;
+}
+
+input,
+button {
   border: 1px solid #c1c1c1;
+  padding: 6px;
   -webkit-input-placeholder: #c1c1c1;
+}
+
+input:focus,
+button:focus {
+  outline: none;
+}
+
+input:active,
+button:active {
+  outline: none;
 }
 
 .chapter-header {
@@ -81,6 +127,30 @@ input {
   overflow-y: scroll;
 }
 
+.messages .message.from-character .body:after {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: auto;
+  top: 0px;
+  bottom: auto;
+  border: 10px solid;
+  right: auto;
+  left: 12px;
+  border-color: transparent transparent #d5d5d5 transparent;
+  top: -20px;
+}
+
+.messages .message.from-character .body {
+  background: #d5d5d5;
+  padding: 10px 16px;
+  border-radius: 5px;
+  max-width: 450px;
+  position: relative;
+  margin-top: 16px;
+}
+
 .messages .message .from {
   font-weight: bold;
   color: #c1c1c1;
@@ -91,6 +161,7 @@ input {
   font-weight: bold;
   cursor: pointer;
   color: #444;
+  text-shadow: 0px 2px 4px rgba(136, 136, 136, 0.2);
 }
 
 .messages .message .body p + p {
