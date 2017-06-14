@@ -62,6 +62,7 @@ grammar = '''
 
     %comboPromptNoHelp
         I am ornery. I don't want to tell you.
+        As it is me mood is rather undistinguished. As such I'm not finding it within myself to be of much assistance.
 
     %comboPromptNegative
         Why should I tell y'? Yer bein an ass.
