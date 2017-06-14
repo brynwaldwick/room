@@ -29,11 +29,24 @@ helpers = {
             s[0].toUpperCase() + s.slice(1)).join ' '
 }
 
-story = require '../levels/level_1_room'
-# story = require '../levels/level_2_office'
+# story = require '../levels/level_1_room'
+# story = require('../levels/level_2_office').story
+
+levelIndexFromClientKey = (client_key) ->
+    if client_key?.split(':')[0] == 'levels'
+        return client_key?.split(':')[1]
+    else
+        return 1
+
+stories = [
+    {name: "Nothing here"},
+    require('../levels/level_1_room').story,
+    require('../levels/level_2_office').story
+]
 # story = require('../levels/level_3_house').story
 # story = require '../levels/level_4_flight'
 # story = require '../levels/level_5_factory'
+
 characters =
     "gargoyle": require '../characters/gargoyle'
     "gardener": require '../characters/gardener'
@@ -68,6 +81,22 @@ parseMessage = (body, cb) ->
 
 
 applyIntentToSession = ({target, action}, context, cb) ->
+
+    story = context.story
+    # if context.level == 1
+        # if the gargoyle falls, the narrator describes it
+        # also the person picks up the key
+        # if context.last_topic = 'hallway_far_door_combo'
+            # response_message = {
+            #     body: "What is the combo?"
+            #     form: {
+            #         combo: {optional: false}
+            #     }
+            # }
+
+
+    # else if context.level == 2
+        # aviana talks, president listens
 
     target = helpers.capitalize target
     if action in ['go_to', 'goto', 'go', 'enter', 'walk']
@@ -110,7 +139,41 @@ applyIntentToSession = ({target, action}, context, cb) ->
             else
                 cb null, Target?[action] || "Sorry, you can't."
 
+base_contexts = [
+    level: 0
+    dead: false
+,
+    level: 1
+    dead: false
+    winner: false
+    location: 'Room'
+    focus: 'Room'
+    topic: ''
+    inventory: []
+    gargoyle:
+        mood: 0.5
+        dead: false
+    gardener:
+        mood: 0.5
+    Hallway:
+        key: false
+        far_door: 'locked'
+    egg: false
+    room_door: 'closed'
+,
+    level: 2
+    dead: false
+    winner: false
+    location: 'Room'
+    focus: 'Room'
+    topic: ''
+    inventory: []
+    man:
+        mood: 0.5
+]
+
 data_methods.sendMessage = (new_message, cb) ->
+    console.log 'the new message', new_message
     new_message.from ||= 'user'
 
     base_context = {
@@ -128,12 +191,19 @@ data_methods.sendMessage = (new_message, cb) ->
             mood: 0.5
         Hallway:
             key: false
-            far_door: 'unlocked'
+            far_door: 'locked'
         egg: false
         room_door: 'closed'}
+    if new_message.client_key?.split(':')[0] == 'levels'
+        level_index = levelIndexFromClientKey new_message.client_key
+        base_context = base_contexts[level_index]
+
+        story = stories[level_index]
+    else
+        story = stories[1]
 
     contexts[new_message.client_key] ||= base_context
-
+    console.log 'the base context', base_context
     _context = contexts[new_message.client_key]
     last_topic = '' + _context.topic
     _context.topic = ''
@@ -225,10 +295,14 @@ data_methods.sendMessage = (new_message, cb) ->
 
                     createAndPublishMessage response_message, cb
                 else
+                    _context.story = story
                     applyIntentToSession {target, action}, _context, (err, response) ->
                         if response?
+                            {form, item, items, lists} = response
                             if _.isString response
                                 _body = response
+                            else if response.body?
+                                _body = response.body
                             else
                                 _body = 'Error.'
                         else
@@ -238,6 +312,7 @@ data_methods.sendMessage = (new_message, cb) ->
                             body: _body
                             from: 'Room'
                             client_key: new_message.client_key
+                            form, item, items, lists
                         }
 
                         createAndPublishMessage response_message, cb
@@ -252,13 +327,21 @@ data_methods.findMessages = (query, cb) ->
         cb err, messages.reverse()
 
         if messages.length == 0
+            level_index = levelIndexFromClientKey query.client_key
             setTimeout =>
                 new_message = {
                     from: 'Room'
-                    body: story.Room.inspect
+                    body: stories[level_index].Room.inspect
                     client_key: query.client_key
                 }
                 createAndPublishMessage new_message, ->
             , 1234
 
+data_methods.restartLevel = (query, cb) ->
+    {client_key} = query
+    generic_methods.findMessages {client_key}, (err, messages) ->
+        console.log err, messages, 'all the messages!'
+        async.map messages, 
+
 data_service.methods = _.extend {}, generic_methods, data_methods
+

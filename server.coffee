@@ -14,7 +14,17 @@ client_info_middleware = (req, res, next) ->
     res.locals.ua = req.get('User-Agent')
     res.locals.session_id = req.session?.id
     res.locals.client_key = md5 res.locals.session_id
+    res.locals.room = {name: 'Room', index: 1}
     next()
+
+levels = [
+    {name: 'Nothing here'},
+    require('./levels/level_1_room'),
+    require('./levels/level_2_office'),
+    require('./levels/level_3_house'),
+    require('./levels/level_4_flight'),
+    require('./levels/level_5_factory')
+]
 
 app = polar config.api, middleware: [client_info_middleware]
 
@@ -25,10 +35,16 @@ app.get '/:thread_slug', (req, res) ->
     res.locals.client_key = req.params.thread_slug
     res.render 'app'
 
-app.get '/levels/:level_int', (req, res) ->
-    res.render 'app'
+app.get '/levels/:level_index', (req, res) ->
+    level_index = Number(req.params.level_index)
+    if level_index in [1, 2]
+        res.locals.client_key = "levels:#{req.params.level_index}:#{res.locals.client_key}"
+        level = levels[level_index]
+        {name, index} = level
+        res.locals.level = {name, index}
+        res.render 'app'
 
-app.get '/levels/:level_int/restart', (req, res) ->
+app.get '/levels/:level_index/restart', (req, res) ->
     DataService 'restartLevel', {client_key: res.locals.client_key}, (err, response) ->
         res.redirect '/levels/:level_int'
 
