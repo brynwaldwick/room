@@ -21,9 +21,9 @@ levels = [
     {name: 'Nothing here'},
     require('./levels/level_1_room'),
     require('./levels/level_2_office'),
-    require('./levels/level_3_house'),
-    require('./levels/level_4_flight'),
-    require('./levels/level_5_factory')
+    # require('./levels/level_3_house'),
+    # require('./levels/level_4_flight'),
+    # require('./levels/level_5_factory')
 ]
 
 app = polar config.api, middleware: [client_info_middleware]
