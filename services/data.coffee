@@ -51,6 +51,10 @@ characters =
     "gargoyle": require '../characters/gargoyle'
     "gardener": require '../characters/gardener'
     "eggs": require '../characters/eggs'
+    "aviana": require '../characters/aviana'
+    # "president": require '../characters/president'
+
+President = require '../characters/president'
 
 data_methods = {}
 
@@ -251,6 +255,7 @@ data_methods.sendMessage = (new_message, cb) ->
 
                     createAndPublishMessage response_message, (err, character_message) ->
                         cb err, character_message
+
                         if response.context.trigger?
                             trigger_slug = response.context.trigger.split(':')[1]
                             Trigger = story[location][name]?.triggers?[trigger_slug]
@@ -269,6 +274,17 @@ data_methods.sendMessage = (new_message, cb) ->
                                 createAndPublishMessage response_message, (err, narrator_message) ->
                                     console.log err if err?
                                     console.log 'Sent narrator message'
+
+                        else if response_message.from == 'aviana'
+                            President.handleMessage _context, body, (err, response) ->
+                                if response.body?
+                                    createAndPublishMessage {
+                                        body: response.body
+                                        from: 'president'
+                                        client_key: new_message.client_key
+                                    }, (err, message_response) ->
+                                        console.log 'hello', err, message_response
+
             else
                 response_message = {
                     body: "They aren't here"
@@ -297,6 +313,7 @@ data_methods.sendMessage = (new_message, cb) ->
                 else
                     _context.story = story
                     applyIntentToSession {target, action}, _context, (err, response) ->
+                        delete _context.story
                         if response?
                             {form, item, items, lists} = response
                             if _.isString response
@@ -337,11 +354,11 @@ data_methods.findMessages = (query, cb) ->
                 createAndPublishMessage new_message, ->
             , 1234
 
-data_methods.restartLevel = (query, cb) ->
-    {client_key} = query
-    generic_methods.findMessages {client_key}, (err, messages) ->
-        console.log err, messages, 'all the messages!'
-        async.map messages, 
+# data_methods.restartLevel = (query, cb) ->
+#     {client_key} = query
+#     generic_methods.findMessages {client_key}, (err, messages) ->
+#         async.map messages, generic_methods
+#         TODO: ...
 
 data_service.methods = _.extend {}, generic_methods, data_methods
 
