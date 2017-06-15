@@ -14,7 +14,7 @@ client_info_middleware = (req, res, next) ->
     res.locals.ua = req.get('User-Agent')
     res.locals.session_id = req.session?.id
     res.locals.client_key = md5 res.locals.session_id
-    res.locals.room = {name: 'Room', index: 1}
+    res.locals.level = {name: 'Room', index: 1}
     next()
 
 levels = [
