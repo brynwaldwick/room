@@ -113,11 +113,13 @@ Story = {
                     context.Hallway.key_exposed = true
                     "The gargoyle howls with rage and wobbles towards you. His eyes catch on fire as he falls off the table and his stone base cracks. You pick up the key. The gargoyle makes one last sickening sound and lays silent. \n
                     You are now going to have to crack that combo on the far door yourself or find a way to kill yourself to get out of here. \n
-                    A tiny brass key scatters from the base of the gargoyle and sits exposed in the middle of the hallway."
+                    (A tiny brass key scatters from the base of the gargoyle and sits exposed in the middle of the hallway.)"
 
         Key:
             take: (context) ->
-                if context.Hallway.key_exposed
+                if context.Hallway.key == true
+                    "You've already picked it up."
+                else if context.Hallway.key_exposed
                     context.Hallway.key = true
                     context.inventory.push "a key"
                     "You pick up the key."
@@ -214,6 +216,13 @@ Story = {
 module.exports = {
     index: 1
     name: "Room"
+    commands:
+        tryDoorCombination: (combination) ->
+            if combination == '12345'
+                response.template_type = 'door_success'
+            else
+                response.template_type = 'door_failed'
+
     story: Story
 }
 

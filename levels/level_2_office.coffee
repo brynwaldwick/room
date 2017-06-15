@@ -21,6 +21,8 @@ module.exports = {
                 These days men make simple decisions. The decisions and the men themselves are broken down and made simpler and they are faster and it feels like there is less to them. The process is clinical as much as it is chemical. Industrial. Want. And. Emotion. People end up where they don't belong. \n
                 \n \n
                 To wit, you are in a room. There is a #desk near the back wall. Some #windows behind it, thick glass. A blue #rug, #tables. #Doors. Perhaps the largest departure from any image in your mind right now is the #robot that swivles through the room."
+            President:
+                inspect: "The @president only ever listened to @aviana."
             Desk:
                 inspect: "The desk is more than that of an enterprising man. It is stately. It speaks to power. It lays bare save for a curious set of items: two mobile #phones, a #green_button, and a nearly unironic, larger #red_button."
                 "Green Button": "Small and green"
@@ -51,7 +53,7 @@ module.exports = {
                     return "The lamp rattles. Please don't touch that, says Aviana"
             Robot: "The #Aviana Presidential Assistant hovers in the office. She was a secret DARPA project; a crowdsourced intelligence robot built to help the Commander in Chief serve the people of his country. \n
             The two were joined at the hip in 2063 and have evolved a sort of communist dictator, tourettes victim, old married couple, dying binary star #dynamic of deep pessimism and the lowest common denominator projected onto itself."
-            Dynamic: 'They would one day write in the history books: "When Aviana talked, the President listened."'
+            Dynamic: 'They would one day write in the history books: "When #Aviana talked, the #President listened."'
             Aviana: "@aviana was named for somebody's granddaughter"
     }
 }
