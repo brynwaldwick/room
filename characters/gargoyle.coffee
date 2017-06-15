@@ -100,10 +100,10 @@ grammar = nalgene.parse grammar
 {bodyContainsEither, bodyContains} = require './helpers'
 
 hello_triggers = [' hi', 'hello', ' hey']
-girl_triggers = ['girl', 'she', 'her', 'mary']
+girl_triggers = ['girl', 'she', 'her', 'mary', 'blond']
 curse_triggers = ['fuck', 'shit', 'bitch', 'asshole']
-pretty_triggers = ['beautiful', 'pretty', 'nice', 'like', 'great', 'amazing', 'kind']
-ugly_triggers = ['ugly', 'hate', 'dumb', 'annoying', 'bossy', 'stupid', 'bitch', 'whore', 'suck', 'cunt']
+ugly_triggers = ['ugly', 'hate', 'dumb', 'annoying', 'bossy', 'stupid', 'bitch', 'whore', 'suck', 'cunt'].concat curse_triggers
+pretty_triggers = ['beautiful', 'pretty', 'nice', 'like', 'great', 'amazing', 'kind', 'blonde']
 door_triggers = ['combo', 'combination', 'unlock', 'door', 'far door']
 
 interrogation_triggers = ['happened', 'knife', 'kill', 'murder', 'who',
