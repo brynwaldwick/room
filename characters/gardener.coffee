@@ -54,5 +54,5 @@ generateResponse = (context, intent, cb) ->
     body = nalgene.generate grammar, null, "%" + intent
     cb null, {body, intent, context}
 
-Gardener = new BotforestBot(parseMessage, generateResponse, {})
+Gardener = new BotforestBot('gardener', parseMessage, generateResponse, {})
 module.exports = Gardener

@@ -239,6 +239,7 @@ data_methods.sendMessage = (new_message, cb) ->
                     mood: _context[target]?.mood
                     dead: _context[target]?.dead
                     topic
+                    channel: new_message.client_key
                 }
 
                 characters[target].handleMessage message_context, new_message.body, (err, response) ->
@@ -276,6 +277,7 @@ data_methods.sendMessage = (new_message, cb) ->
                                     console.log 'Sent narrator message'
 
                         else if response_message.from == 'aviana'
+                            _context.channel = response_message.channel || response_message.client_key
                             President.handleMessage _context, body, (err, response) ->
                                 if response.body?
                                     createAndPublishMessage {

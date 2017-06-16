@@ -110,6 +110,6 @@ buildResponseFromIntent = (context, intent, cb) ->
     body = nalgene.generate grammar, null, "%#{response_template}"
     cb null, {body, intent, context}
 
-Aviana = new BotforestBot(parseMessage, buildResponseFromIntent, methods)
+Aviana = new BotforestBot('aviana', parseMessage, buildResponseFromIntent, methods)
 
 module.exports = Aviana

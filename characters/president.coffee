@@ -61,6 +61,6 @@ buildResponseFromIntent = (context, intent, cb) ->
     body = nalgene.generate grammar, null, "%#{response_template}"
     cb null, {body, intent, context}
 
-President = new BotforestBot(parseMessage, buildResponseFromIntent, methods)
+President = new BotforestBot('president', parseMessage, buildResponseFromIntent, methods)
 
 module.exports = President

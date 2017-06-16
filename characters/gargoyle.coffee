@@ -167,7 +167,7 @@ methods = {
         cb null, {context}
 }
 
-Gargoyle = new BotforestBot(parseMessage, buildResponseFromIntent, methods)
+Gargoyle = new BotforestBot('gargoyle', parseMessage, buildResponseFromIntent, methods)
 module.exports = Gargoyle
 
 # Other dialog ideas

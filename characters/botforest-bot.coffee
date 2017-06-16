@@ -1,8 +1,12 @@
+somata = require 'somata'
 async = require 'async'
+client = new somata.Client()
+
+BotforestService = client.remote.bind client, 'botforest:data'
 
 BotforestBot = class BotforestBot
 
-    constructor: (@parseMessage, @buildResponseFromIntent, @methods) ->
+    constructor: (@name, @parseMessage, @buildResponseFromIntent, @methods) ->
         return @
 
     interpretCommand: (context, {cmd, args}, cb) ->
@@ -39,8 +43,11 @@ BotforestBot = class BotforestBot
         if err?
             console.log 'ERROR:', err
         console.log 'BotforestBot.log', type, event
-        # TODO: decorate with information about bot & context
-        # BotforestService 'createEvent', event, (err, botforest_response) ->
-        #     console.log 'response', err, botforest_response
+        event.type = type
+        event.receiver = @name
+        event.channel = event.context?.client_key || event.context?.channel ||
+            event.client_key || event.channel
+        BotforestService 'create', 'events', event, (err, botforest_response) ->
+            console.log 'response', err, botforest_response
 
 module.exports = BotforestBot
