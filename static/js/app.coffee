@@ -3,15 +3,26 @@ ReactDOM = require 'react-dom'
 reactStringReplace = require 'react-string-replace'
 {ValidatedForm} = require 'validated-form'
 FeedItems = require './feed-items'
+Menu = require './menu'
 
 dispatcher = require './dispatcher'
 
 App = React.createClass
 
+    getInitialState: ->
+        menu: false
+        overlay: null
+
+    toggleMenu: ->
+        @setState menu: !@state.menu
+
     render: ->
         <div className='app'>
+            {if @state.menu
+                <Menu />
+            }
             <div className='nav'>
-                <i className='fa fa-bars' />
+                <i className='fa fa-bars' onClick=@toggleMenu />
             </div>
             <div className='content'>
                 <Messages />

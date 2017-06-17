@@ -1,6 +1,7 @@
 $colors
     bubble_gray: #d5d5d5
     gray: #737373
+    border: #9c9c9c
     light_gray: #c1c1c1
 
 $padding
@@ -39,6 +40,7 @@ p
         width: 100px
         right: 0px
         text-align: right
+        z-index: 750
 
         h1, .fa-bars
             cursor: pointer
@@ -50,6 +52,98 @@ p
 
         h1
             font: 20px "Oswald"
+
+    .content, .message-publisher, .menu, .menu-overlay-content
+        max-width: 600px
+        margin: 0 auto
+
+.menu
+    position: fixed
+    top: 0px
+    bottom: 0px
+    left: 0px
+    right: 0px
+    background: white
+    z-index: 700
+    display: flex
+    flex-direction: column
+
+    a
+        margin-bottom: $padding.default
+        cursor: pointer
+        font-weight: 500
+
+    .menu-links
+        padding: $padding.default
+        padding-top: 100px
+        display: flex
+        flex-direction: column
+        flex-grow: 1
+
+    .menu-footer
+        display: flex
+        flex-direction: column
+        padding: $padding.small
+        text-align: center
+
+        .publisher-note
+            margin-top: $padding.default
+            color: #bbb
+            font-weight: 200
+            font-size: 14px
+            text-decoration: none
+            margin-bottom: 0px
+            a
+                margin-bottom: 0px
+
+    .menu-overlay
+        z-index: 1000
+        position: fixed
+
+        a
+            color: $colors.gray
+
+        .overlay-backdrop
+            position: fixed
+            background: rgba($colors.gray, 0.4)
+            top: 0
+            left: 0
+            right: 0
+            bottom: 0
+
+        .overlay-content
+            position: fixed
+            background: white
+            top: 130px
+            box-shadow: 0 4px 8px rgba($colors.gray, 0.2)
+            background: white
+            display: flex
+            flex-direction: column
+
+            padding: $padding.default
+
+            div
+                margin-bottom: $padding.tiny
+
+            .close
+                margin-top: $padding.default
+                color: $colors.gray
+
+        .social-links
+            margin-top: $padding.default
+            a
+                margin-right: $padding.default
+
+            i
+                font-size: 20px
+                cursor: pointer
+                color: #555
+
+        .emphasis
+            font-weight: bold
+
+.overlay
+    z-index: 900
 
 .message
     form
@@ -86,6 +180,13 @@ input, button
         outline: none
     &:active
         outline: none
+
+.message-publisher
+    input
+        border: none
+        border-top: 1px solid $colors.border
+        box-shadow: 0px -2px 0px rgba(162, 162, 162, 0.11)
+        box-shadow: 0px -2px 0px rgba(39, 39, 39, 0.07)
 
 .chapter-header
     font: 20px "Oswald"
