@@ -20,18 +20,19 @@ Menu = React.createClass
                 </div>
 
             }
+            <h1>Room</h1>
             <div className='menu-links'>
                 <a onClick={@openOverlay.bind(null,'toc')} >Table Of Contents</a>
                 <a onClick={@openOverlay.bind(null,'howtoplay')} >How to play</a>
-                <a onClick={@openOverlay.bind(null,'signup')}>Sign up</a>
                 <a onClick={@openOverlay.bind(null,'share')}>Share with friends</a>
             </div>
             <div className='menu-footer'>
-                <a onClick={@openOverlay.bind(null,'howitworks')}>How it works</a>
                 <a onClick={@openOverlay.bind(null,'abouttheauthor')}>About the author</a>
+                <a onClick={@openOverlay.bind(null,'howitworks')}>How it works</a>
                 <a href="http://donotenter.io" className='publisher-note'>c2177 Furnished by Publisher Guild Productions</a>
             </div>
         </div>
+                # <a onClick={@openOverlay.bind(null,'signup')}>Sign up</a>
 
 MenuOverlay = React.createClass
 
@@ -60,18 +61,28 @@ MenuOverlay = React.createClass
             </div>
 
         else if topic == 'share'
+            url = "http://entertheroom.io"
+            text = encodeURIComponent("I just took an adventure through Room")
+
+            reddit_link = "http://www.reddit.com/submit?url=#{url}&title=#{text}"
+            twitter_link = "https://twitter.com/intent/tweet/?url=#{url}&text=#{text}"
+            facebook_link = "https://www.facebook.com/sharer/sharer.php?u=#{url}"
+
             <div className='menu-overlay-content sharewithfriends'>
-                <div><a>On Reddit</a></div>
-                <div><a>On Twitter</a></div>
-                <div><a>On Facebook</a></div>
+                <div><a href=reddit_link target='_newtab' >On Reddit</a></div>
+                <div><a href=twitter_link target='_newtab' >On Twitter</a></div>
+                <div><a href=facebook_link target='_newtab' >On Facebook</a></div>
             </div>
                 # <div><a>Copy Link</a></div>
 
         else if topic == 'abouttheauthor'
-            <div className='menu-overlay-content' >
+            <div className='abouttheauthor menu-overlay-content' >
+                <div className='author-portrait'>
+                    <img src='http://prontotype.us/images/team/bryn.jpg' />
+                </div>
                 <p>Bryn Waldwick is a Partner at <a href='https://prontotype.us'>Prontotype</a>, where he helps build scalable businesses with great computer code.</p>
                 <p>He likes to research "Blockchain" and how to build things that are easy for users and developers.</p>
-                <p>He dreams about new platforms that make creating art meaningful and valuable.</p>
+                <p>He dreams about new platforms that make practicing creativity more meaningful and more valuable.</p>
                 <div className='social-links'>
                     <a href='https://github.com/brynwaldwick' >
                         <i className='fa fa-github' />
@@ -89,7 +100,7 @@ MenuOverlay = React.createClass
             <div className='menu-overlay-content howitworks'>
                 <p>Room is a text-only adventure game with many levels. The levels house a variety of colorful characters.</p>
                 <p>The levels are built with a <a href='https://github.com/brynwaldwick/room'>narration engine</a> that makes creating customized adventure experiences very easy. The characters are dialog bots who get better with age... and they inhabit different levels with the same internals.</p>
-                <p>Thus, no two adventures can be the same.</p>
+                <p>Thus, no two adventures will ever be the same.</p>
             </div>
 
 module.exports = Menu

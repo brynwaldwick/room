@@ -68,6 +68,11 @@ p
     display: flex
     flex-direction: column
 
+    h1
+        margin-top: 100px
+        font-family: "Oswald"
+        padding: $padding.default
+
     a
         margin-bottom: $padding.default
         cursor: pointer
@@ -75,7 +80,6 @@ p
 
     .menu-links
         padding: $padding.default
-        padding-top: 100px
         display: flex
         flex-direction: column
         flex-grow: 1
@@ -95,6 +99,27 @@ p
             margin-bottom: 0px
             a
                 margin-bottom: 0px
+
+    .abouttheauthor
+        .author-portrait
+            height: 100px
+            width: 100px
+            margin: 0 auto
+            margin-bottom: $padding.default
+
+            img
+                height: 100%
+                border-radius: 100px
+                box-shadow: 0px 2px 8px rgba(51, 51, 51, 0.12)
+
+            p
+                margin-bottom: $padding.default
+
+        .social-links
+            text-align: center
+
+        + .close
+            text-align: center
 
     .menu-overlay
         z-index: 1000
@@ -119,20 +144,22 @@ p
             background: white
             display: flex
             flex-direction: column
-
             padding: $padding.default
-
-            div
-                margin-bottom: $padding.tiny
+            margin-right: $padding.default
 
             .close
                 margin-top: $padding.default
+                margin-bottom: 0px
                 color: $colors.gray
+
+            .how-to-play
+                div
+                    margin-bottom: $padding.tiny
 
         .social-links
             margin-top: $padding.default
-            a
-                margin-right: $padding.default
+            a + a
+                margin-left: $padding.default
 
             i
                 font-size: 20px
