@@ -935,6 +935,8 @@ Menu = React.createClass({
     }, "close"))) : void 0), React.createElement("div", {
       "className": 'menu-links'
     }, React.createElement("a", {
+      "onClick": this.openOverlay.bind(null, 'toc')
+    }, "Table Of Contents"), React.createElement("a", {
       "onClick": this.openOverlay.bind(null, 'howtoplay')
     }, "How to play"), React.createElement("a", {
       "onClick": this.openOverlay.bind(null, 'signup')
@@ -963,7 +965,7 @@ MenuOverlay = React.createClass({
       }, React.createElement("div", null, "(the ", React.createElement("span", {
         "className": 'emphasis',
         "title": 'click them'
-      }, "black links"), " are just for you)"), React.createElement("div", null, React.createElement("span", {
+      }, "black links"), " in the story are just for you)"), React.createElement("div", null, React.createElement("span", {
         "className": 'emphasis',
         "title": 'inspect table'
       }, "inspect"), " things"), React.createElement("div", null, React.createElement("span", {
@@ -986,6 +988,14 @@ MenuOverlay = React.createClass({
       return React.createElement("div", {
         "className": 'menu-overlay-content signup'
       }, "Signup Form");
+    } else if (topic === 'toc') {
+      return React.createElement("div", {
+        "className": 'menu-overlay-content signup'
+      }, React.createElement("div", null, React.createElement("a", {
+        "href": '/levels/1'
+      }, "Chapter 1")), React.createElement("div", null, React.createElement("a", {
+        "href": '/levels/2'
+      }, "Chapter 2")));
     } else if (topic === 'share') {
       return React.createElement("div", {
         "className": 'menu-overlay-content sharewithfriends'
@@ -995,7 +1005,7 @@ MenuOverlay = React.createClass({
         "className": 'menu-overlay-content'
       }, React.createElement("p", null, "Bryn Waldwick is a Partner at ", React.createElement("a", {
         "href": 'https://prontotype.us'
-      }, "Prontotype"), ", where he helps build scalable businesses with great computer code."), React.createElement("p", null, "He likes to research \"Blockchain\" and how to build things that are easy for users and developers."), React.createElement("p", null, "He dreams about new platforms that make practicing art meaningful and valuable."), React.createElement("div", {
+      }, "Prontotype"), ", where he helps build scalable businesses with great computer code."), React.createElement("p", null, "He likes to research \"Blockchain\" and how to build things that are easy for users and developers."), React.createElement("p", null, "He dreams about new platforms that make creating art meaningful and valuable."), React.createElement("div", {
         "className": 'social-links'
       }, React.createElement("a", {
         "href": 'https://github.com/brynwaldwick'

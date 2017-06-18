@@ -144,7 +144,7 @@ p {
 .menu .menu-overlay .overlay-content {
   position: fixed;
   background: white;
-  top: 130px;
+  top: 100px;
   box-shadow: 0 4px 8px rgba(115, 115, 115, 0.2);
   background: white;
   display: flex;
