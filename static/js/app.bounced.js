@@ -932,23 +932,21 @@ Menu = React.createClass({
     }), React.createElement("a", {
       "className": 'close',
       "onClick": this.openOverlay.bind(null, null)
-    }, "close"))) : void 0), React.createElement("div", {
+    }, "close"))) : void 0), React.createElement("h1", null, "Room"), React.createElement("div", {
       "className": 'menu-links'
     }, React.createElement("a", {
       "onClick": this.openOverlay.bind(null, 'toc')
     }, "Table Of Contents"), React.createElement("a", {
       "onClick": this.openOverlay.bind(null, 'howtoplay')
     }, "How to play"), React.createElement("a", {
-      "onClick": this.openOverlay.bind(null, 'signup')
-    }, "Sign up"), React.createElement("a", {
       "onClick": this.openOverlay.bind(null, 'share')
     }, "Share with friends")), React.createElement("div", {
       "className": 'menu-footer'
     }, React.createElement("a", {
-      "onClick": this.openOverlay.bind(null, 'howitworks')
-    }, "How it works"), React.createElement("a", {
       "onClick": this.openOverlay.bind(null, 'abouttheauthor')
     }, "About the author"), React.createElement("a", {
+      "onClick": this.openOverlay.bind(null, 'howitworks')
+    }, "How it works"), React.createElement("a", {
       "href": "http://donotenter.io",
       "className": 'publisher-note'
     }, "c2177 Furnished by Publisher Guild Productions")));
@@ -957,7 +955,7 @@ Menu = React.createClass({
 
 MenuOverlay = React.createClass({
   render: function() {
-    var topic;
+    var facebook_link, reddit_link, text, topic, twitter_link, url;
     topic = this.props.topic;
     if (topic === 'howtoplay') {
       return React.createElement("div", {
@@ -997,15 +995,33 @@ MenuOverlay = React.createClass({
         "href": '/levels/2'
       }, "Chapter 2")));
     } else if (topic === 'share') {
+      url = "http://entertheroom.io";
+      text = encodeURIComponent("I just took an adventure through Room");
+      reddit_link = "http://www.reddit.com/submit?url=" + url + "&title=" + text;
+      twitter_link = "https://twitter.com/intent/tweet/?url=" + url + "&text=" + text;
+      facebook_link = "https://www.facebook.com/sharer/sharer.php?u=" + url;
       return React.createElement("div", {
         "className": 'menu-overlay-content sharewithfriends'
-      }, React.createElement("div", null, React.createElement("a", null, "On Reddit")), React.createElement("div", null, React.createElement("a", null, "On Twitter")), React.createElement("div", null, React.createElement("a", null, "On Facebook")));
+      }, React.createElement("div", null, React.createElement("a", {
+        "href": reddit_link,
+        "target": '_newtab'
+      }, "On Reddit")), React.createElement("div", null, React.createElement("a", {
+        "href": twitter_link,
+        "target": '_newtab'
+      }, "On Twitter")), React.createElement("div", null, React.createElement("a", {
+        "href": facebook_link,
+        "target": '_newtab'
+      }, "On Facebook")));
     } else if (topic === 'abouttheauthor') {
       return React.createElement("div", {
-        "className": 'menu-overlay-content'
-      }, React.createElement("p", null, "Bryn Waldwick is a Partner at ", React.createElement("a", {
+        "className": 'abouttheauthor menu-overlay-content'
+      }, React.createElement("div", {
+        "className": 'author-portrait'
+      }, React.createElement("img", {
+        "src": 'http://prontotype.us/images/team/bryn.jpg'
+      })), React.createElement("p", null, "Bryn Waldwick is a Partner at ", React.createElement("a", {
         "href": 'https://prontotype.us'
-      }, "Prontotype"), ", where he helps build scalable businesses with great computer code."), React.createElement("p", null, "He likes to research \"Blockchain\" and how to build things that are easy for users and developers."), React.createElement("p", null, "He dreams about new platforms that make creating art meaningful and valuable."), React.createElement("div", {
+      }, "Prontotype"), ", where he helps build scalable businesses with great computer code."), React.createElement("p", null, "He likes to research \"Blockchain\" and how to build things that are easy for users and developers."), React.createElement("p", null, "He dreams about new platforms that make practicing creativity more meaningful and more valuable."), React.createElement("div", {
         "className": 'social-links'
       }, React.createElement("a", {
         "href": 'https://github.com/brynwaldwick'
@@ -1025,7 +1041,7 @@ MenuOverlay = React.createClass({
         "className": 'menu-overlay-content howitworks'
       }, React.createElement("p", null, "Room is a text-only adventure game with many levels. The levels house a variety of colorful characters."), React.createElement("p", null, "The levels are built with a ", React.createElement("a", {
         "href": 'https://github.com/brynwaldwick/room'
-      }, "narration engine"), " that makes creating customized adventure experiences very easy. The characters are dialog bots who get better with age... and they inhabit different levels with the same internals."), React.createElement("p", null, "Thus, no two adventures can be the same."));
+      }, "narration engine"), " that makes creating customized adventure experiences very easy. The characters are dialog bots who get better with age... and they inhabit different levels with the same internals."), React.createElement("p", null, "Thus, no two adventures will ever be the same."));
     }
   }
 });
