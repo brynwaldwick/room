@@ -21,6 +21,7 @@ Menu = React.createClass
 
             }
             <div className='menu-links'>
+                <a onClick={@openOverlay.bind(null,'toc')} >Table Of Contents</a>
                 <a onClick={@openOverlay.bind(null,'howtoplay')} >How to play</a>
                 <a onClick={@openOverlay.bind(null,'signup')}>Sign up</a>
                 <a onClick={@openOverlay.bind(null,'share')}>Share with friends</a>
@@ -38,7 +39,7 @@ MenuOverlay = React.createClass
         {topic} = @props
         if topic == 'howtoplay'
             <div className='menu-overlay-content how-to-play'>
-                <div>(the <span className='emphasis' title='click them'>black links</span> are just for you)</div>
+                <div>(the <span className='emphasis' title='click them'>black links</span> in the story are just for you)</div>
                 <div><span className='emphasis' title='inspect table'>inspect</span> things</div>
                 <div><span className='emphasis' title='go to the patio'>go</span> somewhere</div>
                 <div><span className='emphasis' title='take the pan'>take</span> things</div>
@@ -46,9 +47,16 @@ MenuOverlay = React.createClass
                 <div><span className='emphasis' title='inventory'>inventory</span></div>
                 <div><span className='emphasis' title='can your inventory be of use?'>you may need to type other important commands, so try stuff!</span></div>
             </div>
+
         else if topic == 'signup'
             <div className='menu-overlay-content signup'>
                 Signup Form
+            </div>
+
+        else if topic == 'toc'
+            <div className='menu-overlay-content signup'>
+                <div><a href='/levels/1'>Chapter 1</a></div>
+                <div><a href='/levels/2'>Chapter 2</a></div>
             </div>
 
         else if topic == 'share'
@@ -63,7 +71,7 @@ MenuOverlay = React.createClass
             <div className='menu-overlay-content' >
                 <p>Bryn Waldwick is a Partner at <a href='https://prontotype.us'>Prontotype</a>, where he helps build scalable businesses with great computer code.</p>
                 <p>He likes to research "Blockchain" and how to build things that are easy for users and developers.</p>
-                <p>He dreams about new platforms that make practicing art meaningful and valuable.</p>
+                <p>He dreams about new platforms that make creating art meaningful and valuable.</p>
                 <div className='social-links'>
                     <a href='https://github.com/brynwaldwick' >
                         <i className='fa fa-github' />
