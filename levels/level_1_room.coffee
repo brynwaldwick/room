@@ -100,7 +100,7 @@ Story = {
             "King Arthur": "King Arthur is overmatched today but on balance he is a good guy. He will push valiantly towards whichever new challenge dares to rear its head. What is it all for you wonder? People have been asking the chicken that for years and nobody has ever found themselves any kind of satisfying answer, on this side or the next."
             Chicken: "Does there have to be a reason for everything? She sets her eyes on the road ahead of her and lets the seduction of the unknown distance compell her forward."
         Gargoyle:
-            inspect: "The @gargoyle has seen better days. Its nose crumbles from the crawl and repeat of decades. It has three horns and carries shadows of old faces. It also carries a #picture of a something..."
+            inspect: "The @gargoyle has seen better days. Its nose crumbles from the crawl and repeat of decades. It has three horns and carries shadows of old faces. It also carries a #picture of something..."
             take: "It shakes you away with a gruff expletive. It appears far too heavy to actually hold anyway."
             Picture:
                 inspect: "It is a Polaroid of a raven and a girl. A flurry of activity in the background suggests a chicken was at one point framed - with head and alive - in the shot."
