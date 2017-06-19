@@ -20,7 +20,7 @@ client_info_middleware = (req, res, next) ->
 levels = [
     {name: 'Nothing here'},
     require('./levels/level_1_room'),
-    require('./levels/level_2_office'),
+    require('./levels/level_2_office')
     # require('./levels/level_3_house'),
     # require('./levels/level_4_flight'),
     # require('./levels/level_5_factory')
@@ -29,7 +29,8 @@ levels = [
 app = polar config.api, middleware: [client_info_middleware]
 
 app.get '/', (req, res) ->
-    res.render 'app'
+    res.redirect '/levels/1'
+    # res.render 'app'
 
 app.get '/:thread_slug', (req, res) ->
     res.locals.client_key = req.params.thread_slug

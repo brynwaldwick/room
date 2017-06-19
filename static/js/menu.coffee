@@ -55,7 +55,7 @@ MenuOverlay = React.createClass
             </div>
 
         else if topic == 'toc'
-            <div className='menu-overlay-content signup'>
+            <div className='menu-overlay-content toc'>
                 <div><a href='/levels/1'>Chapter 1</a></div>
                 <div><a href='/levels/2'>Chapter 2</a></div>
             </div>
