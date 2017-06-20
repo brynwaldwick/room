@@ -161,6 +161,21 @@ Story = {
                 else
                     context.Hallway.far_door = 'open'
                     "The door swings open. A stone path curls up the hill towards the ~garden."
+
+            unlock: (context) ->
+                if context.last_combo_guess?
+                    if context.last_combo_guess == '12345'
+                        context.Hallway.far_door = 'unlocked'
+                        return "The lock bleeps and you hear metal slither into the wall."
+                    else
+                        context.Hallway.far_door = 'locked'
+                        return "Ihnhhhghh, Wrong."
+                else
+                    return {
+                        body: "What is the combo?"
+                        form:
+                            combo: {value: '', placeholder: 'Enter a 5-digit combo'}
+                    }
         Door:
             inspect: "The #near_door or the #far_door?"
             open: (context) ->
