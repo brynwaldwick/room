@@ -698,7 +698,7 @@ Messages = React.createClass({
           }, value);
         }), replaced = reactStringReplace(replaced, /(~\w+)/g, function(match, mi) {
           var to_send;
-          to_send = "goto " + match.replace("~", "");
+          to_send = "go to the " + match.replace("~", "");
           return React.createElement("a", {
             "key": 'ma_dir_' + li + '_' + i++,
             "onClick": _this.sendMessage(to_send)
@@ -988,7 +988,7 @@ MenuOverlay = React.createClass({
       }, "Signup Form");
     } else if (topic === 'toc') {
       return React.createElement("div", {
-        "className": 'menu-overlay-content signup'
+        "className": 'menu-overlay-content toc'
       }, React.createElement("div", null, React.createElement("a", {
         "href": '/levels/1'
       }, "Chapter 1")), React.createElement("div", null, React.createElement("a", {
@@ -1039,9 +1039,13 @@ MenuOverlay = React.createClass({
     } else if (topic === 'howitworks') {
       return React.createElement("div", {
         "className": 'menu-overlay-content howitworks'
-      }, React.createElement("p", null, "Room is a text-only adventure game with many levels. The levels house a variety of colorful characters."), React.createElement("p", null, "The levels are built with a ", React.createElement("a", {
+      }, React.createElement("p", null, "Room is a text-only adventure game with many levels. It houses a variety of colorful characters."), React.createElement("p", null, "The levels are built with a ", React.createElement("a", {
         "href": 'https://github.com/brynwaldwick/room'
       }, "narration engine"), " that makes creating customized adventure experiences very easy. The characters are dialog bots who get better with age... and they inhabit different levels with the same internals."), React.createElement("p", null, "Thus, no two adventures will ever be the same."));
+    } else if (topic === 'dedicated') {
+      return React.createElement("div", {
+        "className": 'menu-overlay-content dedicated'
+      }, React.createElement("p", null, "For everbody that has always been there \& the good that has yet to be born."));
     }
   }
 });
