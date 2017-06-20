@@ -91,7 +91,7 @@ Messages = React.createClass
                             to_send = "inspect " + value
                             <a key={'ma_men_' + li + '_' + mi} onClick={@sendMessage(to_send)}>{value}</a>
                         replaced = reactStringReplace replaced, /(~\w+)/g, (match, mi) =>
-                            to_send = "goto " + match.replace "~", ""
+                            to_send = "go to the " + match.replace "~", ""
                             <a key={'ma_dir_' + li + '_' + i++} onClick={@sendMessage(to_send)}>{match.replace "~", ""}</a>
                         replaced = reactStringReplace replaced, /(@\w+)/g, (match, mi) =>
                             target = match.replace("@", "").replace('_'," ")
