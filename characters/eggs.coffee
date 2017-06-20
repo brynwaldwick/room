@@ -5,6 +5,7 @@ grammar = nalgene.parse '''
     %hi
         'i
         haci!
+        dee!
 
     %girlPrettyResponse
         chrrrrrrr'!
@@ -20,6 +21,7 @@ grammar = nalgene.parse '''
     %whoAmI
         na s'
         nunu
+        hnn hn hooa
 '''
 
 girl_triggers = ['girl', 'she', 'her', 'mary']

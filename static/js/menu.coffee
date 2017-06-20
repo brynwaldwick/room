@@ -29,6 +29,7 @@ Menu = React.createClass
             <div className='menu-footer'>
                 <a onClick={@openOverlay.bind(null,'abouttheauthor')}>About the author</a>
                 <a onClick={@openOverlay.bind(null,'howitworks')}>How it works</a>
+                <a onClick={@openOverlay.bind(null,'dedicated')}>@</a>
                 <a href="http://donotenter.io" className='publisher-note'>c2177 Furnished by Publisher Guild Productions</a>
             </div>
         </div>
@@ -82,7 +83,7 @@ MenuOverlay = React.createClass
                 </div>
                 <p>Bryn Waldwick is a Partner at <a href='https://prontotype.us'>Prontotype</a>, where he helps build scalable businesses with great computer code.</p>
                 <p>He likes to research "Blockchain" and how to build things that are easy for users and developers.</p>
-                <p>He dreams about new platforms that make practicing creativity more meaningful and more valuable.</p>
+                <p>He dreams about new ways to make creativity more meaningful and more valuable.</p>
                 <div className='social-links'>
                     <a href='https://github.com/brynwaldwick' >
                         <i className='fa fa-github' />
@@ -104,7 +105,8 @@ MenuOverlay = React.createClass
             </div>
         else if topic == 'dedicated'
             <div className='menu-overlay-content dedicated'>
-                <p>For everbody that has always been there & the good that has yet to be born.</p>
+                <p>More toasts for the people that have always been there & those good things yet to be grown.</p>
+                <p>bw 2017</p>
             </div>
 
 module.exports = Menu
