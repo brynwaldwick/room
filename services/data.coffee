@@ -74,7 +74,6 @@ trimFillerWords = (body) ->
     return result
 
 parseMessage = (body, cb) ->
-    console.log 'Parsing the body', body
     split_body = trimFillerWords(body).split ' '
     action = split_body[0] || 'inspect'
     action = action.toLowerCase()
@@ -207,13 +206,13 @@ data_methods.sendMessage = (new_message, cb) ->
         story = stories[1]
 
     contexts[new_message.client_key] ||= base_context
-    console.log 'the base context', base_context
     _context = contexts[new_message.client_key]
     last_topic = '' + _context.topic
     _context.topic = ''
     {location, focus} = _context
 
     createAndPublishMessage new_message, (err, created_message) ->
+        console.log _context
         if _context.dead == true
             response_message = {
                 body: "You are dead. >Restart the level."
@@ -314,6 +313,16 @@ data_methods.sendMessage = (new_message, cb) ->
                     createAndPublishMessage response_message, cb
                 else
                     _context.story = story
+                    deconstructed_target = target.split(' ')
+                    if action == 'unlock' && deconstructed_target[0..1].join(" ") == 'far door'
+                        console.log 'Looks like they tried to unlock the far door'
+                        combo = deconstructed_target[2]
+                        if combo?
+                            target = 'far door'
+                            action = 'unlock'
+                            combo = combo.replace(/-/g,'').replace(/,/g,'').replace(/\s+/g,'')
+                            _context.last_combo_guess = combo
+
                     applyIntentToSession {target, action}, _context, (err, response) ->
                         delete _context.story
                         if response?
