@@ -1047,7 +1047,7 @@ MenuOverlay = React.createClass({
     } else if (topic === 'dedicated') {
       return React.createElement("div", {
         "className": 'menu-overlay-content dedicated'
-      }, React.createElement("p", null, "More toasts for the people that have always been there \& those good things yet to be grown."), React.createElement("p", null, "bw 2017"));
+      }, React.createElement("p", null, "More toasts for the people that have always been there \& the good yet to be grown."));
     }
   }
 });

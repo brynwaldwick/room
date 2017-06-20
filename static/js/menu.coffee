@@ -105,8 +105,7 @@ MenuOverlay = React.createClass
             </div>
         else if topic == 'dedicated'
             <div className='menu-overlay-content dedicated'>
-                <p>More toasts for the people that have always been there & those good things yet to be grown.</p>
-                <p>bw 2017</p>
+                <p>More toasts for the people that have always been there & the good yet to be grown.</p>
             </div>
 
 module.exports = Menu
