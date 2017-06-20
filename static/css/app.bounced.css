@@ -184,6 +184,10 @@ p {
   margin-right: 16px;
 }
 
+.menu .menu-overlay .menu-overlay-content div {
+  margin-bottom: 10px;
+}
+
 .menu .menu-overlay .social-links a + a {
   margin-left: 16px;
 }

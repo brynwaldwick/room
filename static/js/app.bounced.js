@@ -947,6 +947,8 @@ Menu = React.createClass({
     }, "About the author"), React.createElement("a", {
       "onClick": this.openOverlay.bind(null, 'howitworks')
     }, "How it works"), React.createElement("a", {
+      "onClick": this.openOverlay.bind(null, 'dedicated')
+    }, "@"), React.createElement("a", {
       "href": "http://donotenter.io",
       "className": 'publisher-note'
     }, "c2177 Furnished by Publisher Guild Productions")));
@@ -1021,7 +1023,7 @@ MenuOverlay = React.createClass({
         "src": 'http://prontotype.us/images/team/bryn.jpg'
       })), React.createElement("p", null, "Bryn Waldwick is a Partner at ", React.createElement("a", {
         "href": 'https://prontotype.us'
-      }, "Prontotype"), ", where he helps build scalable businesses with great computer code."), React.createElement("p", null, "He likes to research \"Blockchain\" and how to build things that are easy for users and developers."), React.createElement("p", null, "He dreams about new platforms that make practicing creativity more meaningful and more valuable."), React.createElement("div", {
+      }, "Prontotype"), ", where he helps build scalable businesses with great computer code."), React.createElement("p", null, "He likes to research \"Blockchain\" and how to build things that are easy for users and developers."), React.createElement("p", null, "He dreams about new ways to make creativity more meaningful and more valuable."), React.createElement("div", {
         "className": 'social-links'
       }, React.createElement("a", {
         "href": 'https://github.com/brynwaldwick'
@@ -1045,7 +1047,7 @@ MenuOverlay = React.createClass({
     } else if (topic === 'dedicated') {
       return React.createElement("div", {
         "className": 'menu-overlay-content dedicated'
-      }, React.createElement("p", null, "For everbody that has always been there \& the good that has yet to be born."));
+      }, React.createElement("p", null, "More toasts for the people that have always been there \& those good things yet to be grown."), React.createElement("p", null, "bw 2017"));
     }
   }
 });
