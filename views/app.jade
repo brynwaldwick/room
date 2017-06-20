@@ -2,7 +2,7 @@ doctype html
 html
     head
         title Room - Text-only adventure
-        meta(name='description', content="Room is a text-only conversation adventure set in another universe. This universe is filled with colorful characters, allegory, and untold discoveries.")
+        meta(name='description', content="Room is a text-only conversation adventure set in another universe. The universe is filled with colorful characters and untold discoveries.")
         meta(charset='utf-8')
         link(rel='shortcut icon', href='/img/favicon.png')
         meta(property='og:image', content='/img/medium-image.png')
@@ -27,6 +27,7 @@ html
         script.
             window.level = !{JSON.stringify(level)}
 
+        script(src='/js/ga.js')
         script(src='/socket.io/socket.io.js')
         script(src="#{base_url || ''}/js/app.js")
 

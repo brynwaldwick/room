@@ -98,9 +98,13 @@ MenuOverlay = React.createClass
 
         else if topic == 'howitworks'
             <div className='menu-overlay-content howitworks'>
-                <p>Room is a text-only adventure game with many levels. The levels house a variety of colorful characters.</p>
+                <p>Room is a text-only adventure game with many levels. It houses a variety of colorful characters.</p>
                 <p>The levels are built with a <a href='https://github.com/brynwaldwick/room'>narration engine</a> that makes creating customized adventure experiences very easy. The characters are dialog bots who get better with age... and they inhabit different levels with the same internals.</p>
                 <p>Thus, no two adventures will ever be the same.</p>
+            </div>
+        else if topic == 'dedicated'
+            <div className='menu-overlay-content dedicated'>
+                <p>For everbody that has always been there & the good that has yet to be born.</p>
             </div>
 
 module.exports = Menu
