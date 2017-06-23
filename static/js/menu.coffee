@@ -21,12 +21,17 @@ Menu = React.createClass
 
             }
             <h1>Room</h1>
+            <div className='description'>A conversation adventure.</div>
             <div className='menu-links'>
-                <a onClick={@openOverlay.bind(null,'toc')} >Table Of Contents</a>
-                <a onClick={@openOverlay.bind(null,'howtoplay')} >How to play</a>
-                <a onClick={@openOverlay.bind(null,'share')}>Share with friends</a>
+                <a >
+                    Table Of Contents
+                </a>
+                <div><a href='/levels/1'>Chapter 1</a></div>
+                <div><a href='/levels/2'>Chapter 2</a></div>
             </div>
             <div className='menu-footer'>
+                <a onClick={@openOverlay.bind(null,'howtoplay')} >How to play</a>
+                <a onClick={@openOverlay.bind(null,'share')}>Share with friends</a>
                 <a onClick={@openOverlay.bind(null,'abouttheauthor')}>About the author</a>
                 <a onClick={@openOverlay.bind(null,'howitworks')}>How it works</a>
                 <a onClick={@openOverlay.bind(null,'dedicated')}>@</a>
@@ -46,7 +51,7 @@ MenuOverlay = React.createClass
                 <div><span className='emphasis' title='go to the patio'>go</span> somewhere</div>
                 <div><span className='emphasis' title='take the pan'>take</span> things</div>
                 <div><span className='emphasis' title='@tom hi there tom'>@character</span> to talk to them</div>
-                <div><span className='emphasis' title='inventory'>inventory</span></div>
+                <div><span className='emphasis' title='inventory'>inventory</span> lists the things you've taken</div>
                 <div><span className='emphasis' title='can your inventory be of use?'>you may need to type other important commands, so try stuff!</span></div>
             </div>
 

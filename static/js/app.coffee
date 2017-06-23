@@ -30,6 +30,18 @@ App = React.createClass
             </div>
         </div>
 
+
+HomePage = React.createClass
+
+    # h1 Room
+    # .description A text-only conversational adventure game.
+    # .menu
+    #     .menu-link Table of Contents
+    #         .chapter Chapter 1
+    #         .chapter Chapter 2
+    #     .menu-bottom
+    #         .menu-link How to play
+
 Messages = React.createClass
 
     getInitialState: ->

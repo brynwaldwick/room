@@ -8,6 +8,7 @@ $padding
     tiny: 6px
     small: 10px
     default: 16px
+    big: 28px
 
 *
     margin: 0
@@ -72,6 +73,13 @@ p
         margin-top: 100px
         font-family: "Oswald"
         padding: $padding.default
+        text-align: center
+
+    .description
+        padding: $padding.default
+        color: $colors.gray
+        padding-bottom: 50px
+        display: none
 
     a
         margin-bottom: $padding.default
@@ -79,10 +87,15 @@ p
         font-weight: 500
 
     .menu-links
-        padding: $padding.default
+        padding: $padding.big $padding.default
         display: flex
         flex-direction: column
         flex-grow: 1
+        text-align: center
+        div
+            margin-bottom: $padding.small
+            a
+                color: black
 
     .menu-footer
         display: flex
@@ -91,7 +104,6 @@ p
         text-align: center
 
         .publisher-note
-            margin-top: $padding.default
             color: #bbb
             font-weight: 200
             font-size: 14px
@@ -283,3 +295,10 @@ input, button
 
         &:focus
             outline: none
+
+@media(max-width: 600px)
+    .menu
+        h1
+            margin-top: 60px
+        .menu-overlay .overlay-content
+            top: 60px
