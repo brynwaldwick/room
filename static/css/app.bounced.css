@@ -89,6 +89,14 @@ p {
   margin-top: 100px;
   font-family: "Oswald";
   padding: 16px;
+  text-align: center;
+}
+
+.menu .description {
+  padding: 16px;
+  color: #737373;
+  padding-bottom: 50px;
+  display: none;
 }
 
 .menu a {
@@ -97,11 +105,20 @@ p {
   font-weight: 500;
 }
 
+.menu .menu-links div a {
+  color: black;
+}
+
+.menu .menu-links div {
+  margin-bottom: 10px;
+}
+
 .menu .menu-links {
-  padding: 16px;
+  padding: 28px 16px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  text-align: center;
 }
 
 .menu .menu-footer .publisher-note a {
@@ -109,7 +126,6 @@ p {
 }
 
 .menu .menu-footer .publisher-note {
-  margin-top: 16px;
   color: #bbb;
   font-weight: 200;
   font-size: 14px;
@@ -348,4 +364,14 @@ button:active {
 .message-publisher input {
   padding: 10px;
   width: 100%;
+}
+
+@media (max-width: 600px) {
+  .menu h1 {
+    margin-top: 60px;
+  }
+
+  .menu .menu-overlay .overlay-content {
+    top: 60px;
+  }
 }

@@ -548,7 +548,7 @@ exports.authenticate = function(cb) {
 };
 
 },{"kefir":33}],5:[function(require,module,exports){
-var App, FeedItems, Menu, MessagePublisher, Messages, React, ReactDOM, ValidatedForm, dispatcher, reactStringReplace;
+var App, FeedItems, HomePage, Menu, MessagePublisher, Messages, React, ReactDOM, ValidatedForm, dispatcher, reactStringReplace;
 
 React = require('react');
 
@@ -589,6 +589,8 @@ App = React.createClass({
     }, React.createElement(Messages, null), React.createElement(MessagePublisher, null)));
   }
 });
+
+HomePage = React.createClass;
 
 Messages = React.createClass({
   getInitialState: function() {
@@ -933,16 +935,20 @@ Menu = React.createClass({
       "className": 'close',
       "onClick": this.openOverlay.bind(null, null)
     }, "close"))) : void 0), React.createElement("h1", null, "Room"), React.createElement("div", {
+      "className": 'description'
+    }, "A conversation adventure."), React.createElement("div", {
       "className": 'menu-links'
+    }, React.createElement("a", null, "Table Of Contents"), React.createElement("div", null, React.createElement("a", {
+      "href": '/levels/1'
+    }, "Chapter 1")), React.createElement("div", null, React.createElement("a", {
+      "href": '/levels/2'
+    }, "Chapter 2"))), React.createElement("div", {
+      "className": 'menu-footer'
     }, React.createElement("a", {
-      "onClick": this.openOverlay.bind(null, 'toc')
-    }, "Table Of Contents"), React.createElement("a", {
       "onClick": this.openOverlay.bind(null, 'howtoplay')
     }, "How to play"), React.createElement("a", {
       "onClick": this.openOverlay.bind(null, 'share')
-    }, "Share with friends")), React.createElement("div", {
-      "className": 'menu-footer'
-    }, React.createElement("a", {
+    }, "Share with friends"), React.createElement("a", {
       "onClick": this.openOverlay.bind(null, 'abouttheauthor')
     }, "About the author"), React.createElement("a", {
       "onClick": this.openOverlay.bind(null, 'howitworks')
@@ -980,7 +986,7 @@ MenuOverlay = React.createClass({
       }, "@character"), " to talk to them"), React.createElement("div", null, React.createElement("span", {
         "className": 'emphasis',
         "title": 'inventory'
-      }, "inventory")), React.createElement("div", null, React.createElement("span", {
+      }, "inventory"), " lists the things you\'ve taken"), React.createElement("div", null, React.createElement("span", {
         "className": 'emphasis',
         "title": 'can your inventory be of use?'
       }, "you may need to type other important commands, so try stuff!")));
