@@ -941,9 +941,11 @@ Menu = React.createClass({
     }, React.createElement("a", null, "Table Of Contents"), React.createElement("div", null, React.createElement("a", {
       "href": '/levels/1'
     }, "Chapter 1")), React.createElement("div", null, React.createElement("a", {
-      "href": '/levels/2'
+      "href": '/levels/2',
+      "className": 'in-progress'
     }, "Chapter 2")), React.createElement("div", null, React.createElement("a", {
-      "href": '/levels/3'
+      "href": '/levels/3',
+      "className": 'in-progress'
     }, "Chapter 3"))), React.createElement("div", {
       "className": 'menu-footer'
     }, React.createElement("a", {

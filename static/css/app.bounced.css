@@ -114,6 +114,11 @@ p {
   font-weight: 500;
 }
 
+.menu .menu-links div a.in-progress {
+  font-style: italic;
+  color: #454545;
+}
+
 .menu .menu-links div a {
   color: black;
 }
