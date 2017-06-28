@@ -942,7 +942,9 @@ Menu = React.createClass({
       "href": '/levels/1'
     }, "Chapter 1")), React.createElement("div", null, React.createElement("a", {
       "href": '/levels/2'
-    }, "Chapter 2"))), React.createElement("div", {
+    }, "Chapter 2")), React.createElement("div", null, React.createElement("a", {
+      "href": '/levels/3'
+    }, "Chapter 3"))), React.createElement("div", {
       "className": 'menu-footer'
     }, React.createElement("a", {
       "onClick": this.openOverlay.bind(null, 'howtoplay')

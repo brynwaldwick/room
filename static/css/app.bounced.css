@@ -73,6 +73,10 @@ p {
   margin: 0 auto;
 }
 
+.home-page a {
+  text-align: center;
+}
+
 .menu {
   position: fixed;
   top: 0px;
@@ -92,10 +96,15 @@ p {
   text-align: center;
 }
 
-.menu .description {
+.menu .description,
+.menu .home-description {
   padding: 16px;
   color: #737373;
   padding-bottom: 50px;
+  text-align: center;
+}
+
+.menu .description {
   display: none;
 }
 
@@ -373,5 +382,11 @@ button:active {
 
   .menu .menu-overlay .overlay-content {
     top: 60px;
+  }
+}
+
+@media (max-width: 420px) {
+  .chapter-header {
+    margin: 40px 0px;
   }
 }
