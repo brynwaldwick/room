@@ -28,6 +28,7 @@ Menu = React.createClass
                 </a>
                 <div><a href='/levels/1'>Chapter 1</a></div>
                 <div><a href='/levels/2'>Chapter 2</a></div>
+                <div><a href='/levels/3'>Chapter 3</a></div>
             </div>
             <div className='menu-footer'>
                 <a onClick={@openOverlay.bind(null,'howtoplay')} >How to play</a>

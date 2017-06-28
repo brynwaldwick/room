@@ -58,6 +58,10 @@ p
         max-width: 600px
         margin: 0 auto
 
+.home-page
+    a
+        text-align: center
+
 .menu
     position: fixed
     top: 0px
@@ -75,10 +79,13 @@ p
         padding: $padding.default
         text-align: center
 
-    .description
+    .description, .home-description
         padding: $padding.default
         color: $colors.gray
         padding-bottom: 50px
+        text-align: center
+
+    .description
         display: none
 
     a
@@ -302,3 +309,7 @@ input, button
             margin-top: 60px
         .menu-overlay .overlay-content
             top: 60px
+
+@media(max-width: 420px)
+    .chapter-header
+        margin: 40px 0px

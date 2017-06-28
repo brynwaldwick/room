@@ -42,6 +42,7 @@ stories = [
     {name: "Nothing here"},
     require('../levels/level_1_room').story,
     require('../levels/level_2_office').story
+    require('../levels/level_3_school').story
 ]
 # story = require('../levels/level_3_house').story
 # story = require '../levels/level_4_flight'
@@ -173,6 +174,15 @@ base_contexts = [
     inventory: []
     man:
         mood: 0.5
+,
+    level: 3
+    dead: false
+    winner: false
+    location: 'Room'
+    focus: 'Room'
+    inventory: []
+    mr_wallace:
+        mood: 0.2
 ]
 
 data_methods.sendMessage = (new_message, cb) ->

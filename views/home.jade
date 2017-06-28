@@ -17,8 +17,12 @@ html
         link(rel='stylesheet', href="#{base_url || ''}/css/app.css")
     body
         #app
-            .spinner-container: .spinner
-                span.loading Creating room...
+            .app.home-page
+                .content
+                    .menu
+                        h1 Room
+                        p.home-description A text-only conversational adventure game.
+                        a.menu-link(href='/levels/1') Begin
 
         script.
             //- window.user = !{JSON.stringify(user)};
@@ -29,6 +33,4 @@ html
 
         script(src='/js/ga.js')
         script(src='/socket.io/socket.io.js')
-        script(src="#{base_url || ''}/js/app.js")
-
 
