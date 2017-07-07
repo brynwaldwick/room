@@ -186,7 +186,7 @@ Story = {
                 return "You take the brief stroll towards the garden. #{Story.Garden.inspect}"
             Room: (context) ->
                 context.location = 'Room'
-                return "You once again enter the #room. A pile of smashed and rotting vegetables sits in a corner. There is a #girl on the floor inscribed in a pool of blood. On one wall a #window looks out towards a spindly garden. On one wall is an old wooden #table. On yet another wall is that door that has already been mentioned."
+                return "You once again enter the #room. A pile of smashed and rotting vegetables sits in a corner. There is a #girl on the floor inscribed in a pool of #blood. On one wall a #window looks out towards a spindly garden. On one wall is an old wooden #table. On yet another wall is that door that has already been mentioned."
     Garden:
         inspect: "A #gardener flails with a shovel and mutters something about the gargoyle. There is some oddly symbolic activity happening here, where #tomatoes, #corn, and the like reach outward from their festering rows. \n
             Behind you, the house stands with the door to the ~Hallway swinging ajar."
@@ -249,4 +249,4 @@ Inventory: {
 
 ENDING = "The egg screams and crumbles to dust. The dust settles, then animates and morphs to become a tiny figure, sanguine and pink. The figure grows and becomes Mary. \n
 Events unfold in a cloud of sparks. Mary pulls her kerchief over her shining blonde hair as you link hands and head out the door. The gargoyle sends a clever goodbye. You tip your hat to the gardener, who is busy breaking apart a clump of worms with a shovel. You and Mary eat by the river and smoke cigarettes into a fountain until the sun comes up. \n
-You walk together back to the room, feeling complete. Mary guides your hand to pick up the knife and pulls it towards her soft chest. You violently press and leave here there on the floor. She is choking on blood. The butler enters through the open door behind you and hands you a tomato. You bite into the fruit, laden with eggs and larvae from the garden outside. The room darkens as your mind slows, and you tumble forward onto the floor and into darkness."
+You walk together back to the room, feeling complete. Mary guides your hand to pick up the knife and pulls it towards her soft chest. You violently press and leave her there on the floor. She is choking on blood. The butler enters through the open door behind you and hands you a tomato. You bite into the fruit, laden with eggs and larvae from the garden outside. The room darkens as your mind slows, and you tumble forward onto the floor and into darkness."

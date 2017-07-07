@@ -21,9 +21,10 @@ levels = [
     {name: 'Nothing here'},
     require('./levels/level_1_room'),
     require('./levels/level_2_office')
-    require('./levels/level_3_school'),
-    # require('./levels/level_4_flight'),
-    # require('./levels/level_5_factory')
+    require('../room-private/levels/level_3_school'),
+    require('../room-private/levels/level_4_bank'),
+    require('../room-private/levels/level_5_hospital')
+    require('../room-private/levels/level_6_windmill')
 ]
 
 app = polar config.api, middleware: [client_info_middleware]
@@ -37,7 +38,7 @@ app.get '/:thread_slug', (req, res) ->
 
 app.get '/levels/:level_index', (req, res) ->
     level_index = Number(req.params.level_index)
-    if level_index in [1, 2, 3]
+    if level_index in [1, 2, 3, 4, 5, 6]
         res.locals.client_key = "levels:#{req.params.level_index}:#{res.locals.client_key}"
         level = levels[level_index]
         {name, index} = level

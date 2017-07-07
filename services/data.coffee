@@ -42,17 +42,19 @@ stories = [
     {name: "Nothing here"},
     require('../levels/level_1_room').story,
     require('../levels/level_2_office').story
-    require('../levels/level_3_school').story
+    require('../../room-private/levels/level_3_school').story
+    require('../../room-private/levels/level_4_bank').story
+    require('../../room-private/levels/level_5_hospital').story
+    require('../../room-private/levels/level_6_windmill').story
 ]
-# story = require('../levels/level_3_house').story
-# story = require '../levels/level_4_flight'
-# story = require '../levels/level_5_factory'
 
 characters =
     "gargoyle": require '../characters/gargoyle'
     "gardener": require '../characters/gardener'
     "eggs": require '../characters/eggs'
     "aviana": require '../characters/aviana'
+    "teller1": require '../characters/tellerbot'
+    "teller2": require '../characters/tellerbot'
     # "president": require '../characters/president'
 
 President = require '../characters/president'
@@ -183,30 +185,52 @@ base_contexts = [
     inventory: []
     mr_wallace:
         mood: 0.2
+,
+    level: 4
+    dead: false
+    winner: false
+    location: 'Room'
+    focus: 'Room'
+    inventory: []
+    tokens: 0
+    teller1:
+        topic: null
+        in_the_strongroom: false
+    teller2:
+        topic: null
+        in_the_strongroom: false
+,
+    level: 5
+    dead: false
+    winner: false
+    location: 'Room'
+    focus: 'Room'
+    inventory: []
+    trillvillion:
+        topic: null
+    nurse:
+        topic: null
+    bartender:
+        topic: null
+,
+    level: 6
+    dead: false
+    winner: false
+    location: 'Room'
+    focus: 'Room'
+    inventory: []
+    hunchback:
+        topic: null
+    chicken:
+        topic: null
+    bartender:
+        topic: null
 ]
 
 data_methods.sendMessage = (new_message, cb) ->
     console.log 'the new message', new_message
     new_message.from ||= 'user'
 
-    base_context = {
-        level: 1
-        dead: false
-        winner: false
-        location: 'Room'
-        focus: 'Room'
-        topic: ''
-        inventory: []
-        gargoyle:
-            mood: 0.5
-            dead: false
-        gardener:
-            mood: 0.5
-        Hallway:
-            key: false
-            far_door: 'locked'
-        egg: false
-        room_door: 'closed'}
     if new_message.client_key?.split(':')[0] == 'levels'
         level_index = levelIndexFromClientKey new_message.client_key
         base_context = base_contexts[level_index]
@@ -218,6 +242,8 @@ data_methods.sendMessage = (new_message, cb) ->
     contexts[new_message.client_key] ||= base_context
     _context = contexts[new_message.client_key]
     last_topic = '' + _context.topic
+    console.log 'the context', _context
+    console.log 'this was the last topic', last_topic
     _context.topic = ''
     {location, focus} = _context
 
@@ -239,6 +265,9 @@ data_methods.sendMessage = (new_message, cb) ->
             message_to_character = true
             target = matched[0][1..]
             name = helpers.capitalize target
+            console.log name
+            console.log target
+            console.log characters[target]
             if characters[target]? && (story[location][name]? ||
                     story[location]?[focus]?[name]?)
                 # previous context of messages from the person
@@ -247,14 +276,26 @@ data_methods.sendMessage = (new_message, cb) ->
                     location
                     mood: _context[target]?.mood
                     dead: _context[target]?.dead
-                    topic
+                    topic: _context[target]?.topic || "room"
+                    my_tokens: _context.tokens || 0
+                    data: _context[target]?.data || {}
                     channel: new_message.client_key
                 }
 
                 characters[target].handleMessage message_context, new_message.body, (err, response) ->
 
                     if response?.context?.mood
-                        _context[target].mood = response?.context?.mood
+                        _context[target].mood = response.context.mood
+                    if response?.context?.topic
+                        _context[target].topic = response.context.topic
+                        console.log 'im setting the topic', response.context.topic
+                    if response?.context?.data
+                        _context[target].data = response.context.data
+                        console.log 'im setting the data', response.context.data
+                        if response?.context?.data?.my_tokens?
+                            console.log 'an was it here""???'
+                            _context.tokens = response.context.data.my_tokens
+                    console.log 'and the context', _context
                     # TODO: handle characters' interpretations in story state
                     body = response.body || "They don't want to talk"
                     response_message = {
@@ -314,6 +355,8 @@ data_methods.sendMessage = (new_message, cb) ->
                             "nothing."
 
                     )
+                    if _context?.tokens > 0
+                        body = body.replace("You have", "You have #{_context.tokens} tokens, and ")
                     response_message = {
                         body
                         from: 'Room'

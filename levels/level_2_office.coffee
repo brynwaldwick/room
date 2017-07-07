@@ -1,4 +1,6 @@
 
+# needs death scenes
+
 module.exports = {
     index: 2
     name: 'Office'
@@ -27,6 +29,7 @@ module.exports = {
                 inspect: "The desk is more than that of an enterprising man. It is stately. It speaks to power. It lays bare save for a curious set of items: two mobile #phones, a #green_button, and a nearly unironic, larger #red_button."
                 "Green Button": "Small and green"
                 "Red Button": "Big and red"
+                Phones: "One to a hole you don't know about, one to somewhere else entirely. You can't touch them."
             Tables:
                 inspect: "Holding #pens, #candles, #ornaments. "
                 Pens:
@@ -41,8 +44,8 @@ module.exports = {
                     inspect: "Never lit. One with proprietary #listening_devices"
                     take: (context) ->
                         return "That would be unwise."
+            "Listening Devices": "A retina scan is required to use these. It's so small that that's all I can tell you."
             Doors: "To where exactly? The odd garden; a vestibule; a secret tunnel..."
-            Phones: "One to a hole you don't know about, one to somewhere else entirely. You can't touch them."
             Rug: "A blue rug, with a round seal. A bird form and symbols of war and justice round out the #furnishings."
             Pictures: "Titans of old; portraits of men; power and smoke; one with proprietary #listening_devices."
             Furnishings: "Symbols of power and of commerce. The #rug, the #phones, the #man, and of course the #robot."
