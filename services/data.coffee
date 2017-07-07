@@ -189,8 +189,8 @@ base_contexts = [
     level: 4
     dead: false
     winner: false
-    location: 'Room'
-    focus: 'Room'
+    location: 'Lobby'
+    focus: 'Lobby'
     inventory: []
     tokens: 0
     teller1:
