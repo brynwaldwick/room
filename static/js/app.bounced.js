@@ -941,12 +941,16 @@ Menu = React.createClass({
     }, React.createElement("a", null, "Table Of Contents"), React.createElement("div", null, React.createElement("a", {
       "href": '/levels/1'
     }, "Chapter 1")), React.createElement("div", null, React.createElement("a", {
-      "href": '/levels/2',
-      "className": 'in-progress'
+      "href": '/levels/2'
     }, "Chapter 2")), React.createElement("div", null, React.createElement("a", {
-      "href": '/levels/3',
-      "className": 'in-progress'
-    }, "Chapter 3"))), React.createElement("div", {
+      "href": '/levels/3'
+    }, "Chapter 3")), React.createElement("div", null, React.createElement("a", {
+      "href": '/levels/4'
+    }, "Chapter 4")), React.createElement("div", null, React.createElement("a", {
+      "href": '/levels/5'
+    }, "Chapter 5")), React.createElement("div", null, React.createElement("a", {
+      "href": '/levels/6'
+    }, "Chapter 6"))), React.createElement("div", {
       "className": 'menu-footer'
     }, React.createElement("a", {
       "onClick": this.openOverlay.bind(null, 'howtoplay')
