@@ -42,9 +42,23 @@ p {
   flex-direction: column;
 }
 
+#app .nav .fa:hover {
+  background: white;
+}
+
+#app .nav .fa {
+  padding: 16px;
+  color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+#app .nav h1:hover,
+#app .nav .fa-bars:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
 #app .nav h1,
 #app .nav .fa-bars {
-  cursor: pointer;
   font: 20px;
   padding: 16px;
   display: inline-block;
@@ -59,10 +73,12 @@ p {
 #app .nav {
   position: fixed;
   top: 0px;
-  width: 100px;
+  width: 195px;
   right: 0px;
   text-align: right;
   z-index: 750;
+  display: flex;
+  flex-direction: row;
 }
 
 #app .content,
@@ -135,16 +151,27 @@ p {
   text-align: center;
 }
 
-.menu .menu-footer .publisher-note a {
+.menu .menu-footer .footer {
+  text-align: left;
+  padding-top: 40px;
+}
+
+.menu .menu-footer .publisher-note a,
+.menu .menu-footer .dedicated a {
   margin-bottom: 0px;
 }
 
-.menu .menu-footer .publisher-note {
+.menu .menu-footer .publisher-note,
+.menu .menu-footer .dedicated {
   color: #bbb;
   font-weight: 200;
   font-size: 14px;
   text-decoration: none;
   margin-bottom: 0px;
+}
+
+.menu .menu-footer .dedicated {
+  float: right;
 }
 
 .menu .menu-footer {

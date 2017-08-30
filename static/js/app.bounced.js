@@ -568,8 +568,14 @@ App = React.createClass({
   getInitialState: function() {
     return {
       menu: false,
-      overlay: null
+      overlay: null,
+      open_overlay: null
     };
+  },
+  openOverlay: function(open_overlay) {
+    return this.setState({
+      open_overlay: open_overlay
+    });
   },
   toggleMenu: function() {
     return this.setState({
@@ -582,6 +588,12 @@ App = React.createClass({
     }, (this.state.menu ? React.createElement(Menu, null) : void 0), React.createElement("div", {
       "className": 'nav'
     }, React.createElement("i", {
+      "className": 'fa fa-suitcase'
+    }), React.createElement("i", {
+      "className": 'fa fa-eye'
+    }), React.createElement("i", {
+      "className": 'fa fa-question-circle-o'
+    }), React.createElement("i", {
       "className": 'fa fa-bars',
       "onClick": this.toggleMenu
     })), React.createElement("div", {
@@ -938,7 +950,7 @@ Menu = React.createClass({
       "className": 'description'
     }, "A conversation adventure."), React.createElement("div", {
       "className": 'menu-links'
-    }, React.createElement("a", null, "Table Of Contents"), React.createElement("div", null, React.createElement("a", {
+    }, React.createElement("div", null, React.createElement("a", {
       "href": '/levels/1'
     }, "Chapter 1")), React.createElement("div", null, React.createElement("a", {
       "href": '/levels/2'
@@ -953,19 +965,18 @@ Menu = React.createClass({
     }, "Chapter 6"))), React.createElement("div", {
       "className": 'menu-footer'
     }, React.createElement("a", {
-      "onClick": this.openOverlay.bind(null, 'howtoplay')
-    }, "How to play"), React.createElement("a", {
       "onClick": this.openOverlay.bind(null, 'share')
     }, "Share with friends"), React.createElement("a", {
       "onClick": this.openOverlay.bind(null, 'abouttheauthor')
-    }, "About the author"), React.createElement("a", {
-      "onClick": this.openOverlay.bind(null, 'howitworks')
-    }, "How it works"), React.createElement("a", {
+    }, "About the author"), React.createElement("div", {
+      "className": 'footer'
+    }, React.createElement("a", {
+      "className": 'dedicated',
       "onClick": this.openOverlay.bind(null, 'dedicated')
     }, "@"), React.createElement("a", {
       "href": "http://donotenter.io",
       "className": 'publisher-note'
-    }, "c2177 Furnished by Publisher Guild Productions")));
+    }, "c2177 Furnished by Publisher Guild Productions"))));
   }
 });
 
