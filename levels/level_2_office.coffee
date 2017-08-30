@@ -55,7 +55,7 @@ module.exports = {
                     context.Lamp?.health -= 0.1
                     return "The lamp rattles. Please don't touch that, says Aviana"
             Robot: "The #Aviana Presidential Assistant hovers in the office. She was a secret DARPA project; a crowdsourced intelligence robot built to help the Commander in Chief serve the people of his country. \n
-            The two were joined at the hip in 2063 and have evolved a sort of communist dictator, tourettes victim, old married couple, dying binary star #dynamic of deep pessimism and the lowest common denominator projected onto itself."
+            The two were joined at the hip in 2048 and have evolved a sort of communist dictator, tourettes victim, old married couple, dying binary star #dynamic of deep pessimism and the lowest common denominator projected onto itself."
             Dynamic: 'They would one day write in the history books: "When #Aviana talked, the #President listened."'
             Aviana: "@aviana was named for somebody's granddaughter"
     }

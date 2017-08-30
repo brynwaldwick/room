@@ -12,6 +12,10 @@ App = React.createClass
     getInitialState: ->
         menu: false
         overlay: null
+        open_overlay: null
+
+    openOverlay: (open_overlay) ->
+        @setState {open_overlay}
 
     toggleMenu: ->
         @setState menu: !@state.menu
@@ -22,6 +26,9 @@ App = React.createClass
                 <Menu />
             }
             <div className='nav'>
+                <i className='fa fa-suitcase' />
+                <i className='fa fa-eye' />
+                <i className='fa fa-question-circle-o' />
                 <i className='fa fa-bars' onClick=@toggleMenu />
             </div>
             <div className='content'>

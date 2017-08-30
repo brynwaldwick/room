@@ -11,7 +11,8 @@ grammar = nalgene.parse '''
         On 8am, Monday of that week, the last living journalist announced they were going to start fighting politics with art. 80% of humankind was dead within 9 days. On that 9th day they built a new world.
         What do you think ended the world? Something beyond us and ours and errors? All ears, Eros!
         Things kind of got out of hand...
-        There was a monk who built a huge mechanical computer out of jade. But that got smashed with every other thing. What am I to do right now today to right that wrong?
+        There was a monk who built a huge mechanical computer out of jade. But that got smashed with every other thing. What am I to do right now that could possibly right that wrong?
+        In the decade before this, scientists finally proved that the eleventh dimension was actually a neural network from the future. You can probably derive the logical conclusion from there.
 
     %president
         What do you want me to say? The man is a marvel. Give him an inch and he'll take a mile.
@@ -88,6 +89,9 @@ methods = {}
 
 parseMessage = (context, body, cb) ->
     {location, topic, mood} = context
+    # can you get the president to call the phone
+    # can you get him to press the button
+    # listening devices
     if bodyContainsEither(body, china_triggers)
         intent = 'china'
     else if bodyContainsEither(body, peace_triggers)

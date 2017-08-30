@@ -38,18 +38,29 @@ p
     .nav
         position: fixed
         top: 0px
-        width: 100px
+        width: 195px
         right: 0px
         text-align: right
         z-index: 750
+        display: flex
+        flex-direction: row
+
+        .fa
+            padding: $padding.default
+            color: rgba(0, 0, 0, 0.5)
+            cursor: pointer
+
+            &:hover
+                background: white
 
         h1, .fa-bars
-            cursor: pointer
             font: 20px
             padding: $padding.default
             display: inline-block
             color: white
             background: rgba(0, 0, 0, 0.5)
+            &:hover
+                background: rgba(0, 0, 0, 0.5)
 
         h1
             font: 20px "Oswald"
@@ -114,7 +125,11 @@ p
         padding: $padding.small
         text-align: center
 
-        .publisher-note
+        .footer
+            text-align: left
+            padding-top: 40px
+
+        .publisher-note, .dedicated
             color: #bbb
             font-weight: 200
             font-size: 14px
@@ -122,6 +137,9 @@ p
             margin-bottom: 0px
             a
                 margin-bottom: 0px
+
+        .dedicated
+            float: right
 
     .abouttheauthor
         .author-portrait

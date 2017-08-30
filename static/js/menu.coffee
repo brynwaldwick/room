@@ -23,9 +23,6 @@ Menu = React.createClass
             <h1>Room</h1>
             <div className='description'>A conversation adventure.</div>
             <div className='menu-links'>
-                <a >
-                    Table Of Contents
-                </a>
                 <div><a href='/levels/1'>Chapter 1</a></div>
                 <div><a href='/levels/2'>Chapter 2</a></div>
                 <div><a href='/levels/3'>Chapter 3</a></div>
@@ -34,14 +31,15 @@ Menu = React.createClass
                 <div><a href='/levels/6'>Chapter 6</a></div>
             </div>
             <div className='menu-footer'>
-                <a onClick={@openOverlay.bind(null,'howtoplay')} >How to play</a>
                 <a onClick={@openOverlay.bind(null,'share')}>Share with friends</a>
                 <a onClick={@openOverlay.bind(null,'abouttheauthor')}>About the author</a>
-                <a onClick={@openOverlay.bind(null,'howitworks')}>How it works</a>
-                <a onClick={@openOverlay.bind(null,'dedicated')}>@</a>
-                <a href="http://donotenter.io" className='publisher-note'>c2177 Furnished by Publisher Guild Productions</a>
+                <div className='footer'>
+                    <a className='dedicated' onClick={@openOverlay.bind(null,'dedicated')}>@</a>
+                    <a href="http://donotenter.io" className='publisher-note'>c2177 Furnished by Publisher Guild Productions</a>
+                </div>
             </div>
         </div>
+                # <a onClick={@openOverlay.bind(null,'howtoplay')} >How to play</a>
                 # <a onClick={@openOverlay.bind(null,'signup')}>Sign up</a>
 
 MenuOverlay = React.createClass

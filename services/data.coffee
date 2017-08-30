@@ -55,6 +55,8 @@ characters =
     "aviana": require '../characters/aviana'
     "teller1": require '../characters/tellerbot'
     "teller2": require '../characters/tellerbot'
+    "hunchback": require '../../room-private/characters/hunchback'
+    "chicken": require '../../room-private/characters/chicken'
     # "president": require '../characters/president'
 
 President = require '../characters/president'
@@ -174,6 +176,8 @@ base_contexts = [
     focus: 'Room'
     topic: ''
     inventory: []
+    aviana: {}
+    president: {}
     man:
         mood: 0.5
 ,
@@ -221,8 +225,12 @@ base_contexts = [
     inventory: []
     hunchback:
         topic: null
+        dialog_index: 0
+        done_talking: false
     chicken:
         topic: null
+        dialog_index: 0
+        done_talking: false
     bartender:
         topic: null
 ]
@@ -276,6 +284,7 @@ data_methods.sendMessage = (new_message, cb) ->
                     location
                     mood: _context[target]?.mood
                     dead: _context[target]?.dead
+                    dialog_index: _context[target]?.dialog_index
                     topic: _context[target]?.topic || "room"
                     my_tokens: _context.tokens || 0
                     data: _context[target]?.data || {}
@@ -295,6 +304,9 @@ data_methods.sendMessage = (new_message, cb) ->
                         if response?.context?.data?.my_tokens?
                             console.log 'an was it here""???'
                             _context.tokens = response.context.data.my_tokens
+                    if response?.context?.dialog_index
+                        _context[target].dialog_index = response.context.dialog_index
+
                     console.log 'and the context', _context
                     # TODO: handle characters' interpretations in story state
                     body = response.body || "They don't want to talk"
