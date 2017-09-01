@@ -11,6 +11,7 @@ App = React.createClass
 
     getInitialState: ->
         menu: false
+        how_to_open: false
         overlay: null
         open_overlay: null
 
@@ -20,15 +21,37 @@ App = React.createClass
     toggleMenu: ->
         @setState menu: !@state.menu
 
+    toggleHowTo: ->
+        @setState how_to_open: !@state.how_to_open
+
+    sendMessage: (body) -> =>
+        dispatcher.intents$.emit {type: 'message', body}
+
     render: ->
         <div className='app'>
             {if @state.menu
                 <Menu />
+            else if @state.how_to_open
+                <div className='menu-overlay'>
+                    <div className='overlay-backdrop' onClick={@toggleHowTo} />
+                    <div className='overlay-content'>
+                        <div className='menu-overlay-content how-to-play'>
+                            <div>(the <span className='emphasis' title='click them'>black links</span> in the story are just for you)</div>
+                            <div><span className='emphasis' title='inspect table'>inspect</span> things</div>
+                            <div><span className='emphasis' title='go to the patio'>go</span> somewhere</div>
+                            <div><span className='emphasis' title='take the pan'>take</span> things</div>
+                            <div><span className='emphasis' title='@tom hi there tom'>@character</span> to talk to them</div>
+                            <div><span className='emphasis' title='inventory'>inventory</span> lists the things you've taken</div>
+                            <div><span className='emphasis' title='can your inventory be of use?'>you may need to type other important commands, so try stuff!</span></div>
+                        </div>
+                        <a className='close' onClick={@toggleHowTo} >close</a>
+                    </div>
+                </div>            
             }
             <div className='nav'>
-                <i className='fa fa-suitcase' />
-                <i className='fa fa-eye' />
-                <i className='fa fa-question-circle-o' />
+                <i className='fa fa-suitcase' onClick={@sendMessage('inventory')} />
+                <i className='fa fa-eye' onClick={@sendMessage('look around')} />
+                <i className='fa fa-question-circle-o' onClick=@toggleHowTo />
                 <i className='fa fa-bars' onClick=@toggleMenu />
             </div>
             <div className='content'>

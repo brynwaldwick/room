@@ -162,57 +162,58 @@ p
         + .close
             text-align: center
 
-    .menu-overlay
-        z-index: 1000
+.menu-overlay
+    z-index: 1000
+    position: fixed
+
+    a
+        color: $colors.gray
+
+    .overlay-backdrop
         position: fixed
+        background: rgba($colors.gray, 0.4)
+        top: 0
+        left: 0
+        right: 0
+        bottom: 0
 
-        a
-            color: $colors.gray
+    .overlay-content
+        position: fixed
+        background: white
+        top: 100px
+        box-shadow: 0 4px 8px rgba($colors.gray, 0.2)
+        background: white
+        display: flex
+        flex-direction: column
+        padding: $padding.default
+        margin-right: $padding.default
 
-        .overlay-backdrop
-            position: fixed
-            background: rgba($colors.gray, 0.4)
-            top: 0
-            left: 0
-            right: 0
-            bottom: 0
-
-        .overlay-content
-            position: fixed
-            background: white
-            top: 100px
-            box-shadow: 0 4px 8px rgba($colors.gray, 0.2)
-            background: white
-            display: flex
-            flex-direction: column
-            padding: $padding.default
-            margin-right: $padding.default
-
-            .close
-                margin-top: $padding.default
-                margin-bottom: 0px
-                color: $colors.gray
-
-            .how-to-play
-                div
-                    margin-bottom: $padding.tiny
-
-        .menu-overlay-content
-            div
-                margin-bottom: $padding.small
-
-        .social-links
+        .close
             margin-top: $padding.default
-            a + a
-                margin-left: $padding.default
+            margin-bottom: 0px
+            color: $colors.gray
+            cursor: pointer
 
-            i
-                font-size: 20px
-                cursor: pointer
-                color: #555
+        .how-to-play
+            div
+                margin-bottom: $padding.tiny
 
-        .emphasis
-            font-weight: bold
+    .menu-overlay-content
+        div
+            margin-bottom: $padding.small
+
+    .social-links
+        margin-top: $padding.default
+        a + a
+            margin-left: $padding.default
+
+        i
+            font-size: 20px
+            cursor: pointer
+            color: #555
+
+    .emphasis
+        font-weight: bold
 
 .overlay
     z-index: 900

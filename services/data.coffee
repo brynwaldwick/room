@@ -106,6 +106,9 @@ applyIntentToSession = ({target, action}, context, cb) ->
     # else if context.level == 2
         # aviana talks, president listens
 
+    if target == 'around' && action == 'look'
+        return cb null, story[context.location]?.inspect
+
     target = helpers.capitalize target
     if action in ['go_to', 'goto', 'go', 'enter', 'walk']
         if target == context.location
@@ -379,6 +382,7 @@ data_methods.sendMessage = (new_message, cb) ->
                 else
                     _context.story = story
                     deconstructed_target = target.split(' ')
+
                     if action == 'unlock' && deconstructed_target[0..1].join(" ") == 'far door'
                         console.log 'Looks like they tried to unlock the far door'
                         combo = deconstructed_target[2]

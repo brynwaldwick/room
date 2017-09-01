@@ -46,18 +46,8 @@ MenuOverlay = React.createClass
 
     render: ->
         {topic} = @props
-        if topic == 'howtoplay'
-            <div className='menu-overlay-content how-to-play'>
-                <div>(the <span className='emphasis' title='click them'>black links</span> in the story are just for you)</div>
-                <div><span className='emphasis' title='inspect table'>inspect</span> things</div>
-                <div><span className='emphasis' title='go to the patio'>go</span> somewhere</div>
-                <div><span className='emphasis' title='take the pan'>take</span> things</div>
-                <div><span className='emphasis' title='@tom hi there tom'>@character</span> to talk to them</div>
-                <div><span className='emphasis' title='inventory'>inventory</span> lists the things you've taken</div>
-                <div><span className='emphasis' title='can your inventory be of use?'>you may need to type other important commands, so try stuff!</span></div>
-            </div>
 
-        else if topic == 'signup'
+        if topic == 'signup'
             <div className='menu-overlay-content signup'>
                 Signup Form
             </div>
