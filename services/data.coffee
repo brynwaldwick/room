@@ -250,7 +250,7 @@ data_methods.sendMessage = (new_message, cb) ->
     else
         story = stories[1]
 
-    contexts[new_message.client_key] ||= base_context
+    contexts[new_message.client_key] ||= Object.assign({}, base_context)
     _context = contexts[new_message.client_key]
     last_topic = '' + _context.topic
     console.log 'the context', _context
