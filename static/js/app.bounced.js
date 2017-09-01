@@ -568,6 +568,7 @@ App = React.createClass({
   getInitialState: function() {
     return {
       menu: false,
+      how_to_open: false,
       overlay: null,
       open_overlay: null
     };
@@ -582,17 +583,68 @@ App = React.createClass({
       menu: !this.state.menu
     });
   },
+  toggleHowTo: function() {
+    return this.setState({
+      how_to_open: !this.state.how_to_open
+    });
+  },
+  sendMessage: function(body) {
+    return (function(_this) {
+      return function() {
+        return dispatcher.intents$.emit({
+          type: 'message',
+          body: body
+        });
+      };
+    })(this);
+  },
   render: function() {
     return React.createElement("div", {
       "className": 'app'
-    }, (this.state.menu ? React.createElement(Menu, null) : void 0), React.createElement("div", {
+    }, (this.state.menu ? React.createElement(Menu, null) : this.state.how_to_open ? React.createElement("div", {
+      "className": 'menu-overlay'
+    }, React.createElement("div", {
+      "className": 'overlay-backdrop',
+      "onClick": this.toggleHowTo
+    }), React.createElement("div", {
+      "className": 'overlay-content'
+    }, React.createElement("div", {
+      "className": 'menu-overlay-content how-to-play'
+    }, React.createElement("div", null, "(the ", React.createElement("span", {
+      "className": 'emphasis',
+      "title": 'click them'
+    }, "black links"), " in the story are just for you)"), React.createElement("div", null, React.createElement("span", {
+      "className": 'emphasis',
+      "title": 'inspect table'
+    }, "inspect"), " things"), React.createElement("div", null, React.createElement("span", {
+      "className": 'emphasis',
+      "title": 'go to the patio'
+    }, "go"), " somewhere"), React.createElement("div", null, React.createElement("span", {
+      "className": 'emphasis',
+      "title": 'take the pan'
+    }, "take"), " things"), React.createElement("div", null, React.createElement("span", {
+      "className": 'emphasis',
+      "title": '@tom hi there tom'
+    }, "@character"), " to talk to them"), React.createElement("div", null, React.createElement("span", {
+      "className": 'emphasis',
+      "title": 'inventory'
+    }, "inventory"), " lists the things you\'ve taken"), React.createElement("div", null, React.createElement("span", {
+      "className": 'emphasis',
+      "title": 'can your inventory be of use?'
+    }, "you may need to type other important commands, so try stuff!"))), React.createElement("a", {
+      "className": 'close',
+      "onClick": this.toggleHowTo
+    }, "close"))) : void 0), React.createElement("div", {
       "className": 'nav'
     }, React.createElement("i", {
-      "className": 'fa fa-suitcase'
+      "className": 'fa fa-suitcase',
+      "onClick": this.sendMessage('inventory')
     }), React.createElement("i", {
-      "className": 'fa fa-eye'
+      "className": 'fa fa-eye',
+      "onClick": this.sendMessage('look around')
     }), React.createElement("i", {
-      "className": 'fa fa-question-circle-o'
+      "className": 'fa fa-question-circle-o',
+      "onClick": this.toggleHowTo
     }), React.createElement("i", {
       "className": 'fa fa-bars',
       "onClick": this.toggleMenu
@@ -984,32 +1036,7 @@ MenuOverlay = React.createClass({
   render: function() {
     var facebook_link, reddit_link, text, topic, twitter_link, url;
     topic = this.props.topic;
-    if (topic === 'howtoplay') {
-      return React.createElement("div", {
-        "className": 'menu-overlay-content how-to-play'
-      }, React.createElement("div", null, "(the ", React.createElement("span", {
-        "className": 'emphasis',
-        "title": 'click them'
-      }, "black links"), " in the story are just for you)"), React.createElement("div", null, React.createElement("span", {
-        "className": 'emphasis',
-        "title": 'inspect table'
-      }, "inspect"), " things"), React.createElement("div", null, React.createElement("span", {
-        "className": 'emphasis',
-        "title": 'go to the patio'
-      }, "go"), " somewhere"), React.createElement("div", null, React.createElement("span", {
-        "className": 'emphasis',
-        "title": 'take the pan'
-      }, "take"), " things"), React.createElement("div", null, React.createElement("span", {
-        "className": 'emphasis',
-        "title": '@tom hi there tom'
-      }, "@character"), " to talk to them"), React.createElement("div", null, React.createElement("span", {
-        "className": 'emphasis',
-        "title": 'inventory'
-      }, "inventory"), " lists the things you\'ve taken"), React.createElement("div", null, React.createElement("span", {
-        "className": 'emphasis',
-        "title": 'can your inventory be of use?'
-      }, "you may need to type other important commands, so try stuff!")));
-    } else if (topic === 'signup') {
+    if (topic === 'signup') {
       return React.createElement("div", {
         "className": 'menu-overlay-content signup'
       }, "Signup Form");

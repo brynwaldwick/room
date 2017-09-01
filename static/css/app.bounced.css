@@ -206,11 +206,16 @@ p {
   text-align: center;
 }
 
-.menu .menu-overlay a {
+.menu-overlay {
+  z-index: 1000;
+  position: fixed;
+}
+
+.menu-overlay a {
   color: #737373;
 }
 
-.menu .menu-overlay .overlay-backdrop {
+.menu-overlay .overlay-backdrop {
   position: fixed;
   background: rgba(115, 115, 115, 0.4);
   top: 0;
@@ -219,17 +224,18 @@ p {
   bottom: 0;
 }
 
-.menu .menu-overlay .overlay-content .close {
+.menu-overlay .overlay-content .close {
   margin-top: 16px;
   margin-bottom: 0px;
   color: #737373;
+  cursor: pointer;
 }
 
-.menu .menu-overlay .overlay-content .how-to-play div {
+.menu-overlay .overlay-content .how-to-play div {
   margin-bottom: 6px;
 }
 
-.menu .menu-overlay .overlay-content {
+.menu-overlay .overlay-content {
   position: fixed;
   background: white;
   top: 100px;
@@ -241,31 +247,26 @@ p {
   margin-right: 16px;
 }
 
-.menu .menu-overlay .menu-overlay-content div {
+.menu-overlay .menu-overlay-content div {
   margin-bottom: 10px;
 }
 
-.menu .menu-overlay .social-links a + a {
+.menu-overlay .social-links a + a {
   margin-left: 16px;
 }
 
-.menu .menu-overlay .social-links i {
+.menu-overlay .social-links i {
   font-size: 20px;
   cursor: pointer;
   color: #555;
 }
 
-.menu .menu-overlay .social-links {
+.menu-overlay .social-links {
   margin-top: 16px;
 }
 
-.menu .menu-overlay .emphasis {
+.menu-overlay .emphasis {
   font-weight: bold;
-}
-
-.menu .menu-overlay {
-  z-index: 1000;
-  position: fixed;
 }
 
 .overlay {
