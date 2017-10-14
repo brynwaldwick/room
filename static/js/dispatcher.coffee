@@ -5,8 +5,8 @@ somata = require 'somata-socketio-client'
 noop = -> # Sometimes you don't want anything to happen because the events will handle it
 
 class Dispatcher
-    remote: somata.remote.bind null, 'room:data'
-    remote$: somata.remote$.bind null, 'room:data'
+    remote: somata.remote.bind null, 'room:chat'
+    remote$: somata.remote$.bind null, 'room:chat'
     subscribe$: somata.subscribe$.bind null, 'room:data'
 
     intents$: new KefirBus()

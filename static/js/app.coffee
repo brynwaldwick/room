@@ -90,6 +90,7 @@ Messages = React.createClass
             @fixScroll()
 
     newMessage: (message) ->
+        console.log 'well well well', message
         _messages = @state.messages
         _messages.push message
         @setState {messages: _messages}, =>
