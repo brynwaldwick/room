@@ -25,6 +25,22 @@ module.exports = {
                 To wit, you are in a room. There is a #desk near the back wall. Some #windows behind it, thick glass. A blue #rug, #tables. #Doors. Perhaps the largest departure from any image in your mind right now is the #robot that swivles through the room."
             President:
                 inspect: "The @president only ever listened to @aviana."
+                triggers:
+                    green: (context) ->
+                        context.dead = true
+                        "The man straightens and his eyes dart towards the desk. He holds one hand out and moves silently to stand beside the array of phones and buttons. He picks up the phone on the left and stares out the window wordlessly. Five seconds pass. Then, \n
+                        -- Do it. -- \n
+                        he utters. He slams the phone down and presses his palm to the Green Button. The chain of events henceforth kill you and everything else on Earth.\n
+                        You are dead."
+                    red: (context) ->
+                        context.dead = true
+                        "The man becomes irate. \n
+                        -- These maniacs -- \n
+                        He gestures toward the cieling wildly. \n
+                        -- I told them, step out and we all go down! And now we have to show them... -- \n
+                        He moves to the desk, picks up the phone on the right, and hurls it into the glass of the closest window. \n
+                        The glass, bulletproof, absorbs the phone with little sound, and it falls to the floor. The man screams in disgust and whirls around, pressing hard on the red button. The desk explodes, vaporizing every living thing within a hundred mile radius.\n
+                        You are dead."
             Desk:
                 inspect: "The desk is more than that of an enterprising man. It is stately. It speaks to power. It lays bare save for a curious set of items: two mobile #phones, a #green_button, and a nearly unironic, larger #red_button."
                 "Green Button": "Small and green"

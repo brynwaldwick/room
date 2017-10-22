@@ -111,7 +111,7 @@ Story = {
                 fall: (context) ->
                     context.gargoyle.dead = true
                     context.Hallway.key_exposed = true
-                    "The gargoyle howls with rage and wobbles towards you. His eyes catch on fire as he falls off the table and his stone base cracks. You pick up the key. The gargoyle makes one last sickening sound and lays silent. \n
+                    "The gargoyle howls with rage and wobbles towards you. His eyes catch on fire as he falls off the table and his stone base cracks. The gargoyle makes one last sickening sound and lays silent. \n
                     You are now going to have to crack that combo on the far door yourself or find a way to kill yourself to get out of here. \n
                     (A tiny brass key scatters from the base of the gargoyle and sits exposed in the middle of the hallway.)"
 
