@@ -230,9 +230,38 @@ base_contexts = [
         topic: null
         dialog_index: 0
         done_talking: false
-    bartender:
-        topic: null
+        in_forest: false
+    figure:
+        appeared: false
+        in_forest: false
 ]
+
+# Narrating any outcome of a character sending back a trigger
+handleCharacterMessage = (client_key, _context, name, response, cb) ->
+    {location} = _context
+    story = stories[_context.level]
+    console.log 'hello the response', response
+
+    if response.context.trigger?
+        trigger_slug = response.context.trigger.split(':')[1]
+        Trigger = story[location][name]?.triggers?[trigger_slug]
+        console.log 'The trigger', Trigger, trigger_slug
+        if _.isFunction Trigger
+            body = Trigger(_context)
+        else
+            body = Trigger
+
+        if body?
+            response_message = {
+                body
+                from: 'Room'
+                client_key: client_key
+            }
+
+            createAndPublishMessage response_message, (err, narrator_message) ->
+                console.log err if err?
+                console.log 'Sent triggered message'
+                console.log narrator_message
 
 chat_methods.sendMessage = (new_message, cb) ->
     console.log 'the new message', new_message
@@ -294,6 +323,8 @@ chat_methods.sendMessage = (new_message, cb) ->
                     channel: new_message.client_key
                 }
 
+                # TODO: announce a character is dead if they're dead, or done_talking
+
                 characters[target].handleMessage message_context, new_message.body, (err, response) ->
 
                     # Updating the character's attributes in the context
@@ -341,29 +372,14 @@ chat_methods.sendMessage = (new_message, cb) ->
                     createAndPublishMessage response_message, (err, character_message) ->
                         cb err, character_message
 
-                        DataService 'update', 'contexts', _context.id, context_update, (err, _context) ->
+                        DataService 'update', 'contexts', _context.id, context_update, (err, __context) ->
 
-                            if response.context.trigger?
-                                trigger_slug = response.context.trigger.split(':')[1]
-                                Trigger = story[location][name]?.triggers?[trigger_slug]
-                                if _.isFunction Trigger
-                                    body = Trigger(_context)
-                                else
-                                    body = Trigger
-
-                                if body?
-                                    response_message = {
-                                        body
-                                        from: 'Room'
-                                        client_key: new_message.client_key
-                                    }
-
-                                    createAndPublishMessage response_message, (err, narrator_message) ->
-                                        console.log err if err?
-                                        console.log 'Sent narrator message'
+                            handleCharacterMessage new_message.client_key, _context, name, response, (err, done) ->
+                                # TO figure out: put triggers into story, or put them into Engine.
+                                # when you put them into story, you can mutate the context
 
                             # TODO: move this to the engine messages:created
-                            else if response_message.from == 'aviana'
+                            if response_message.from == 'aviana'
                                 _context.channel = response_message.channel || response_message.client_key
                                 President.handleMessage _context, body, (err, response) ->
                                     if response.body?
@@ -372,7 +388,7 @@ chat_methods.sendMessage = (new_message, cb) ->
                                             from: 'president'
                                             client_key: new_message.client_key
                                         }, (err, message_response) ->
-                                            console.log 'hello', err, message_response
+                                            handleCharacterMessage new_message.client_key, _context, "President", response, (err, done) ->
 
             else
                 response_message = {
@@ -452,25 +468,21 @@ chat_methods.sendMessage = (new_message, cb) ->
 
 createAndPublishMessage = (new_message, cb) ->
     DataService 'createAndPublishMessage', new_message, cb
-    # generic_methods.createMessage new_message, (err, created_message) ->
-    #     data_service.publish "new_message:#{new_message.client_key}", created_message
-    #     cb null, created_message
 
 chat_methods.findMessages = (query, cb) ->
-    DataService 'findMessages', query, cb
-    # generic_methods.findMessages query, (err, messages) ->
-    #     cb err, messages.reverse()
-
-    #     if messages.length == 0
-    #         level_index = levelIndexFromClientKey query.client_key
-    #         setTimeout =>
-    #             new_message = {
-    #                 from: 'Room'
-    #                 body: stories[level_index].Room.inspect
-    #                 client_key: query.client_key
-    #             }
-    #             createAndPublishMessage new_message, ->
-    #         , 1234
+    DataService 'findMessages', query, (err, messages) ->
+        cb err, messages
+        if messages.length == 0
+            level_index = levelIndexFromClientKey query.client_key
+            setTimeout =>
+                new_message = {
+                    from: 'Room'
+                    body: stories[level_index].Room.inspect
+                    client_key: query.client_key
+                }
+                createAndPublishMessage new_message, ->
+            , 746
 
 data_service.methods = _.extend {}, generic_methods, chat_methods
+
 

@@ -85,8 +85,10 @@ base_contexts = [
         topic: null
         dialog_index: 0
         done_talking: false
-    bartender:
-        topic: null
+        in_forest: false
+    figure:
+        appeared: false
+        in_forest: false
 ]
 
 stories = [
@@ -109,18 +111,7 @@ data_methods = {}
 
 data_methods.findMessages = (query, cb) ->
     find 'messages', query, {}, {all: true}, (err, messages) ->
-        cb err, messages.reverse()
-
-        if messages.length == 0
-            level_index = levelIndexFromClientKey query.client_key
-            setTimeout =>
-                new_message = {
-                    from: 'Room'
-                    body: stories[level_index].Room.inspect
-                    client_key: query.client_key
-                }
-                data_methods.createAndPublishMessage new_message, ->
-            , 1234
+        cb err, messages
 
 # TODO: move the publishing to an "engine", which is in charge of subscriptions
 # and resulting actions??
@@ -139,7 +130,6 @@ data_methods.getOrCreateContext = (client_key, cb) ->
             level_index = levelIndexFromClientKey client_key
             base_context = base_contexts[level_index]
             new_context = Object.assign({}, base_context, {client_key})
-            # console.log 'i am here', new_context
             create 'contexts', new_context, (err, created_context) ->
                 cb err, created_context
 
@@ -148,33 +138,34 @@ data_methods.updateContext = (client_key, context_update, cb) ->
         update 'contexts', context.id, context_update, (err, updated_context) ->
             cb null, updated_context
 
-# data_methods.restartLevel = (query, cb) ->
-#     {client_key} = query
-#     generic_methods.findMessages {client_key}, (err, messages) ->
-#         async.map messages, generic_methods
-#         TODO: ...
+data_methods.restartLevel = (query, cb) ->
+    {client_key} = query
+    generic_methods.findMessages {client_key}, (err, messages) ->
+        async.map messages, (message, _cb) ->
+            generic_methods.remove 'messages', message.id, _cb
+        , cb
 
-# data_service = new DataService 'room:data', {
-#     type: 'mongo'
-#     config: {
-#         host: config?.mongo?.host or 'localhost'
-#         db: config?.mongo?.db or 'room'
-#         id_key: 'id'
-#         strict_auth: false
-#     }
-# }, data_methods
-
-aws_auth = config.aws_auth
-    
 data_service = new DataService 'room:data', {
-    type: 'dynamo'
+    type: 'mongo'
     config: {
-        project_slug: "room"
-        aws_auth
-        db: config?.dynamo?.db or 'room'
+        host: config?.mongo?.host or 'localhost'
+        db: config?.mongo?.db or 'room'
         id_key: 'id'
         strict_auth: false
     }
 }, data_methods
+
+aws_auth = config.aws_auth
+    
+# data_service = new DataService 'room:data', {
+#     type: 'dynamo'
+#     config: {
+#         project_slug: "room"
+#         aws_auth
+#         db: config?.dynamo?.db or 'room'
+#         id_key: 'id'
+#         strict_auth: false
+#     }
+# }, data_methods
 
 {get, create, update, find} = data_service.methods
