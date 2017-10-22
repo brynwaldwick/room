@@ -79,8 +79,7 @@ MenuOverlay = React.createClass
                     <img src='http://prontotype.us/images/team/bryn.jpg' />
                 </div>
                 <p>Bryn Waldwick is a Partner at <a href='https://prontotype.us'>Prontotype</a>, where he helps build scalable businesses with great computer code.</p>
-                <p>He likes to research "Blockchain" and how to build things that are easy for users and developers.</p>
-                <p>He dreams about new ways to make creativity more meaningful and more valuable.</p>
+                <p>He likes to research blockchains, new technology, and how to build things that are easy for users and developers.</p>
                 <div className='social-links'>
                     <a href='https://github.com/brynwaldwick' >
                         <i className='fa fa-github' />
