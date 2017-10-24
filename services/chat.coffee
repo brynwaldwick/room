@@ -55,6 +55,7 @@ characters =
     "aviana": require '../characters/aviana'
     "teller1": require '../characters/tellerbot'
     "teller2": require '../characters/tellerbot'
+    "sally": require('../characters/classmates').Sally
     "hunchback": require '../../room-private/characters/hunchback'
     "chicken": require '../../room-private/characters/chicken'
     # "president": require '../characters/president'
@@ -109,8 +110,8 @@ applyIntentToSession = ({target, action}, context, cb) ->
     if action in ['go_to', 'goto', 'go', 'enter', 'walk']
         if target == context.location
             cb null, "You are here."
-        else if story[context.location].neighbors[target]?
-            response = story[context.location].neighbors[target](context)
+        else if story[context.location].neighbors?[target]?
+            response = story[context.location].neighbors?[target](context)
             cb null, response
         else
             cb null, 'You cannot go there'
@@ -188,6 +189,11 @@ base_contexts = [
     inventory: []
     mr_wallace:
         mood: 0.2
+        in_antechamber: false
+    sally:
+        in_antechamber: false
+    tim:
+        in_antechamber: false
 ,
     level: 4
     dead: false
@@ -303,7 +309,7 @@ chat_methods.sendMessage = (new_message, cb) ->
 
         else if matched = new_message.body.match /\@([\w]*)/g
             message_to_character = true
-            target = matched[0][1..]
+            target = matched[0][1..]?.toLowerCase()
             name = helpers.capitalize target
             console.log name
             console.log target
