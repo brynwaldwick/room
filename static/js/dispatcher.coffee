@@ -24,13 +24,15 @@ class Dispatcher
         @remote 'sendMessage', message, cb
 
     findMessages$: (query) ->
-        console.log 'quality', query
         items$ = @remote$ 'findMessages', query, =>
         items$
 
     newMessages$: ->
         new_items$ = @subscribe$ "new_message:#{window.client_key}"
         new_items$
+
+    Restart: (client_key) ->
+        @remote$ 'restartLevel', {client_key}
 
 dispatcher = new Dispatcher
 module.exports = dispatcher

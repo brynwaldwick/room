@@ -7,6 +7,12 @@ Menu = require './menu'
 
 dispatcher = require './dispatcher'
 
+levelIndexFromClientKey = (client_key) ->
+    if client_key?.split(':')[0] == 'levels'
+        return Number(client_key?.split(':')[1])
+    else
+        return 1
+
 App = React.createClass
 
     getInitialState: ->
@@ -90,7 +96,6 @@ Messages = React.createClass
             @fixScroll()
 
     newMessage: (message) ->
-        console.log 'well well well', message
         _messages = @state.messages
         _messages.push message
         @setState {messages: _messages}, =>
@@ -118,6 +123,17 @@ Messages = React.createClass
     populateInput: (body) -> =>
         dispatcher.intents$.emit {type: 'talk-to', body}
 
+    doFunction: (name) -> =>
+        switch name
+            when 'Restart'
+                dispatcher.Restart(window.client_key).onValue (v) ->
+                    window.location.reload()
+            when 'Next'
+                level_index = levelIndexFromClientKey(window.client_key) + 1
+                window.location = "/levels/#{level_index}"
+            else
+                dispatcher[name]?()
+
     renderMessage: (message, i) ->
         if !(message.from in ['user', 'Room', 'room'])
             from_class = "from-character"
@@ -140,6 +156,9 @@ Messages = React.createClass
                             target = match.replace("@", "").replace('_'," ")
                             value = "@" + target
                             <a key={'ma_talk_to_' + li + '_' + mi} onClick={@populateInput(value)}>{value}</a>
+                        replaced = reactStringReplace replaced, /(>\w+)/g, (match, mi) =>
+                            value = match.replace(">", "").replace('_'," ")
+                            <a key={'ma_do' + li + '_' + mi} onClick={@doFunction(value)}>{value}</a>
                         replaced
                         }
                     </p>}
