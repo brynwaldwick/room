@@ -26,9 +26,6 @@ Menu = React.createClass
                 <div><a href='/levels/1'>Chapter 1</a></div>
                 <div><a href='/levels/2'>Chapter 2</a></div>
                 <div><a href='/levels/3'>Chapter 3</a></div>
-                <div><a href='/levels/4'>Chapter 4</a></div>
-                <div><a href='/levels/5'>Chapter 5</a></div>
-                <div><a href='/levels/6'>Chapter 6</a></div>
             </div>
             <div className='menu-footer'>
                 <a onClick={@openOverlay.bind(null,'share')}>Share with friends</a>
@@ -39,7 +36,10 @@ Menu = React.createClass
                 </div>
             </div>
         </div>
-                # <a onClick={@openOverlay.bind(null,'howtoplay')} >How to play</a>
+                # <div><a href='/levels/4'>Chapter 4</a></div>
+                # <div><a href='/levels/5'>Chapter 5</a></div>
+                # <div><a href='/levels/6'>Chapter 6</a></div>
+
                 # <a onClick={@openOverlay.bind(null,'signup')}>Sign up</a>
 
 MenuOverlay = React.createClass
