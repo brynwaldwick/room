@@ -275,7 +275,7 @@ chat_methods.sendMessage = (new_message, cb) ->
 
     if new_message.client_key?.split(':')[0] == 'levels'
         level_index = levelIndexFromClientKey new_message.client_key
-        base_context = base_contexts[level_index]
+        base_context = JSON.parse(JSON.stringify(base_contexts[level_index]))
 
         story = stories[level_index]
     else
@@ -284,7 +284,7 @@ chat_methods.sendMessage = (new_message, cb) ->
     # TODOcontext: find context from data service
     # DataService 'findOrCreateContext', new_message.client_key, (err, _context) ->
 
-    contexts[new_message.client_key] ||= Object.assign({}, base_context)
+    contexts[new_message.client_key] ||= base_context
     _context = contexts[new_message.client_key]
 
     last_topic = '' + _context.topic
@@ -488,6 +488,13 @@ chat_methods.findMessages = (query, cb) ->
                 }
                 createAndPublishMessage new_message, ->
             , 746
+
+chat_methods.restartLevel = (query, cb) ->
+    {client_key} = query
+    DataService 'restartLevel', query, (err, resp) ->
+        level_index = levelIndexFromClientKey client_key
+        contexts[client_key] = JSON.parse(JSON.stringify(base_contexts[level_index]))
+        cb err, resp
 
 data_service.methods = _.extend {}, generic_methods, chat_methods
 

@@ -1,3 +1,4 @@
+async = require 'async'
 DataService = require 'data-service'
 config = require '../config'
 
@@ -140,9 +141,11 @@ data_methods.updateContext = (client_key, context_update, cb) ->
 
 data_methods.restartLevel = (query, cb) ->
     {client_key} = query
-    generic_methods.findMessages {client_key}, (err, messages) ->
+    console.log 'hi there', query
+    find 'messages', {client_key}, null, {all: true}, (err, messages) ->
+        console.log 'the messages', err, messages
         async.map messages, (message, _cb) ->
-            generic_methods.remove 'messages', message.id, _cb
+            data_service.methods.remove 'messages', message.id, _cb
         , cb
 
 data_service = new DataService 'room:data', {
