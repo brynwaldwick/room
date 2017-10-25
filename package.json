@@ -1,0 +1,13 @@
+{
+  "name": "room",
+  "dependencies": {
+    "async": "^2.5.0",
+    "data-service": "git+ssh://git@github.com/prontotype-us/data-service.git",
+    "nalgene": "0.0.10",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "somata": "^0.2.6",
+    "somata-socketio-client": "0.0.1",
+    "validated-form": "^0.1.15"
+  }
+}
