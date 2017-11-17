@@ -112,8 +112,6 @@ data_methods = {}
 
 data_methods.findMessages = (query, cb) ->
     find 'messages', query, {}, {sort: '_id', sort_dir: 'asc', all: true}, (err, messages) ->
-        console.log 'ma messages', messages
-        console.log 'test jones 123'
         cb err, messages
 
 # TODO: move the publishing to an "engine", which is in charge of subscriptions
