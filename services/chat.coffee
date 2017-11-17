@@ -53,11 +53,12 @@ characters =
     "gardener": require '../characters/gardener'
     "eggs": require '../characters/eggs'
     "aviana": require '../characters/aviana'
-    "teller1": require '../characters/tellerbot'
-    "teller2": require '../characters/tellerbot'
+    "teller1": require '../../room-private/characters/tellerbot'
+    "teller2": require '../../room-private/characters/tellerbot'
     "sally": require('../characters/classmates').Sally
     "hunchback": require '../../room-private/characters/hunchback'
     "chicken": require '../../room-private/characters/chicken'
+    "trillvillion": require "../../room-private/characters/trillvillion"
     # "president": require '../characters/president'
 
 President = require '../characters/president'
@@ -202,6 +203,7 @@ base_contexts = [
     focus: 'Lobby'
     inventory: []
     tokens: 0
+    boxes_count: 0
     teller1:
         topic: null
         in_the_strongroom: false

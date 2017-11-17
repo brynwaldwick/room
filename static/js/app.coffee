@@ -85,6 +85,7 @@ Messages = React.createClass
 
     componentDidMount: ->
         @messages$ = dispatcher.findMessages {client_key: window.client_key}, (err, messages) =>
+            console.log 'found the messages', err, messages
             @setState {messages}, =>
                 @fixScroll()
         # @messages$.onValue @foundMessages
