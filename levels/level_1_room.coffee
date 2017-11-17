@@ -142,7 +142,7 @@ Story = {
                 if context.Hallway.near_door == 'unlocked'
                     context.Hallway.near_door = 'open'
                     context.dead = true
-                    "The door swings open. The Butler is standing alone in a tiny room holding an antique pistol. He shoots you in the face for being an asshole to the gargoyle. You are dead."
+                    "The door swings open. The Butler is standing alone in a tiny room holding an antique pistol. He shoots you in the face for being an asshole to the gargoyle. You are dead. >Restart the level."
                 else
                     "It is locked."
         "Far Door":
@@ -249,4 +249,5 @@ Inventory: {
 
 ENDING = "The egg screams and crumbles to dust. The dust settles, then animates and morphs to become a tiny figure, sanguine and pink. The figure grows and becomes Mary. \n
 Events unfold in a cloud of sparks. Mary pulls her kerchief over her shining blonde hair as you link hands and head out the door. The gargoyle sends a clever goodbye. You tip your hat to the gardener, who is busy breaking apart a clump of worms with a shovel. You and Mary eat by the river and smoke cigarettes into a fountain until the sun comes up. \n
-You walk together back to the room, feeling complete. Mary guides your hand to pick up the knife and pulls it towards her soft chest. You violently press and leave her there on the floor. She is choking on blood. The butler enters through the open door behind you and hands you a tomato. You bite into the fruit, laden with eggs and larvae from the garden outside. The room darkens as your mind slows, and you tumble forward onto the floor and into darkness."
+You walk together back to the room, feeling complete. Mary guides your hand to pick up the knife and pulls it towards her soft chest. You violently press and leave her there on the floor. She is choking on blood. The butler enters through the open door behind you and hands you a tomato. You bite into the fruit, laden with eggs and larvae from the garden outside. The room darkens as your mind slows, and you tumble forward onto the floor and into darkness.\n
+You win! >Next chapter or >Restart level."
