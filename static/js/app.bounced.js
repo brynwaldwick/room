@@ -25535,6 +25535,7 @@ Messages = React.createClass({
       client_key: window.client_key
     }, (function(_this) {
       return function(err, messages) {
+        console.log('found the messages', err, messages);
         return _this.setState({
           messages: messages
         }, function() {
@@ -25896,7 +25897,10 @@ Menu = React.createClass({
     }), React.createElement("a", {
       "className": 'close',
       "onClick": this.openOverlay.bind(null, null)
-    }, "close"))) : void 0), React.createElement("h1", null, "Room"), React.createElement("div", {
+    }, "close"))) : void 0), React.createElement("a", {
+      "className": 'menu-title',
+      "href": '/'
+    }, React.createElement("h1", null, "Room")), React.createElement("div", {
       "className": 'description'
     }, "A conversation adventure."), React.createElement("div", {
       "className": 'menu-links'
@@ -25906,7 +25910,13 @@ Menu = React.createClass({
       "href": '/levels/2'
     }, "Chapter 2")), React.createElement("div", null, React.createElement("a", {
       "href": '/levels/3'
-    }, "Chapter 3"))), React.createElement("div", {
+    }, "Chapter 3")), React.createElement("div", null, React.createElement("a", {
+      "href": '/levels/4'
+    }, "Chapter 4")), React.createElement("div", null, React.createElement("a", {
+      "href": '/levels/5'
+    }, "Chapter 5")), React.createElement("div", null, React.createElement("a", {
+      "href": '/levels/6'
+    }, "Chapter 6"))), React.createElement("div", {
       "className": 'menu-footer'
     }, React.createElement("a", {
       "onClick": this.openOverlay.bind(null, 'share')
