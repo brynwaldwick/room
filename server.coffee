@@ -44,6 +44,8 @@ app.get '/levels/:level_index', (req, res) ->
         {name, index} = level
         res.locals.level = {name, index}
         res.render 'app'
+    else if level_index == 7
+        res.redirect "http://book2.room.dev"
 
 app.get '/level/:level_index', (req, res) ->
     level_index = Number(req.params.level_index)

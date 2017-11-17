@@ -5,9 +5,9 @@ html
         meta(name='description', content="Room is a text-only conversation adventure through another universe. The universe is filled with colorful characters and untold discoveries.")
         meta(charset='utf-8')
         link(rel='shortcut icon', href='/img/favicon.png')
-        meta(property='og:image', content='http://entertheroom.io/img/medium-image.png')
+        meta(property='og:image', content='http://entertheroom.io/img/Room_proof.png')
         meta(property='og:type', content='website')
-        meta(property='twitter:image', content='http://entertheroom.io/img/medium-image.png')
+        meta(property='twitter:image', content='http://entertheroom.io/img/Room_proof.png')
         meta(name='viewport', content='width=device-width, initial-scale=1.0, user-scalable=no')
         meta(name='apple-mobile-web-app-capable', content='yes')
         link(rel='stylesheet', href='/css/font-awesome.min.css')
@@ -17,13 +17,15 @@ html
         link(rel='stylesheet', href='//fonts.googleapis.com/css?family=Arimo:400,500,700')
         link(rel='stylesheet', href="#{base_url || ''}/css/app.css")
     body
-        #app
+        #app(style="background: #efefef;")
             .app.home-page
-                .content
-                    .menu
-                        h1 Room
-                        p.home-description A text-only conversational adventure game.
-                        a.menu-link(href='/levels/1') Begin
+                .content(style="background:transparent;")
+                    .menu(style="background:transparent;")
+                        //- h1 Room
+                        //- p.home-description A text-only conversational adventure game.
+                        a(href='/levels/1')
+                            img.cover-picture(src="/img/Room_proof.png")
+                        //- a.menu-link(href='/levels/1') Begin
 
         script.
             //- window.user = !{JSON.stringify(user)};
